@@ -2,6 +2,6 @@
   "name": "vueports/vueports-solutions",
   "description": "Vueports Solutions Website",
   "require": {
-    "php": "8.3"
+    "php": "^8.3"
   }
 }
