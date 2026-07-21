@@ -2,11 +2,19 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = ltrim($uri, '/');
+
+// If requesting a specific PHP file directly, let it serve
+if ($uri && $uri !== 'index.php' && file_exists($uri . '.php')) {
+    include $uri . '.php';
+    exit;
+}
 
 $pageTitle = 'Home';
 $pageDescription = 'Vueports Solutions - Your IT Solutions Production Partner.';
 
-//require_once 'includes/functions.php';
+require_once 'includes/functions.php';
 require_once 'includes/header.php';
 echo "<h1>Vueports Solutions</h1>";
 echo "<p>PHP is working on Railway!</p>";
