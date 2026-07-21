@@ -6,9 +6,12 @@ ini_set('display_errors', 1);
 $pageTitle = 'Home';
 $pageDescription = 'Vueports Solutions - Your IT Solutions Production Partner.';
 
-require_once 'includes/functions.php';
+//require_once 'includes/functions.php';
 require_once 'includes/header.php';
-
+echo "<h1>Vueports Solutions</h1>";
+echo "<p>PHP is working on Railway!</p>";
+echo "<p>Server time: " . date('Y-m-d H:i:s') . "</p>";
+phpinfo();
 // Fetch services from database
 $services = [];
 if (function_exists('getAllServices')) {
