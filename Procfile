@@ -1,1 +1,1 @@
-web: php -S 0.0.0.0:$PORT -t . index.php
+web: docker run -p $PORT:80 myapp
