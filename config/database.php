@@ -35,12 +35,10 @@ try {
     $pdo->exec("SET time_zone = '+00:00'");
     $pdo->exec("SET SESSION sql_mode = 'STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'");
     
-} catch (\PDOException $e) {
+} } catch (\PDOException $e) {
     error_log("Database connection failed: " . $e->getMessage());
     $pdo = null;
     
-    if (($_ENV['APP_ENV'] ?? 'production') === 'development') {
-        die("Database connection failed: " . $e->getMessage());
-    }
-    die("Service temporarily unavailable. Please try again later.");
+    // TEMPORARY: Always show error for debugging
+    die("Database connection failed: " . $e->getMessage());
 }
