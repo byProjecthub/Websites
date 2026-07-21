@@ -1,0 +1,8 @@
+/vendor
+/.git
+/.github
+/cache
+/logs
+*.log
+.env
+.env.example
