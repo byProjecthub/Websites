@@ -1,0 +1,7 @@
+{
+  "name": "vueports/vueports-solutions",
+  "description": "Vueports Solutions Website",
+  "require": {
+    "php": ">=7.4"
+  }
+}
