@@ -1,23 +1,15 @@
-# Dockerfile
-FROM php:8.2-apache
+FROM php:8.3-apache
 
-RUN apt-get update && apt-get install -y \
-    libpng-dev libjpeg-dev libfreetype6-dev \
-    zip unzip git libzip-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql zip opcache
+# Install PDO MySQL and other extensions
+RUN docker-php-ext-install pdo pdo_mysql mysqli
 
-RUN a2enmod rewrite headers ssl
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy your app
+COPY . /var/www/html/
 
-WORKDIR /var/www/html
-COPY . .
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
 
-RUN composer install --no-dev --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/uploads \
-    && chmod -R 755 /var/www/html/cache
-
-EXPOSE 80 443
+EXPOSE 80
