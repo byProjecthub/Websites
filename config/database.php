@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// config/database.php — FIXED for Railway deployment
+// config/database.php — Railway deployment ready
 
 $host = $_ENV['MYSQLHOST'] ?? $_ENV['DB_HOST'] ?? 'localhost';
 $port = $_ENV['MYSQLPORT'] ?? $_ENV['DB_PORT'] ?? '3306';
@@ -19,7 +19,6 @@ $options = [
     PDO::ATTR_PERSISTENT         => true,
 ];
 
-// Only add MYSQL_ATTR_INIT_COMMAND if the constant exists
 if (defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
     $options[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES $charset COLLATE utf8mb4_unicode_ci";
 }
@@ -27,7 +26,6 @@ if (defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
     
-    // If MYSQL_ATTR_INIT_COMMAND wasn't available, set charset manually
     if (!defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
         $pdo->exec("SET NAMES $charset COLLATE utf8mb4_unicode_ci");
     }
@@ -35,10 +33,8 @@ try {
     $pdo->exec("SET time_zone = '+00:00'");
     $pdo->exec("SET SESSION sql_mode = 'STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'");
     
-} } catch (\PDOException $e) {
+} catch (\PDOException $e) {
     error_log("Database connection failed: " . $e->getMessage());
     $pdo = null;
-    
-    // TEMPORARY: Always show error for debugging
     die("Database connection failed: " . $e->getMessage());
 }
