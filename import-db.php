@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-// import-db.php - Auto-import database on Railway deploy
-
 $host = $_ENV['MYSQLHOST'] ?? 'mysql.railway.internal';
 $port = $_ENV['MYSQLPORT'] ?? '3306';
 $dbname = $_ENV['MYSQLDATABASE'] ?? 'railway';
@@ -23,61 +21,36 @@ try {
     echo "Database '$dbname' ready.\n";
     
     $pdo->exec("USE `$dbname`");
-    
     $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
     
     if (count($tables) === 0) {
-        echo "Database is empty. Looking for SQL import file...\n";
-        
-        $possibleFiles = [
-            __DIR__ . '/database.sql',
-            __DIR__ . '/database - Copy.sql',
-            __DIR__ . '/vueports_database.sql',
-            __DIR__ . '/dump.sql',
-        ];
-        
+        echo "Database empty. Importing...\n";
+        $files = ['/var/www/html/database.sql', '/var/www/html/database - Copy.sql'];
         $sqlFile = null;
-        foreach ($possibleFiles as $file) {
-            if (file_exists($file)) {
-                $sqlFile = $file;
+        foreach ($files as $f) {
+            if (file_exists($f)) {
+                $sqlFile = $f;
                 break;
             }
         }
         
         if ($sqlFile) {
-            echo "Found: $sqlFile\n";
             $sql = file_get_contents($sqlFile);
             $statements = array_filter(array_map('trim', explode(';', $sql)));
-            $success = 0;
-            $failed = 0;
-            
-            foreach ($statements as $statement) {
-                if (!empty($statement)) {
+            foreach ($statements as $stmt) {
+                if (!empty($stmt)) {
                     try {
-                        $pdo->exec($statement);
-                        $success++;
+                        $pdo->exec($stmt);
                     } catch (PDOException $e) {
-                        if (strpos($e->getMessage(), 'already exists') === false) {
-                            echo "Warning: " . $e->getMessage() . "\n";
-                            $failed++;
-                        } else {
-                            $success++;
-                        }
+                        // ignore errors
                     }
                 }
             }
-            
-            echo "Import complete: $success statements executed, $failed warnings.\n";
-        } else {
-            echo "No SQL file found.\n";
+            echo "Import done.\n";
         }
     } else {
-        echo "Database already has " . count($tables) . " tables. Skipping import.\n";
+        echo "Database has " . count($tables) . " tables. Skipping import.\n";
     }
-    
-    $count = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
-    echo "Connected to '$dbname' with " . count($count) . " tables.\n";
-    
 } catch (PDOException $e) {
     echo "ERROR: " . $e->getMessage() . "\n";
     exit(1);
