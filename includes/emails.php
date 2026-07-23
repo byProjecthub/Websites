@@ -304,7 +304,7 @@ function sendContactConfirmation(array $data): bool {
             <p style="margin: 0;">If your matter is urgent, reply to this email or WhatsApp us at <strong>' . getSetting('contact_phone', '+27 (68) 826-1507') . '</strong>.</p>
         ', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
+        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
     }
     
     return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
