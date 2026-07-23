@@ -1,14 +1,6 @@
 <?php
 declare(strict_types=1);
 
-/**
- * PHPMailer Configuration
- * 
- * Setup:
- * 1. composer require phpmailer/phpmailer
- * 2. Update settings in database or hardcode below
- */
-
 function getMailer() {
     $composerAutoload = __DIR__ . '/../vendor/autoload.php';
     $manualPHPMailer  = __DIR__ . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
@@ -20,19 +12,51 @@ function getMailer() {
         require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
         require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/SMTP.php';
     } else {
-        return null; // Falls back to PHP mail()
+        error_log('PHPMailer not found');
+        return null;
     }
 
-    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host       = getSetting('smtp_host', 'smtp.gmail.com');
-    $mail->SMTPAuth   = true;
-    $mail->Username   = getSetting('smtp_user', 'njabulod.hlongwane@gmail.com');
-    $mail->Password   = getSetting('smtp_pass', 'NJ@b_loHlon1802');
-    $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = (int) getSetting('smtp_port', '587');
-    $mail->setFrom(getSetting('smtp_from', 'noreply@vueports.co.za'), 'Vueports Solutions');
-    $mail->CharSet = 'UTF-8';
-    $mail->isHTML(true);
-    return $mail;
+    try {
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+        
+        // Read from Railway env vars
+        $user     = $_ENV['SMTP_USER'] ?? getSetting('smtp_user', 'njabulod.hlongwane@gmail.com');
+        $pass     = $_ENV['SMTP_PASS'] ?? getSetting('smtp_pass', '');
+        $host     = $_ENV['SMTP_HOST'] ?? getSetting('smtp_host', 'smtp.gmail.com');
+        $port     = (int) ($_ENV['SMTP_PORT'] ?? getSetting('smtp_port', '587'));
+        $fromName = $_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions');
+        
+        // CRITICAL FIX: From address MUST match your authenticated Gmail
+        // You cannot send from noreply@vueports.com unless you verify/own it
+        $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', $user);
+        
+        if (empty($pass)) {
+            error_log('SMTP_PASS not set. Add it to Railway environment variables.');
+            return null;
+        }
+
+        $mail->isSMTP();
+        $mail->Host       = $host;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $user;
+        $mail->Password   = $pass;
+        $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = $port;
+        $mail->CharSet    = 'UTF-8';
+        $mail->isHTML(true);
+        $mail->SMTPDebug  = (int) ($_ENV['SMTP_DEBUG'] ?? '0');
+        
+        // Gmail requirement: From must match authenticated user
+        $mail->setFrom($fromEmail, $fromName);
+        
+        // Reply-To can be different (e.g., your real contact email)
+        $replyTo = $_ENV['SMTP_REPLY_TO'] ?? getSetting('contact_email', $user);
+        $mail->addReplyTo($replyTo, $fromName);
+        
+        return $mail;
+        
+    } catch (Exception $e) {
+        error_log('PHPMailer error: ' . $e->getMessage());
+        return null;
+    }
 }
