@@ -1199,37 +1199,59 @@ function renderEmailTemplate(string $templateKey, array $variables = []): ?array
     }
 }
 
-// FIXED: Added function to queue email for async sending
-function queueEmail(string $toEmail, string $toName, string $templateKey, array $variables = [], ?string $replyTo = null): bool {
+/**
+ * Queue an email for async sending.
+ * 
+ * Template mode: queueEmail('user@x.com', 'Name', 'template_key', ['name' => 'John'])
+ * Direct mode:   queueEmail('user@x.com', 'Name', 'Subject', '<html>...</html>')
+ */
+function queueEmail(string $toEmail, string $toName, string $subjectOrTemplateKey, array|string $bodyOrVariables = [], ?string $textBody = null): int {
     $db = db();
-    if (!$db) return false;
+    if (!$db) return 0;
     
-    $template = renderEmailTemplate($templateKey, $variables);
-    if (!$template) return false;
+    $fromEmail = getSetting('smtp_from', 'noreply@vueports.co.za');
+    $fromName  = getSetting('smtp_from_name', 'Vueports Solutions');
+    
+    $subject   = $subjectOrTemplateKey;
+    $htmlBody  = '';
+    $plainText = $textBody;
+    
+    // Template mode: 4th arg is array of variables
+    if (is_array($bodyOrVariables)) {
+        $template = renderEmailTemplate($subjectOrTemplateKey, $bodyOrVariables);
+        if (!$template) {
+            error_log("Email template not found: $subjectOrTemplateKey");
+            return 0;
+        }
+        $subject   = $template['subject'];
+        $htmlBody  = $template['html'];
+        $plainText = $template['text'];
+    } 
+    // Direct mode: 4th arg is HTML string
+    else {
+        $htmlBody  = $bodyOrVariables;
+        $plainText = $textBody ?? strip_tags($bodyOrVariables);
+    }
     
     try {
         $stmt = $db->prepare("INSERT INTO email_queue 
-            (to_email, to_name, subject, body_html, body_text, from_email, from_name, reply_to, status, created_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
-        
-        $fromEmail = getSetting('smtp_from', 'noreply@vueports.co.za');
-        $fromName = getSetting('smtp_from_name', 'Vueports Solutions');
+            (to_email, to_name, subject, body_html, body_text, from_email, from_name, status, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
         
         $stmt->execute([
-            $toEmail,
-            $toName,
-            $template['subject'],
-            $template['html'],
-            $template['text'],
+            filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL),
+            sanitize($toName),
+            sanitize($subject),
+            $htmlBody,
+            $plainText,
             $fromEmail,
             $fromName,
-            $replyTo,
         ]);
         
-        return true;
+        return (int) $db->lastInsertId();
     } catch (PDOException $e) {
         error_log("queueEmail error: " . $e->getMessage());
-        return false;
+        return 0;
     }
 }
 
