@@ -39,8 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'service_interest' => $service
             ];
             
-            sendContactConfirmation($leadData);
-            sendAdminLeadNotification($leadData);
+            // Send immediately instead of queuing
+$template = loadEmailTemplate('contact_confirmation', $leadData);
+if ($template['subject']) {
+    sendEmailNow($leadData['email'], $leadData['name'], $template['subject'], $template['body']);
+}
+
+$adminTemplate = loadEmailTemplate('admin_lead_notification', $leadData);
+if ($adminTemplate['subject']) {
+    sendEmailNow('your-admin-email@gmail.com', 'Admin', $adminTemplate['subject'], $adminTemplate['body']);
+}
             
             $success = 'Thank you! Your message has been received. We will respond within 24 hours.';
         }
