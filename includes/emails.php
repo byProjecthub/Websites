@@ -314,18 +314,14 @@ function sendAdminLeadNotification(array $data): bool {
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600;">Email</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . htmlspecialchars($data['email'] ?? '-') . '</td></tr>
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600;">Phone</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . htmlspecialchars($data['phone'] ?? '-') . '</td></tr>
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600;">Service</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . htmlspecialchars($data['service_interest'] ?? 'General') . '</td></tr>
-                <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600;">Subject</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . htmlspecialchars($data['subject'] ?? '-') . '</td></tr>
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600; vertical-align: top;">Message</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . nl2br(htmlspecialchars($data['message'] ?? '')) . '</td></tr>
             </table>
-            <div style="margin-top: 24px;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/admin/messages.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">View in Admin Portal</a>
-            </div>
         ', $subject);
         
-        return queueEmail($adminEmail, 'Vueports Admin', $subject, $body) > 0;
+        return sendEmailNow($adminEmail, 'Vueports Admin', $subject, $body);
     }
     
-    return queueEmail($adminEmail, 'Vueports Admin', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($adminEmail, 'Vueports Admin', $template['subject'], $template['body']);
 }
 
 function sendPaymentReceipt(array $payment, ?array $client = null): bool {
