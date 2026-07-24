@@ -1,9 +1,11 @@
 <?php
-// includes/emails.php — Updated with complete email queue system, templates, and POPIA compliance
 declare(strict_types=1);
 
+require_once __DIR__ . '/../config/phpmailer-config.php';
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/functions.php';
 
+// ... rest of emails.php
 /**
  * Email queue system with PHPMailer fallback and delivery tracking
  */
