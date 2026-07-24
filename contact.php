@@ -81,4 +81,110 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $pageTitle = 'Contact';
 require_once 'includes/header.php';
+
+
+<section class="services-hero" style="padding-top:140px;">
+    <div class="container">
+        <span class="section-tag">/ Contact</span>
+        <h1>Let's Build Something <span class="highlight">Profitable</span></h1>
+        <p>Tell us about your project. We reply to all inquiries within one business day.</p>
+    </div>
+</section>
+
+<section style="padding:60px 0 120px;">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p><?= sanitize(getSetting('contact_email', 'njabulod.hlongwane@gmail.com')) ?></p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p><?= sanitize(getSetting('contact_phone', '+27 (68) 826-1507')) ?></p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>Location</h4>
+                        <p><?= sanitize(getSetting('location', 'Johannesburg, SA')) ?></p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Response Time</h4>
+                        <p>Within 24 business hours</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <?php if ($success): ?>
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle"></i> <?= $success ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($error): ?>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> <?= $error ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="POST" action="contact.php" class="card card-hover">
+                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                    
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label class="form-label">Name *</label>
+                            <input type="text" name="name" required class="form-input">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label class="form-label">Email *</label>
+                            <input type="email" name="email" required class="form-input">
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" name="phone" class="form-input">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label class="form-label">Service Interest</label>
+                            <select name="service_interest" class="form-select">
+                                <option value="">General Inquiry</option>
+                                <option value="custom-software-web">Custom Software & Web</option>
+                                <option value="data-engineering-analytics">Data Engineering</option>
+                                <option value="ai-agent-development">AI Agent Development</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <input type="text" name="subject" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message *</label>
+                        <textarea name="message" rows="6" required class="form-textarea" placeholder="Describe your project, goals, timeline, and budget..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php require_once 'includes/footer.php'; ?>
 ?>
