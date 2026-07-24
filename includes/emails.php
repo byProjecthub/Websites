@@ -730,3 +730,32 @@ function recordUnsubscribe(string $email, string $source = 'email'): bool {
         return false;
     }
 }
+
+function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
+    if (!function_exists('getMailer')) {
+        error_log('sendEmailNow: getMailer() not found. Is phpmailer-config.php loaded?');
+        return false;
+    }
+    
+    try {
+        $mailer = getMailer();
+        if (!$mailer) {
+            error_log('sendEmailNow: getMailer() returned null — check SMTP_PASS env var');
+            return false;
+        }
+        
+        $mailer->clearAddresses();
+        $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), $toName);
+        $mailer->Subject = $subject;
+        $mailer->Body = $htmlBody;
+        $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
+        
+        $mailer->send();
+        error_log("sendEmailNow: SUCCESS — sent to $toEmail");
+        return true;
+        
+    } catch (Exception $e) {
+        error_log('PHPMailer error: ' . $e->getMessage());
+        return false;
+    }
+}
