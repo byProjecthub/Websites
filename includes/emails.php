@@ -284,6 +284,7 @@ function loadEmailTemplate(string $templateKey, array $variables = []): array {
    Branded Transactional Emails
    ======================================== */
 
+
 function sendContactConfirmation(array $data): bool {
     $template = loadEmailTemplate('contact_confirmation', [
         'name' => $data['name'] ?? 'there',
@@ -294,20 +295,12 @@ function sendContactConfirmation(array $data): bool {
     if (empty($template['subject'])) {
         // Fallback inline template
         $subject = 'We received your message — Vueports Solutions';
-        $body = buildEmailTemplate('
-            <h2 style="color: #0f172a; margin: 0 0 16px; font-size: 22px;">Hi ' . htmlspecialchars($data['name'] ?? 'there') . ',</h2>
-            <p style="margin: 0 0 16px;">Thank you for reaching out. We have received your message regarding <strong style="color: #6366f1;">' . htmlspecialchars($data['subject'] ?? 'General Inquiry') . '</strong>.</p>
-            <p style="margin: 0 0 16px;">Our team reviews every inquiry within <strong>24 business hours</strong>. A copy of your message is below:</p>
-            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #6366f1;">
-                ' . nl2br(htmlspecialchars($data['message'] ?? '')) . '
-            </div>
-            <p style="margin: 0;">If your matter is urgent, reply to this email or WhatsApp us at <strong>' . getSetting('contact_phone', '+27 (68) 826-1507') . '</strong>.</p>
-        ', $subject);
+        $body = buildEmailTemplate('...HTML...', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
+        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body);
     }
     
-    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
+    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']);
 }
 
 function sendAdminLeadNotification(array $data): bool {
