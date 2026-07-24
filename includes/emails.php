@@ -287,14 +287,20 @@ function sendContactConfirmation(array $data): bool {
     if (empty($template['subject'])) {
         // Fallback inline template
         $subject = 'We received your message — Vueports Solutions';
-        $body = buildEmailTemplate('...HTML...', $subject);
+        $body = buildEmailTemplate('
+            <h2 style="color: #0f172a; margin: 0 0 16px; font-size: 22px;">Hi ' . htmlspecialchars($data['name'] ?? 'there') . ',</h2>
+            <p style="margin: 0 0 16px;">Thank you for reaching out. We have received your message regarding <strong style="color: #6366f1;">' . htmlspecialchars($data['subject'] ?? 'General Inquiry') . '</strong>.</p>
+            <p style="margin: 0 0 16px;">Our team reviews every inquiry within <strong>24 business hours</strong>.</p>
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #6366f1;">
+                ' . nl2br(htmlspecialchars($data['message'] ?? '')) . '
+            </div>
+        ', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body);
+        return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body);
     }
     
-    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']);
+    return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']);
 }
-
 function sendAdminLeadNotification(array $data): bool {
     $adminEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     $template = loadEmailTemplate('admin_lead_notification', $data);
