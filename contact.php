@@ -28,13 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $db = db();
             
-            // Check database connection
             if (!$db) {
                 $error = 'Database connection failed. Please try again later.';
                 error_log('CONTACT FORM ERROR: db() returned null');
             } else {
                 try {
-                    // Insert into messages table
                     $stmt = $db->prepare("INSERT INTO messages (name, email, phone, subject, message, service_interest, status, created_at) VALUES (?,?,?,?,?,?, 'new', NOW())");
                     $stmt->execute([$name, $email, $phone, $subject, $message, $service]);
                     $messageId = (int) $db->lastInsertId();
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     error_log("CONTACT FORM: Saved message ID $messageId from $email");
                     
-                    // Send emails (non-blocking: don't fail form if email fails)
                     $leadData = [
                         'name' => $name,
                         'email' => $email,
@@ -81,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $pageTitle = 'Contact';
 require_once 'includes/header.php';
-
+?>
 
 <section class="services-hero" style="padding-top:140px;">
     <div class="container">
@@ -187,4 +184,3 @@ require_once 'includes/header.php';
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
-?>
