@@ -21,37 +21,106 @@ require_once __DIR__ . '/functions.php';
  * Send email immediately via PHPMailer (bypass queue)
  * NOTE: Railway has no sendmail. SMTP only.
  */
+/**
+ * Send email via SendGrid Web API (bypasses Railway SMTP block)
+ */
 function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    if (!function_exists('getMailer')) {
-        error_log('sendEmailNow: getMailer() not found. Is phpmailer-config.php loaded?');
+    $apiKey = $_ENV['SENDGRID_API_KEY'] ?? '';
+    
+    // If SendGrid key exists, use API
+    if (!empty($apiKey)) {
+        return sendViaSendGrid($toEmail, $toName, $subject, $htmlBody, $textBody);
+    }
+    
+    // Fallback: try PHPMailer (works on local dev, fails on Railway)
+    if (function_exists('getMailer')) {
+        try {
+            $mailer = getMailer();
+            if ($mailer) {
+                $mailer->clearAddresses();
+                $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
+                $mailer->Subject = sanitize($subject);
+                $mailer->isHTML(true);
+                $mailer->Body = $htmlBody;
+                $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
+                $mailer->send();
+                error_log("sendEmailNow: PHPMailer sent to $toEmail");
+                return true;
+            }
+        } catch (\Exception $e) {
+            error_log('PHPMailer fallback failed: ' . $e->getMessage());
+        }
+    }
+    
+    error_log('sendEmailNow: No email provider available. Set SENDGRID_API_KEY in Railway.');
+    return false;
+}
+
+/**
+ * SendGrid V3 Mail Send API via cURL
+ */
+function sendViaSendGrid(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
+    $apiKey = $_ENV['SENDGRID_API_KEY'] ?? '';
+    $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
+    $fromName = $_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions');
+    
+    $payload = [
+        'personalizations' => [[
+            'to' => [[
+                'email' => filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL),
+                'name' => $toName,
+            ]]
+        ]],
+        'from' => [
+            'email' => $fromEmail,
+            'name' => $fromName,
+        ],
+        'reply_to' => [
+            'email' => $fromEmail,
+            'name' => $fromName,
+        ],
+        'subject' => $subject,
+        'content' => [
+            [
+                'type' => 'text/plain',
+                'value' => $textBody ?? strip_tags($htmlBody),
+            ],
+            [
+                'type' => 'text/html',
+                'value' => $htmlBody,
+            ],
+        ],
+    ];
+    
+    $ch = curl_init('https://api.sendgrid.com/v3/mail/send');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $apiKey,
+        'Content-Type: application/json',
+    ]);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    if ($curlError) {
+        error_log("SendGrid cURL error: $curlError");
         return false;
     }
     
-    try {
-        $mailer = getMailer();
-        if (!$mailer) {
-            error_log('sendEmailNow: getMailer() returned null. Check SMTP_PASS, SMTP_USER, SMTP_HOST in Railway env vars.');
-            return false;
-        }
-        
-        $mailer->clearAddresses();
-        $mailer->clearAttachments();
-        $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
-        $mailer->Subject = sanitize($subject);
-        $mailer->isHTML(true);
-        $mailer->Body = $htmlBody;
-        $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
-        
-        $mailer->send();
-        error_log("sendEmailNow: SUCCESS — sent to $toEmail | Subject: $subject");
+    if ($httpCode >= 200 && $httpCode < 300) {
+        error_log("SendGrid: SUCCESS — sent to $toEmail | Subject: $subject");
         return true;
-        
-    } catch (\Exception $e) {
-        error_log('PHPMailer error: ' . $e->getMessage());
-        return false;
     }
+    
+    error_log("SendGrid API error: HTTP $httpCode | Response: $response");
+    return false;
 }
-
 /**
  * Process pending emails from queue (called by cron)
  */
