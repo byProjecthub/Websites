@@ -1205,23 +1205,32 @@ function renderEmailTemplate(string $templateKey, array $variables = []): ?array
  * Template mode: queueEmail('user@x.com', 'Name', 'template_key', ['name' => 'John'])
  * Direct mode:   queueEmail('user@x.com', 'Name', 'Subject', '<html>...</html>')
  */
-function queueEmail(string $toEmail, string $toName, string $subjectOrTemplateKey, array|string $bodyOrVariables = [], ?string $textBody = null): int {
+/**
+ * Queue an email for async sending.
+ * 
+ * Template mode: queueEmail('user@x.com', 'Name', 'template_key', ['name' => 'John'])
+ * Direct mode:   queueEmail('user@x.com', 'Name', 'Subject', '<html>...</html>')
+ */
+function queueEmail(string $toEmail, string $toName, string $subjectOrTemplateKey, array|string $bodyOrVariables = [], ?string $replyTo = null): bool {
     $db = db();
-    if (!$db) return 0;
+    if (!$db) {
+        error_log('queueEmail: No database connection');
+        return false;
+    }
     
-    $fromEmail = getSetting('smtp_from', 'noreply@vueports.co.za');
+    $fromEmail = getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
     $fromName  = getSetting('smtp_from_name', 'Vueports Solutions');
     
     $subject   = $subjectOrTemplateKey;
     $htmlBody  = '';
-    $plainText = $textBody;
+    $plainText = null;
     
     // Template mode: 4th arg is array of variables
     if (is_array($bodyOrVariables)) {
         $template = renderEmailTemplate($subjectOrTemplateKey, $bodyOrVariables);
         if (!$template) {
-            error_log("Email template not found: $subjectOrTemplateKey");
-            return 0;
+            error_log("queueEmail: Template not found: $subjectOrTemplateKey");
+            return false;
         }
         $subject   = $template['subject'];
         $htmlBody  = $template['html'];
@@ -1230,13 +1239,13 @@ function queueEmail(string $toEmail, string $toName, string $subjectOrTemplateKe
     // Direct mode: 4th arg is HTML string
     else {
         $htmlBody  = $bodyOrVariables;
-        $plainText = $textBody ?? strip_tags($bodyOrVariables);
+        $plainText = strip_tags($bodyOrVariables);
     }
     
     try {
         $stmt = $db->prepare("INSERT INTO email_queue 
-            (to_email, to_name, subject, body_html, body_text, from_email, from_name, status, created_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
+            (to_email, to_name, subject, body_html, body_text, from_email, from_name, reply_to, status, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
         
         $stmt->execute([
             filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL),
@@ -1246,15 +1255,17 @@ function queueEmail(string $toEmail, string $toName, string $subjectOrTemplateKe
             $plainText,
             $fromEmail,
             $fromName,
+            $replyTo,
         ]);
         
-        return (int) $db->lastInsertId();
+        error_log("queueEmail: Queued email to $toEmail, ID " . $db->lastInsertId());
+        return true;
+        
     } catch (PDOException $e) {
-        error_log("queueEmail error: " . $e->getMessage());
-        return 0;
+        error_log("queueEmail DB error: " . $e->getMessage());
+        return false;
     }
 }
-
 // FIXED: Added password hashing helper with automatic rehash
 function verifyPassword(string $password, string $hash): bool {
     if (!password_verify($password, $hash)) {
