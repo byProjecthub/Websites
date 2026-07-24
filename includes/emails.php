@@ -48,13 +48,19 @@ require_once __DIR__ . '/functions.php';
 /**
  * Send email immediately (bypass queue)
  */
+/**
+ * Send email immediately via PHPMailer (bypass queue)
+ */
 function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    $db = db();
-    
     // Try PHPMailer first
     if (function_exists('getMailer')) {
         try {
             $mailer = getMailer();
+            if (!$mailer) {
+                error_log('sendEmailNow: getMailer() returned null');
+                return false;
+            }
+            
             $mailer->clearAddresses();
             $mailer->clearAttachments();
             $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
@@ -64,38 +70,24 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
             $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
             
             $mailer->send();
-            
-            // Log success
-            if ($db) {
-                $stmt = $db->prepare("INSERT INTO email_logs (recipient, subject, status, sent_at, created_at) VALUES (?, ?, 'delivered', NOW(), NOW())");
-                $stmt->execute([$toEmail, $subject]);
-            }
-            
+            error_log("sendEmailNow: Sent to $toEmail - $subject");
             return true;
+            
         } catch (Exception $e) {
-            error_log("PHPMailer immediate send failed: " . $e->getMessage());
+            error_log("PHPMailer send failed: " . $e->getMessage());
             // Fall through to mail() fallback
         }
     }
     
     // Fallback to PHP mail()
-    $from = getSetting('smtp_from', 'noreply@vueports.co.za');
+    $from = getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8\r\n";
     $headers .= "From: " . getSetting('smtp_from_name', 'Vueports Solutions') . " <$from>\r\n";
     $headers .= "Reply-To: $from\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     
-    $result = mail(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($subject), $htmlBody, $headers);
-    
-    if ($result && $db) {
-        $stmt = $db->prepare("INSERT INTO email_logs (recipient, subject, status, sent_at, created_at) VALUES (?, ?, 'sent', NOW(), NOW())");
-        $stmt->execute([$toEmail, $subject]);
-    }
-    
-    return $result;
+    return mail(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($subject), $htmlBody, $headers);
 }
-
 /**
  * Process pending emails from queue (called by cron)
  */
