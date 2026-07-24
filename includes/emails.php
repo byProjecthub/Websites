@@ -61,7 +61,7 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
  */
 function sendViaSendGrid(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
     $apiKey = $_ENV['SENDGRID_API_KEY'] ?? '';
-    $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
+    $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'colourerrclrr@gmail.com');
     $fromName = $_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions');
     
     $payload = [
@@ -219,7 +219,7 @@ function buildEmailTemplate(string $content, string $title = ''): string {
     $appName = getSetting('app_name', 'Vueports Solutions');
     $appUrl = getSetting('app_url', 'https://vueports.co.za');
     $year = date('Y');
-    $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
+    $contactEmail = getSetting('contact_email', 'colourerrclrr@gmail.com');
     $contactPhone = getSetting('contact_phone', '+27 (68) 826-1507');
     
     return '<!DOCTYPE html>
@@ -335,7 +335,7 @@ function sendContactConfirmation(array $data): bool {
 }
 
 function sendAdminLeadNotification(array $data): bool {
-    $adminEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
+    $adminEmail = getSetting('contact_email', 'colourerrclrr@gmail.com');
     $template = loadEmailTemplate('admin_lead_notification', $data);
     
     if (empty($template['subject'])) {
@@ -454,7 +454,7 @@ function sendConsultationConfirmation(array $data): bool {
 }
 
 function sendConsultationAdminAlert(array $data): bool {
-    $to = getSetting('consultation_email', getSetting('contact_email', 'njabulod.hlongwane@gmail.com'));
+    $to = getSetting('consultation_email', getSetting('contact_email', 'colourerrclrr@gmail.com'));
     $template = loadEmailTemplate('consultation_admin_alert', $data);
     
     if (empty($template['subject'])) {
@@ -510,7 +510,7 @@ function sendBookingConfirmation(array $data): bool {
 }
 
 function sendBookingAdminAlert(array $data): bool {
-    $to = getSetting('booking_email', getSetting('contact_email', 'njabulod.hlongwane@gmail.com'));
+    $to = getSetting('booking_email', getSetting('contact_email', 'colourerrclrr@gmail.com'));
     $template = loadEmailTemplate('booking_admin_alert', $data);
     
     if (empty($template['subject'])) {
