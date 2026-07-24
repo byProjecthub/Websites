@@ -16,35 +16,6 @@ require_once __DIR__ . '/functions.php';
 /**
  * Add email to queue for async processing
  */
-function queueEmail(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null, array $attachments = []): int {
-    $db = db();
-    if (!$db) return 0;
-    
-    try {
-        $fromEmail = getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
-        $fromName = getSetting('smtp_from_name', 'Vueports Solutions');
-        
-        $stmt = $db->prepare("INSERT INTO email_queue 
-            (to_email, to_name, subject, body_html, body_text, from_email, from_name, attachments, status, created_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
-        
-        $stmt->execute([
-            filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL),
-            sanitize($toName),
-            sanitize($subject),
-            $htmlBody,
-            $textBody ?? strip_tags($htmlBody),
-            $fromEmail,
-            $fromName,
-            !empty($attachments) ? json_encode($attachments) : null,
-        ]);
-        
-        return (int) $db->lastInsertId();
-    } catch (PDOException $e) {
-        error_log("queueEmail error: " . $e->getMessage());
-        return 0;
-    }
-}
 
 /**
  * Send email immediately via PHPMailer (bypass queue)
