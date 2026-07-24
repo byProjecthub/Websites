@@ -5,9 +5,8 @@ require_once __DIR__ . '/../config/phpmailer-config.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/functions.php';
 
-// ... rest of emails.php
 /**
- * Email queue system with PHPMailer fallback and delivery tracking
+ * Email queue system with PHPMailer
  */
 
 /* ========================================
@@ -17,12 +16,12 @@ require_once __DIR__ . '/functions.php';
 /**
  * Add email to queue for async processing
  */
-/*function queueEmail(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null, array $attachments = []): int {
+function queueEmail(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null, array $attachments = []): int {
     $db = db();
     if (!$db) return 0;
     
     try {
-        $fromEmail = getSetting('smtp_from', 'noreply@vueports.co.za');
+        $fromEmail = getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
         $fromName = getSetting('smtp_from_name', 'Vueports Solutions');
         
         $stmt = $db->prepare("INSERT INTO email_queue 
@@ -48,48 +47,40 @@ require_once __DIR__ . '/functions.php';
 }
 
 /**
- * Send email immediately (bypass queue)
- */
-/**
  * Send email immediately via PHPMailer (bypass queue)
+ * NOTE: Railway has no sendmail. SMTP only.
  */
 function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    // Try PHPMailer first
-    if (function_exists('getMailer')) {
-        try {
-            $mailer = getMailer();
-            if (!$mailer) {
-                error_log('sendEmailNow: getMailer() returned null');
-                return false;
-            }
-            
-            $mailer->clearAddresses();
-            $mailer->clearAttachments();
-            $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
-            $mailer->Subject = sanitize($subject);
-            $mailer->isHTML(true);
-            $mailer->Body = $htmlBody;
-            $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
-            
-            $mailer->send();
-            error_log("sendEmailNow: Sent to $toEmail - $subject");
-            return true;
-            
-        } catch (Exception $e) {
-            error_log("PHPMailer send failed: " . $e->getMessage());
-            // Fall through to mail() fallback
-        }
+    if (!function_exists('getMailer')) {
+        error_log('sendEmailNow: getMailer() not found. Is phpmailer-config.php loaded?');
+        return false;
     }
     
-    // Fallback to PHP mail()
-    $from = getSetting('smtp_from', 'njabulod.hlongwane@gmail.com');
-    $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8\r\n";
-    $headers .= "From: " . getSetting('smtp_from_name', 'Vueports Solutions') . " <$from>\r\n";
-    $headers .= "Reply-To: $from\r\n";
-    
-    return mail(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($subject), $htmlBody, $headers);
+    try {
+        $mailer = getMailer();
+        if (!$mailer) {
+            error_log('sendEmailNow: getMailer() returned null. Check SMTP_PASS, SMTP_USER, SMTP_HOST in Railway env vars.');
+            return false;
+        }
+        
+        $mailer->clearAddresses();
+        $mailer->clearAttachments();
+        $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
+        $mailer->Subject = sanitize($subject);
+        $mailer->isHTML(true);
+        $mailer->Body = $htmlBody;
+        $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
+        
+        $mailer->send();
+        error_log("sendEmailNow: SUCCESS — sent to $toEmail | Subject: $subject");
+        return true;
+        
+    } catch (\Exception $e) {
+        error_log('PHPMailer error: ' . $e->getMessage());
+        return false;
+    }
 }
+
 /**
  * Process pending emails from queue (called by cron)
  */
@@ -107,7 +98,7 @@ function processEmailQueue(int $batchSize = 20, int $maxAttempts = 3): array {
     foreach ($emails as $email) {
         $success = sendSingleQueuedEmail((int) $email['id']);
         $success ? $sent++ : $failed++;
-        usleep(200000); // Rate limit: 200ms between sends
+        usleep(200000);
     }
     
     return ['sent' => $sent, 'failed' => $failed];
@@ -120,16 +111,25 @@ function sendSingleQueuedEmail(int $emailId): bool {
     $db = db();
     if (!$db) return false;
     
+    if (!function_exists('getMailer')) {
+        error_log('sendSingleQueuedEmail: getMailer() not found');
+        return false;
+    }
+    
     $stmt = $db->prepare("SELECT * FROM email_queue WHERE id = ? AND status = 'pending'");
     $stmt->execute([$emailId]);
     $email = $stmt->fetch();
     if (!$email) return false;
     
-    // Increment attempts
     $db->prepare("UPDATE email_queue SET attempts = attempts + 1, updated_at = NOW() WHERE id = ?")->execute([$emailId]);
     
     try {
         $mailer = getMailer();
+        if (!$mailer) {
+            error_log('sendSingleQueuedEmail: getMailer() returned null');
+            return false;
+        }
+        
         $mailer->clearAddresses();
         $mailer->clearAttachments();
         $mailer->addAddress($email['to_email'], $email['to_name'] ?? '');
@@ -138,7 +138,6 @@ function sendSingleQueuedEmail(int $emailId): bool {
         $mailer->Body = $email['body_html'];
         $mailer->AltBody = $email['body_text'] ?? strip_tags($email['body_html']);
         
-        // Add attachments if any
         if (!empty($email['attachments'])) {
             $attachments = json_decode($email['attachments'], true) ?? [];
             foreach ($attachments as $attachment) {
@@ -150,16 +149,14 @@ function sendSingleQueuedEmail(int $emailId): bool {
         
         $mailer->send();
         
-        // Mark as sent
         $db->prepare("UPDATE email_queue SET status = 'sent', sent_at = NOW(), updated_at = NOW() WHERE id = ?")->execute([$emailId]);
         
-        // Log to email_logs
         $db->prepare("INSERT INTO email_logs (recipient, subject, status, sent_at, created_at) VALUES (?, ?, 'delivered', NOW(), NOW())")
            ->execute([$email['to_email'], $email['subject']]);
         
         return true;
         
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         $error = $e->getMessage();
         $attempts = (int) $email['attempts'] + 1;
         $newStatus = $attempts >= 3 ? 'failed' : 'pending';
@@ -205,7 +202,6 @@ function buildEmailTemplate(string $content, string $title = ''): string {
         <tr>
             <td align="center" style="padding: 40px 20px;">
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="container" style="max-width: 600px; width: 100%; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
-                    <!-- Header -->
                     <tr>
                         <td class="header" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 32px; text-align: center;">
                             <div style="font-size: 28px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">
@@ -214,13 +210,11 @@ function buildEmailTemplate(string $content, string $title = ''): string {
                             <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; letter-spacing: 3px; text-transform: uppercase;">Solutions</div>
                         </td>
                     </tr>
-                    <!-- Content -->
                     <tr>
                         <td class="content" style="padding: 40px 32px;">
                             ' . $content . '
                         </td>
                     </tr>
-                    <!-- Footer -->
                     <tr>
                         <td class="footer" style="background: #f8fafc; padding: 32px; text-align: center; border-top: 1px solid #e2e8f0;">
                             <div style="font-size: 13px; color: #64748b; margin-bottom: 12px;">
@@ -254,14 +248,12 @@ function loadEmailTemplate(string $templateKey, array $variables = []): array {
     $template = $stmt->fetch();
     
     if (!$template) {
-        // Return default empty template
         return ['subject' => '', 'body' => ''];
     }
     
     $subject = $template['subject'];
     $body = $template['body_html'];
     
-    // Replace variables
     foreach ($variables as $key => $value) {
         $subject = str_replace('{{' . $key . '}}', htmlspecialchars((string) $value), $subject);
         $body = str_replace('{{' . $key . '}}', htmlspecialchars((string) $value), $body);
@@ -278,7 +270,6 @@ function loadEmailTemplate(string $templateKey, array $variables = []): array {
    Branded Transactional Emails
    ======================================== */
 
-
 function sendContactConfirmation(array $data): bool {
     $template = loadEmailTemplate('contact_confirmation', [
         'name' => $data['name'] ?? 'there',
@@ -287,7 +278,6 @@ function sendContactConfirmation(array $data): bool {
     ]);
     
     if (empty($template['subject'])) {
-        // Fallback inline template
         $subject = 'We received your message — Vueports Solutions';
         $body = buildEmailTemplate('
             <h2 style="color: #0f172a; margin: 0 0 16px; font-size: 22px;">Hi ' . htmlspecialchars($data['name'] ?? 'there') . ',</h2>
@@ -303,6 +293,7 @@ function sendContactConfirmation(array $data): bool {
     
     return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']);
 }
+
 function sendAdminLeadNotification(array $data): bool {
     $adminEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     $template = loadEmailTemplate('admin_lead_notification', $data);
@@ -698,7 +689,6 @@ function canSendMarketing(string $email): bool {
     $db = db();
     if (!$db) return false;
     
-    // Check if client has opted out
     $stmt = $db->prepare("SELECT marketing_consent, marketing_consent_at FROM clients WHERE email = ? LIMIT 1");
     $stmt->execute([$email]);
     $client = $stmt->fetch();
@@ -707,7 +697,6 @@ function canSendMarketing(string $email): bool {
         return (bool) ($client['marketing_consent'] ?? false);
     }
     
-    // Check unsubscribes table
     $stmt = $db->prepare("SELECT id FROM unsubscribes WHERE email = ? LIMIT 1");
     $stmt->execute([$email]);
     return !$stmt->fetch();
@@ -721,41 +710,11 @@ function recordUnsubscribe(string $email, string $source = 'email'): bool {
         $stmt = $db->prepare("INSERT INTO unsubscribes (email, source, created_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE source = ?, created_at = NOW()");
         $stmt->execute([$email, $source, $source]);
         
-        // Also update client record if exists
         $db->prepare("UPDATE clients SET marketing_consent = 0, marketing_consent_at = NULL WHERE email = ?")->execute([$email]);
         
         return true;
     } catch (PDOException $e) {
         error_log("recordUnsubscribe error: " . $e->getMessage());
-        return false;
-    }
-}
-
-function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    if (!function_exists('getMailer')) {
-        error_log('sendEmailNow: getMailer() not found. Is phpmailer-config.php loaded?');
-        return false;
-    }
-    
-    try {
-        $mailer = getMailer();
-        if (!$mailer) {
-            error_log('sendEmailNow: getMailer() returned null — check SMTP_PASS env var');
-            return false;
-        }
-        
-        $mailer->clearAddresses();
-        $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), $toName);
-        $mailer->Subject = $subject;
-        $mailer->Body = $htmlBody;
-        $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
-        
-        $mailer->send();
-        error_log("sendEmailNow: SUCCESS — sent to $toEmail");
-        return true;
-        
-    } catch (Exception $e) {
-        error_log('PHPMailer error: ' . $e->getMessage());
         return false;
     }
 }
