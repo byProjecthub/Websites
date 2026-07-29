@@ -24,15 +24,18 @@ require_once __DIR__ . '/functions.php';
 /**
  * Send email via SendGrid Web API (bypasses Railway SMTP block)
  */
+/**
+ * Send email immediately via Resend API (bypasses Railway SMTP block)
+ */
 function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    $apiKey = $_ENV['SENDGRID_API_KEY'] ?? '';
+    $apiKey = $_ENV['RESEND_API_KEY'] ?? '';
     
-    // If SendGrid key exists, use API
+    // Use Resend if key exists
     if (!empty($apiKey)) {
-        return sendViaSendGrid($toEmail, $toName, $subject, $htmlBody, $textBody);
+        return sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
     }
     
-    // Fallback: try PHPMailer (works on local dev, fails on Railway)
+    // Local dev fallback: try PHPMailer
     if (function_exists('getMailer')) {
         try {
             $mailer = getMailer();
@@ -52,7 +55,57 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
         }
     }
     
-    error_log('sendEmailNow: No email provider available. Set SENDGRID_API_KEY in Railway.');
+    error_log('sendEmailNow: No email provider configured. Set RESEND_API_KEY in Railway.');
+    return false;
+}
+
+/**
+ * Resend API v1 — POST /emails
+ */
+function sendViaResend(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
+    $apiKey = $_ENV['RESEND_API_KEY'] ?? '';
+    $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'onboarding@resend.dev');
+    $fromName = $_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions');
+    
+    $from = $fromName ? "$fromName <$fromEmail>" : $fromEmail;
+    
+    $payload = [
+        'from' => $from,
+        'to' => [filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL)],
+        'subject' => $subject,
+        'html' => $htmlBody,
+        'text' => $textBody ?? strip_tags($htmlBody),
+    ];
+    
+    $ch = curl_init('https://api.resend.com/emails');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $apiKey,
+        'Content-Type: application/json',
+    ]);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    if ($curlError) {
+        error_log("Resend cURL error: $curlError");
+        return false;
+    }
+    
+    if ($httpCode >= 200 && $httpCode < 300) {
+        $decoded = json_decode($response, true);
+        $id = $decoded['id'] ?? 'unknown';
+        error_log("Resend: SUCCESS — ID: $id | To: $toEmail | Subject: $subject");
+        return true;
+    }
+    
+    error_log("Resend API error: HTTP $httpCode | Response: $response");
     return false;
 }
 
