@@ -27,15 +27,25 @@ require_once __DIR__ . '/functions.php';
 /**
  * Send email immediately via Resend API (bypasses Railway SMTP block)
  */
+/**
+ * Send email immediately via Resend API (bypasses Railway SMTP block)
+ */
 function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    $apiKey = $_ENV['RESEND_API_KEY'] ?? '';
+    // Railway: use getenv() — $_ENV is often empty in PHP-FPM/built-in server
+    $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
+    $apiKey = trim($apiKey);
     
-    // Use Resend if key exists
+    error_log("sendEmailNow: START | To: $toEmail | Key present: " . (empty($apiKey) ? 'NO' : 'YES (' . substr($apiKey, 0, 6) . '...)'));
+    
     if (!empty($apiKey)) {
-        return sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
+        $result = sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
+        error_log("sendEmailNow: Resend result = " . ($result ? 'SUCCESS' : 'FAILED'));
+        return $result;
     }
     
-    // Local dev fallback: try PHPMailer
+    error_log("sendEmailNow: No RESEND_API_KEY found. Tried getenv() and _ENV.");
+    
+    // Local dev fallback only
     if (function_exists('getMailer')) {
         try {
             $mailer = getMailer();
@@ -55,7 +65,6 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
         }
     }
     
-    error_log('sendEmailNow: No email provider configured. Set RESEND_API_KEY in Railway.');
     return false;
 }
 
@@ -63,15 +72,18 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
  * Resend API v1 — POST /emails
  */
 function sendViaResend(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    $apiKey = $_ENV['RESEND_API_KEY'] ?? '';
-    $fromEmail = $_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'onboarding@resend.dev');
-    $fromName = $_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions');
+    $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
+    $fromEmail = getenv('SMTP_FROM') ?: ($_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'onboarding@resend.dev'));
+    $fromName = getenv('SMTP_FROM_NAME') ?: ($_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions'));
     
     $from = $fromName ? "$fromName <$fromEmail>" : $fromEmail;
+    $to = filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL);
+    
+    error_log("sendViaResend: From=$from | To=$to | Subject=$subject");
     
     $payload = [
         'from' => $from,
-        'to' => [filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL)],
+        'to' => [$to],
         'subject' => $subject,
         'html' => $htmlBody,
         'text' => $textBody ?? strip_tags($htmlBody),
@@ -87,6 +99,7 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
     ]);
     curl_setopt($ch, CURLOPT_TIMEOUT, 15);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -94,21 +107,21 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
     curl_close($ch);
     
     if ($curlError) {
-        error_log("Resend cURL error: $curlError");
+        error_log("sendViaResend: cURL ERROR: $curlError");
         return false;
     }
+    
+    error_log("sendViaResend: HTTP $httpCode | Response: $response");
     
     if ($httpCode >= 200 && $httpCode < 300) {
         $decoded = json_decode($response, true);
         $id = $decoded['id'] ?? 'unknown';
-        error_log("Resend: SUCCESS — ID: $id | To: $toEmail | Subject: $subject");
+        error_log("sendViaResend: SUCCESS — ID: $id");
         return true;
     }
     
-    error_log("Resend API error: HTTP $httpCode | Response: $response");
     return false;
 }
-
 /**
  * SendGrid V3 Mail Send API via cURL
  */
