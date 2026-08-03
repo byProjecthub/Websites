@@ -102,8 +102,8 @@ require_once 'includes/header.php';
                     <label>Third-party Integrations</label>
                     <select id="sw-integrations" class="calc-select">
                         <option value="0">None</option>
-                        <option value="8000">1 – 2 APIs</option>
-                        <option value="18000">3 – 5 APIs</option>
+                        <option value="3000">1 – 2 APIs</option>
+                        <option value="15000">3 – 5 APIs</option>
                         <option value="30000">5+ APIs / Enterprise</option>
                     </select>
                 </div>
@@ -111,16 +111,16 @@ require_once 'includes/header.php';
                     <label>Design Requirement</label>
                     <select id="sw-design" class="calc-select">
                         <option value="0">Template-based</option>
-                        <option value="10000" selected>Custom UI Design</option>
-                        <option value="20000">Premium UX Research + Design</option>
+                        <option value="5000" selected>Custom UI Design</option>
+                        <option value="15000">Premium UX Research + Design</option>
                     </select>
                 </div>
                 <div class="calc-question">
                     <label>Timeline Urgency</label>
                     <select id="sw-timeline" class="calc-select">
                         <option value="0">Standard (8+ weeks)</option>
-                        <option value="15000">Fast (4–6 weeks)</option>
-                        <option value="25000">Rush (< 4 weeks)</option>
+                        <option value="8000">Fast (4–6 weeks)</option>
+                        <option value="20000">Rush (< 4 weeks)</option>
                     </select>
                 </div>
             </div>
@@ -151,15 +151,15 @@ require_once 'includes/header.php';
                     <label>Real-time Processing?</label>
                     <select id="de-realtime" class="calc-select">
                         <option value="0">No / Batch only</option>
-                        <option value="20000" selected>Yes (Streaming)</option>
+                        <option value="15000" selected>Yes (Streaming)</option>
                     </select>
                 </div>
                 <div class="calc-question">
                     <label>Dashboards Required</label>
                     <select id="de-dashboards" class="calc-select">
                         <option value="0">None</option>
-                        <option value="12000" selected>1 – 3 dashboards</option>
-                        <option value="25000">3 – 10 dashboards</option>
+                        <option value="8000" selected>1 – 3 dashboards</option>
+                        <option value="20000">3 – 10 dashboards</option>
                         <option value="45000">10+ / Embedded</option>
                     </select>
                 </div>
@@ -263,8 +263,8 @@ require_once 'includes/header.php';
 const services = {
     software: {
         name: 'Custom Software & Web Development',
-        base: 15000,
-        pageRate: 1500,
+        base: 13000,
+        pageRate: 1300,
         calculate() {
             const typeMult = parseFloat(document.getElementById('sw-type').value);
             const pages = parseInt(document.getElementById('sw-pages').value);
