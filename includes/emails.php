@@ -443,10 +443,10 @@ function sendPaymentReceipt(array $payment, ?array $client = null): bool {
             <p style="margin: 0;">You can view your full invoice history in the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/invoices.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
-        return queueEmail($to, $name, $subject, $body) > 0;
+        return sendEmailNow($to, $name, $subject, $body) > 0;
     }
     
-    return queueEmail($to, $name, $template['subject'], $template['body']) > 0;
+    return sendEmailNow($to, $name, $template['subject'], $template['body']) > 0;
 }
 
 function sendWelcomeEmail(array $client): bool {
@@ -466,10 +466,10 @@ function sendWelcomeEmail(array $client): bool {
             </div>
         ', $subject);
         
-        return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 function sendPasswordReset(string $email, string $name, string $resetUrl, string $token): bool {
@@ -487,10 +487,10 @@ function sendPasswordReset(string $email, string $name, string $resetUrl, string
             <p style="margin: 0; font-size: 12px; color: #94a3b8; word-break: break-all;">Or copy this link: ' . htmlspecialchars($resetUrl) . '</p>
         ', $subject);
         
-        return queueEmail($email, $name, $subject, $body) > 0;
+        return sendEmailNow($email, $name, $subject, $body) > 0;
     }
     
-    return queueEmail($email, $name, $template['subject'], $template['body']) > 0;
+    return sendEmailNow($email, $name, $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -513,10 +513,10 @@ function sendConsultationConfirmation(array $data): bool {
             <p style="margin: 0;">While you wait, explore our <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/calculator.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Project Calculator</a> to estimate your investment.</p>
         ', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 function sendConsultationAdminAlert(array $data): bool {
@@ -542,10 +542,10 @@ function sendConsultationAdminAlert(array $data): bool {
             </div>
         ', $subject);
         
-        return queueEmail($to, 'Vueports Admin', $subject, $body) > 0;
+        return sendEmailNow($to, 'Vueports Admin', $subject, $body) > 0;
     }
     
-    return queueEmail($to, 'Vueports Admin', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($to, 'Vueports Admin', $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -569,10 +569,10 @@ function sendBookingConfirmation(array $data): bool {
             <p style="margin: 0;">To reschedule, reply to this email or <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/booking.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">book a new slot</a>.</p>
         ', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 function sendBookingAdminAlert(array $data): bool {
@@ -597,10 +597,10 @@ function sendBookingAdminAlert(array $data): bool {
             </div>
         ', $subject);
         
-        return queueEmail($to, 'Vueports Admin', $subject, $body) > 0;
+        return sendEmailNow($to, 'Vueports Admin', $subject, $body) > 0;
     }
     
-    return queueEmail($to, 'Vueports Admin', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($to, 'Vueports Admin', $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -625,10 +625,10 @@ function sendCalculatorLead(array $data): bool {
             </div>
         ', $subject);
         
-        return queueEmail($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -676,10 +676,10 @@ function sendInvoiceNotification(array $invoice, array $client, array $items = [
             </div>
         ', $subject);
         
-        return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -712,7 +712,7 @@ function sendProjectUpdateNotification(int $projectId, string $updateText, array
     
     $success = true;
     foreach ($recipients as $recipient) {
-        if (!queueEmail($recipient['email'], $recipient['name'] ?? '', $subject, $body)) {
+        if (!sendEmailNow($recipient['email'], $recipient['name'] ?? '', $subject, $body)) {
             $success = false;
         }
     }
@@ -740,10 +740,10 @@ function sendSubscriptionRenewal(array $subscription, array $client): bool {
             <p style="margin: 0;">You can manage your subscription in the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
-        return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 function sendSubscriptionReminder(array $subscription, array $client, int $daysUntil): bool {
@@ -761,10 +761,10 @@ function sendSubscriptionReminder(array $subscription, array $client, int $daysU
             <p style="margin: 0;">No action is required — your subscription will renew automatically. To cancel or modify, visit the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
-        return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
+        return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
     }
     
-    return queueEmail($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
+    return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $template['subject'], $template['body']) > 0;
 }
 
 /* ========================================
@@ -784,7 +784,7 @@ function sendDataSubjectRequestConfirmation(string $email, string $name, string 
         <p style="margin: 0; font-size: 13px; color: #64748b;">If you have any questions, contact our Information Officer at <a href="mailto:' . getSetting('contact_email') . '" style="color: #6366f1;">' . getSetting('contact_email') . '</a>.</p>
     ', $subject);
     
-    return queueEmail($email, $name, $subject, $body) > 0;
+    return sendEmailNow($email, $name, $subject, $body) > 0;
 }
 
 /* ========================================
