@@ -9,8 +9,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote') {
     if (!verifyCsrf($_POST['csrf_token'] ?? '')) {
         $error = 'Invalid token.';
-    }
-    else {
+    } else {
     $db = db();
     if ($db) {
         $stmt = $db->prepare("INSERT INTO calculator_leads 
@@ -30,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote
             $_SERVER['REMOTE_ADDR'] ?? ''
         ]);
     }
+}
     sendCalculatorLead([
         'name' => sanitize($_POST['name'] ?? ''),
         'email' => filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
