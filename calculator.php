@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote
     } else {
         $db = db();
         if ($db) {
-            $stmt = $db->prepare("INSERT INTO calculator_leads (name, email, company, service_type, answers_json, estimated_min, estimated_max) VALUES (?,?,?,?,?,?,?)");
+            $stmt = $db->prepare("INSERT INTO calculator_leads (name, email, company, service_type, features, estimated_min, estimated_max) VALUES (?,?,?,?,?,?,?)");
             $stmt->execute([
                 sanitize($_POST['name'] ?? ''),
                 filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
