@@ -241,7 +241,7 @@ $stats = [
         <div class="pricing-grid">
             <div class="card card-hover animate-on-scroll">
                 <h3 style="font-size: var(--font-size-xl);">Starter</h3>
-                <div class="pricing-price">R15,000<span>/project</span></div>
+                <div class="pricing-price">R13,000<span>/project</span></div>
                 <p class="pricing-desc">Perfect for MVPs, small web apps, and single AI agents. These solutions are integrated with quality standards.</p>
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> 5-Page Website or Simple SaaS MVP</li>
@@ -250,11 +250,11 @@ $stats = [
                     <li><i class="fas fa-check"></i> 30 Days Support</li>
                     <li class="not-included"><i class="fas fa-times"></i> Advanced Analytics</li>
                 </ul>
-                <a href="pay.php?plan=starter" class="btn btn-outline" style="width: 100%;">Get Started</a>
+                <a href="calculator.php" class="btn btn-outline" style="width: 100%;">Get Started</a>
             </div>
             <div class="card card-featured animate-on-scroll">
                 <h3 style="font-size: var(--font-size-xl);">Professional</h3>
-                <div class="pricing-price">R45,000<span>/project</span></div>
+                <div class="pricing-price">R25,000<span>/project</span></div>
                 <p class="pricing-desc">Growing businesses needing robust platforms and data intelligence for quality daily functionality.</p>
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> Full-Stack Web Application</li>
@@ -263,7 +263,7 @@ $stats = [
                     <li><i class="fas fa-check"></i> API Development & Integration</li>
                     <li><i class="fas fa-check"></i> 90 Days Support</li>
                 </ul>
-                <a href="pay.php?plan=professional" class="btn btn-primary" style="width: 100%;">Get Started</a>
+                <a href="calculator.php" class="btn btn-primary" style="width: 100%;">Get Started</a>
             </div>
             <div class="card card-hover animate-on-scroll">
                 <h3 style="font-size: var(--font-size-xl);">Enterprise</h3>
