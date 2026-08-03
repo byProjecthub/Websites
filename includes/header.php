@@ -127,3 +127,107 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
         </div>
     </div>
 </nav>
+
+<!-- Mobile Nav Overlay -->
+<div class="nav-overlay" id="navOverlay"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('navMenu');
+    const dropdowns = document.querySelectorAll('.dropdown');
+    const navLinks  = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a, .dropdown-menu a');
+    const overlay   = document.getElementById('navOverlay');
+
+    /* Toggle mobile menu */
+    function toggleMenu(forceClose) {
+        if (forceClose === true) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            dropdowns.forEach(d => d.classList.remove('active'));
+            document.body.style.overflow = '';
+        } else {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        }
+    }
+
+    hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    /* Close when clicking overlay */
+    overlay.addEventListener('click', function () {
+        toggleMenu(true);
+    });
+
+    /* Close when clicking a regular link */
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            if (navMenu.classList.contains('active')) {
+                toggleMenu(true);
+            }
+        });
+    });
+
+    /* Mobile dropdown toggles */
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('a');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', function (e) {
+            if (window.innerWidth <= 1023) {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    /* Close everything on resize to desktop */
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 1023) {
+            toggleMenu(true);
+        }
+    });
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        });
+
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = themeToggle.querySelector('i');
+            if (icon) icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    }
+
+    /* Navbar scroll effect */
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+});
+</script>
