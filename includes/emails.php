@@ -283,7 +283,7 @@ function sendSingleQueuedEmail(int $emailId): bool {
 
 function buildEmailTemplate(string $content, string $title = ''): string {
     $appName = getSetting('app_name', 'Vueports Solutions');
-    $appUrl = getSetting('app_url', 'https://vueports.co.za');
+    $appUrl = getSetting('app_url', 'https://vueports.reloventura.site');
     $year = date('Y');
     $contactEmail = getSetting('contact_email', 'colourerrclrr@gmail.com');
     $contactPhone = getSetting('contact_phone', '+27 (68) 826-1507');
@@ -440,7 +440,7 @@ function sendPaymentReceipt(array $payment, ?array $client = null): bool {
                 <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span style="color: #64748b;">Date</span><span>' . date('j F Y, H:i') . '</span></div>
                 <div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">Item</span><span>' . htmlspecialchars($payment['plan_name'] ?? 'Service Payment') . '</span></div>
             </div>
-            <p style="margin: 0;">You can view your full invoice history in the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/invoices.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
+            <p style="margin: 0;">You can view your full invoice history in the <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/invoices.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
         return sendEmailNow($to, $name, $subject, $body) > 0;
@@ -458,11 +458,11 @@ function sendWelcomeEmail(array $client): bool {
             <h2 style="color: #0f172a; margin: 0 0 16px; font-size: 22px;">Welcome, ' . htmlspecialchars($client['full_name'] ?? 'there') . '!</h2>
             <p style="margin: 0 0 16px;">Your client account has been created successfully. You can now log in to track projects, view invoices, and manage payments.</p>
             <div style="background: #f8fafc; padding: 24px; border-radius: 12px; margin: 20px 0; border: 1px solid #e2e8f0;">
-                <div style="margin-bottom: 12px;"><strong style="color: #64748b; display: inline-block; width: 100px;">Portal URL</strong> <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/login.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">' . getSetting('app_url', 'https://vueports.co.za') . '/client/login.php</a></div>
+                <div style="margin-bottom: 12px;"><strong style="color: #64748b; display: inline-block; width: 100px;">Portal URL</strong> <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/login.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/login.php</a></div>
                 <div><strong style="color: #64748b; display: inline-block; width: 100px;">Email</strong> ' . htmlspecialchars($client['email'] ?? '') . '</div>
             </div>
             <div style="margin-top: 24px;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/login.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Access Portal</a>
+                <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/login.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Access Portal</a>
             </div>
         ', $subject);
         
@@ -510,7 +510,7 @@ function sendConsultationConfirmation(array $data): bool {
                 <div style="margin-bottom: 8px;"><strong style="color: #64748b;">Budget:</strong> ' . htmlspecialchars($data['budget_range'] ?? 'Not specified') . '</div>
                 <div><strong style="color: #64748b;">Timeline:</strong> ' . htmlspecialchars($data['timeline'] ?? 'Not specified') . '</div>
             </div>
-            <p style="margin: 0;">While you wait, explore our <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/calculator.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Project Calculator</a> to estimate your investment.</p>
+            <p style="margin: 0;">While you wait, explore our <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/calculator.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Project Calculator</a> to estimate your investment.</p>
         ', $subject);
         
         return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
@@ -538,7 +538,7 @@ function sendConsultationAdminAlert(array $data): bool {
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600; vertical-align: top;">Message</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . nl2br(htmlspecialchars($data['message'] ?? '')) . '</td></tr>
             </table>
             <div style="margin-top: 24px;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/admin/consultations.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Manage in Admin</a>
+                <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/admin/consultations.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Manage in Admin</a>
             </div>
         ', $subject);
         
@@ -566,7 +566,7 @@ function sendBookingConfirmation(array $data): bool {
                 <div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">Service</span><span>' . htmlspecialchars($data['service_type'] ?? 'General Consultation') . '</span></div>
             </div>
             <p style="margin: 0 0 16px;">We will send you a Google Meet or Zoom link <strong>2 hours before</strong> the meeting.</p>
-            <p style="margin: 0;">To reschedule, reply to this email or <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/booking.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">book a new slot</a>.</p>
+            <p style="margin: 0;">To reschedule, reply to this email or <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/booking.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">book a new slot</a>.</p>
         ', $subject);
         
         return sendEmailNow($data['email'] ?? '', $data['name'] ?? '', $subject, $body) > 0;
@@ -593,7 +593,7 @@ function sendBookingAdminAlert(array $data): bool {
                 <tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-weight: 600; vertical-align: top;">Notes</td><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">' . nl2br(htmlspecialchars($data['notes'] ?? '')) . '</td></tr>
             </table>
             <div style="margin-top: 24px;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/admin/bookings.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">View Bookings</a>
+                <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/admin/bookings.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">View Bookings</a>
             </div>
         ', $subject);
         
@@ -621,7 +621,7 @@ function sendCalculatorLead(array $data): bool {
             </div>
             <p style="margin: 0 0 16px; font-size: 13px; color: #64748b;">This is a rough estimate based on your selections. For a precise, fixed-price quote, reply to this email or schedule a consultation.</p>
             <div style="margin-top: 24px; text-align: center;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/consultation.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Schedule Consultation</a>
+                <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/consultation.php" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Schedule Consultation</a>
             </div>
         ', $subject);
         
@@ -672,7 +672,7 @@ function sendInvoiceNotification(array $invoice, array $client, array $items = [
                 <tbody>' . $itemsHtml . '</tbody>
             </table>
             <div style="margin-top: 24px; text-align: center;">
-                <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/pay.php?invoice_id=' . ($invoice['id'] ?? '') . '" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Pay Now</a>
+                <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/pay.php?invoice_id=' . ($invoice['id'] ?? '') . '" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">Pay Now</a>
             </div>
         ', $subject);
         
@@ -706,7 +706,7 @@ function sendProjectUpdateNotification(int $projectId, string $updateText, array
             ' . nl2br(htmlspecialchars($updateText)) . '
         </div>
         <div style="margin-top: 24px;">
-            <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/project-detail.php?id=' . $projectId . '" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">View Project</a>
+            <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/project-detail.php?id=' . $projectId . '" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px;">View Project</a>
         </div>
     ', $subject);
     
@@ -737,7 +737,7 @@ function sendSubscriptionRenewal(array $subscription, array $client): bool {
                 <div style="display: flex; justify-content: space-between; margin-bottom: 12px;"><span style="color: #64748b;">Billing Cycle</span><span>' . ucfirst($subscription['billing_cycle'] ?? 'monthly') . '</span></div>
                 <div style="display: flex; justify-content: space-between;"><span style="color: #64748b;">Next Billing</span><span>' . date('j F Y', strtotime($subscription['next_billing_date'] ?? '+1 month')) . '</span></div>
             </div>
-            <p style="margin: 0;">You can manage your subscription in the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
+            <p style="margin: 0;">You can manage your subscription in the <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
         return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
@@ -758,7 +758,7 @@ function sendSubscriptionReminder(array $subscription, array $client, int $daysU
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span style="color: #92400e;">Amount</span><span style="font-weight: 700; color: #92400e;">R' . number_format((float) ($subscription['amount'] ?? 0), 2) . '</span></div>
                 <div style="display: flex; justify-content: space-between;"><span style="color: #92400e;">Billing Cycle</span><span style="color: #92400e;">' . ucfirst($subscription['billing_cycle'] ?? 'monthly') . '</span></div>
             </div>
-            <p style="margin: 0;">No action is required — your subscription will renew automatically. To cancel or modify, visit the <a href="' . getSetting('app_url', 'https://vueports.co.za') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
+            <p style="margin: 0;">No action is required — your subscription will renew automatically. To cancel or modify, visit the <a href="' . getSetting('app_url', 'https://vueports.reloventura.site') . '/client/dashboard.php" style="color: #6366f1; text-decoration: none; font-weight: 600;">Client Portal</a>.</p>
         ', $subject);
         
         return sendEmailNow($client['email'] ?? '', $client['full_name'] ?? '', $subject, $body) > 0;
