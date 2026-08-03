@@ -71,10 +71,7 @@ $stats = [
             </div>
         </div>
     </div>
-    <div class="scroll-indicator">
-        <div class="mouse"><div class="mouse-wheel"></div></div>
-        <span>Scroll down</span>
-    </div>
+    
 </section>
 
 <!-- Stats Bar -->
