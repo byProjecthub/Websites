@@ -25,7 +25,7 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/assets/images/apple-touch-icon.png">
     <!-- CRITICAL: Ensure mobile dropdown works even if responsive.css is missing -->
     <style>
         .nav-overlay {
