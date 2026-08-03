@@ -9,29 +9,35 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote') {
     if (!verifyCsrf($_POST['csrf_token'] ?? '')) {
         $error = 'Invalid token.';
-    } else {
-        $db = db();
-        if ($db) {
-            $stmt = $db->prepare("INSERT INTO calculator_leads (name, email, company, service_type, answer_json, estimated_min, estimated_max) VALUES (?,?,?,?,?,?,?)");
-            $stmt->execute([
-                sanitize($_POST['name'] ?? ''),
-                filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
-                sanitize($_POST['company'] ?? ''),
-                sanitize($_POST['service_type'] ?? ''),
-                $_POST['answer_json'] ?? '{}',
-                (float) ($_POST['estimated_min'] ?? 0),
-                (float) ($_POST['estimated_max'] ?? 0),
-            ]);
-        }
-        sendCalculatorLead([
-            'name' => sanitize($_POST['name'] ?? ''),
-            'email' => filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
-            'service_type' => sanitize($_POST['service_type'] ?? ''),
-            'estimated_min' => (float) ($_POST['estimated_min'] ?? 0),
-            'estimated_max' => (float) ($_POST['estimated_max'] ?? 0),
-        ]);
-        $success = 'Estimate sent to your email. We will follow up with a formal quote within 24 hours.';
     }
+    else {
+    $db = db();
+    if ($db) {
+        $stmt = $db->prepare("INSERT INTO calculator_leads 
+            (service_type, answer_json, complexity, features, estimated_total, name, email, phone, company, submitted, ip_address) 
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+        $stmt->execute([
+            sanitize($_POST['service_type'] ?? ''),
+            $_POST['answer_json'] ?? '{}',
+            sanitize($_POST['complexity'] ?? ''),
+            $_POST['features'] ?? '{}',
+            (float) ($_POST['estimated_max'] ?? $_POST['estimated_min'] ?? 0),
+            sanitize($_POST['name'] ?? ''),
+            filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+            sanitize($_POST['phone'] ?? ''),
+            sanitize($_POST['company'] ?? ''),
+            1, // submitted = true
+            $_SERVER['REMOTE_ADDR'] ?? ''
+        ]);
+    }
+    sendCalculatorLead([
+        'name' => sanitize($_POST['name'] ?? ''),
+        'email' => filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+        'service_type' => sanitize($_POST['service_type'] ?? ''),
+        'estimated_min' => (float) ($_POST['estimated_min'] ?? 0),
+        'estimated_max' => (float) ($_POST['estimated_max'] ?? 0),
+    ]);
+    $success = 'Estimate sent to your email. We will follow up with a formal quote within 24 hours.';
 }
 
 $pageTitle = 'Project Calculator';
