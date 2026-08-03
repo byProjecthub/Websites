@@ -25,6 +25,32 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     
+    <!-- CRITICAL: Ensure mobile dropdown works even if responsive.css is missing -->
+    <style>
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        @media (max-width: 1023px) {
+            .dropdown-menu {
+                display: none;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block !important;
+            }
+        }
+    </style>
+    
     <script>
     window.addEventListener('load', function(){
         window.cookieconsent.initialise({
@@ -68,7 +94,6 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
                         <stop offset="100%" style="stop-color:#f43f5e;stop-opacity:1" />
                     </linearGradient>
                 </defs>
-                <!-- Stylized V Mark — FLIPPED UPSIDE DOWN -->
                 <g transform="rotate(180 65 65)">
                     <path d="M 60 10 L 110 130 L 130 130 L 70 0 L 50 0 L 0 130 L 20 130 Z" fill="url(#vGrad)"/>
                     <path d="M 70 35 L 95 95 L 105 95 L 75 20 Z" fill="url(#accentGrad)" opacity="0.9"/>
@@ -80,40 +105,23 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
         </a>
 
         <ul class="nav-menu" id="navMenu">
-            <li>
-                <a href="index.php" class="nav-link <?= $currentPage === 'index' ? 'active' : '' ?>">Home</a>
-            </li>
-            <li>
-                <a href="about.php" class="nav-link <?= $currentPage === 'about' ? 'active' : '' ?>">About</a>
-            </li>
-            <li>
-                <a href="services.php" class="nav-link <?= in_array($currentPage, ['services', 'service-detail']) ? 'active' : '' ?>">Services</a>
-            </li>
+            <li><a href="index.php" class="nav-link <?= $currentPage === 'index' ? 'active' : '' ?>">Home</a></li>
+            <li><a href="about.php" class="nav-link <?= $currentPage === 'about' ? 'active' : '' ?>">About</a></li>
+            <li><a href="services.php" class="nav-link <?= in_array($currentPage, ['services','service-detail']) ? 'active' : '' ?>">Services</a></li>
 
-            <!-- Dropdown Menu -->
-            <li class="dropdown">
-                <a href="#" class="nav-link <?= in_array($currentPage, ['portfolio', 'consultation', 'booking', 'calculator']) ? 'active' : '' ?>">
+            <li class="dropdown" id="getStartedDropdown">
+                <a href="#" class="nav-link dropdown-toggle <?= in_array($currentPage, ['portfolio','consultation','booking','calculator']) ? 'active' : '' ?>">
                     Get Started <i class="fas fa-chevron-down"></i>
                 </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="portfolio.php" class="nav-link <?= $currentPage === 'portfolio' ? 'active' : '' ?>">Portfolio</a>
-                    </li> 
-                    <li>
-                        <a href="consultation.php" class="nav-link <?= $currentPage === 'consultation' ? 'active' : '' ?>">Consult</a>
-                    </li>
-                    <li>
-                        <a href="booking.php" class="nav-link <?= $currentPage === 'booking' ? 'active' : '' ?>">Book</a>
-                    </li> 
-                    <li>
-                        <a href="calculator.php" class="nav-link <?= $currentPage === 'calculator' ? 'active' : '' ?>">Calculator</a>
-                    </li>
+                <ul class="dropdown-menu" id="getStartedMenu">
+                    <li><a href="portfolio.php" class="nav-link <?= $currentPage === 'portfolio' ? 'active' : '' ?>">Portfolio</a></li>
+                    <li><a href="consultation.php" class="nav-link <?= $currentPage === 'consultation' ? 'active' : '' ?>">Consult</a></li>
+                    <li><a href="booking.php" class="nav-link <?= $currentPage === 'booking' ? 'active' : '' ?>">Book</a></li>
+                    <li><a href="calculator.php" class="nav-link <?= $currentPage === 'calculator' ? 'active' : '' ?>">Calculator</a></li>
                 </ul>
             </li>
 
-            <li>
-                <a href="contact.php" class="nav-link <?= $currentPage === 'contact' ? 'active' : '' ?>">Contact</a>
-            </li>
+            <li><a href="contact.php" class="nav-link <?= $currentPage === 'contact' ? 'active' : '' ?>">Contact</a></li>
         </ul>
 
         <div class="nav-actions">
@@ -128,24 +136,28 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     </div>
 </nav>
 
-<!-- Mobile Nav Overlay -->
+<!-- Mobile overlay -->
 <div class="nav-overlay" id="navOverlay"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const hamburger = document.getElementById('hamburger');
     const navMenu   = document.getElementById('navMenu');
+    const overlay   = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
     const navLinks  = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a, .dropdown-menu a');
-    const overlay   = document.getElementById('navOverlay');
 
-    /* Toggle mobile menu */
+    /* ---------- Toggle mobile menu ---------- */
     function toggleMenu(forceClose) {
         if (forceClose === true) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
             overlay.classList.remove('active');
-            dropdowns.forEach(d => d.classList.remove('active'));
+            dropdowns.forEach(d => {
+                d.classList.remove('active');
+                const m = d.querySelector('.dropdown-menu');
+                if (m) m.style.display = '';
+            });
             document.body.style.overflow = '';
         } else {
             hamburger.classList.toggle('active');
@@ -160,12 +172,11 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleMenu();
     });
 
-    /* Close when clicking overlay */
     overlay.addEventListener('click', function () {
         toggleMenu(true);
     });
 
-    /* Close when clicking a regular link */
+    /* ---------- Close menu when clicking a regular link ---------- */
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
             if (navMenu.classList.contains('active')) {
@@ -174,27 +185,56 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    /* Mobile dropdown toggles */
+    /* ---------- Mobile dropdown toggles (THE FIX) ---------- */
     dropdowns.forEach(dropdown => {
-        const toggle = dropdown.querySelector('a');
-        if (!toggle) return;
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        const menu   = dropdown.querySelector('.dropdown-menu');
+        if (!toggle || !menu) return;
 
         toggle.addEventListener('click', function (e) {
-            if (window.innerWidth <= 1023) {
-                e.preventDefault();
-                dropdown.classList.toggle('active');
+            // Only intercept on mobile/tablet
+            if (window.innerWidth > 1023) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Close other dropdowns (accordion style)
+            dropdowns.forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('active');
+                    const m = d.querySelector('.dropdown-menu');
+                    if (m) m.style.display = 'none';
+                }
+            });
+
+            // Toggle this dropdown
+            const isOpen = dropdown.classList.contains('active');
+            if (isOpen) {
+                dropdown.classList.remove('active');
+                menu.style.display = 'none';
+            } else {
+                dropdown.classList.add('active');
+                menu.style.display = 'block';
             }
         });
     });
 
-    /* Close everything on resize to desktop */
+    /* ---------- Reset on resize to desktop ---------- */
     window.addEventListener('resize', function () {
         if (window.innerWidth > 1023) {
-            toggleMenu(true);
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            dropdowns.forEach(d => {
+                d.classList.remove('active');
+                const m = d.querySelector('.dropdown-menu');
+                if (m) m.style.display = '';
+            });
+            document.body.style.overflow = '';
         }
     });
 
-    /* Theme toggle */
+    /* ---------- Theme toggle ---------- */
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
         themeToggle.addEventListener('click', function () {
@@ -203,11 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const next = current === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
-            
             const icon = this.querySelector('i');
-            if (icon) {
-                icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            }
+            if (icon) icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         });
 
         const saved = localStorage.getItem('theme');
@@ -218,15 +255,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* Navbar scroll effect */
+    /* ---------- Navbar scroll shadow ---------- */
     const navbar = document.getElementById('navbar');
     if (navbar) {
         window.addEventListener('scroll', function () {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }
 });
