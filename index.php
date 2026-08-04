@@ -1,488 +1,376 @@
-<?php declare(strict_types=1);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = ltrim($uri, '/');
-
-// If requesting a specific PHP file directly, let it serve
-if ($uri && $uri !== 'index.php' && file_exists($uri . '.php')) {
-    include $uri . '.php';
-    exit;
-}
-
+<?php
 $pageTitle = 'Home';
-$pageDescription = 'Vueports Solutions - Your IT Solutions Production Partner.';
-
-require_once 'includes/functions.php';
-require_once 'includes/header.php';
-
-
-// Fetch services from database
-$services = [];
-if (function_exists('getAllServices')) {
-    $services = getAllServices('active');
-}
-if (empty($services) && function_exists('getServices')) {
-    $services = getServices(3);
-}
-
-// Fetch portfolio items for testimonials
-$portfolio_items = [];
-if (function_exists('getPortfolioItems')) {
-    $portfolio_items = getPortfolioItems(6, 'active');
-}
-
-// Stats for counters
-$stats = [
-    ['count' => 12, 'label' => 'Projects Delivered', 'suffix' => '+'],
-    ['count' => 8, 'label' => 'Enterprise Clients', 'suffix' => '+'],
-    ['count' => 3, 'label' => 'Core Specializations', 'suffix' => ''],
-    ['count' => 5, 'label' => 'Years Experience', 'suffix' => '+'],
-];
+include 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="hero" id="home">
-    <div class="hero-bg">
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label animate-fade-in-up">
+        <span class="dot"></span>
+        Available for new projects
+      </div>
+      <h1 class="hero-title animate-fade-in-up delay-100">
+        The super fast<br>
+        software studio<br>
+        for <span class="accent">modern teams.</span>
+      </h1>
+      <p class="hero-subtitle animate-fade-in-up delay-200">
+        We build custom software, data pipelines, and AI agents that help your business move faster, think smarter, and scale effortlessly.
+      </p>
+      <div class="hero-actions animate-fade-in-up delay-300">
+        <a href="consultation.php" class="btn btn-primary btn-lg">
+          Start a Project
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a href="services.php" class="btn btn-secondary btn-lg">Explore Services</a>
+      </div>
     </div>
-    <div class="container hero-wrapper">
-        
-        <!-- Left: Existing content -->
-        <div class="hero-content">
-            <h1 class="hero-title">
-                Vueports Solutions is your best <span class="highlight gradient-text">IT Solutions Production Partner</span> — 
-                <span class="typewriter" id="typewriter" data-words='["Software Architect", "Data Engineer", "AI Agent Builder", "Cloud Specialist"]'></span><span class="cursor-blink">|</span>
-            </h1>
-            <p class="hero-description">
-                We build <strong>custom software & web platforms</strong>, engineer <strong>data pipelines & analytics</strong>, and develop <strong>autonomous AI agents</strong> that automate your business. Secure, scalable, and built for real ROI.
-            </p>
-            <div class="hero-actions">
-                <a href="contact.php" class="btn btn-primary btn-lg">Start Your Project <i class="fas fa-arrow-right"></i></a>
-                <a href="services.php" class="btn btn-outline btn-lg">Explore Services <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="hero-social">
-                <span class="hero-social-text">Follow us for insights</span>
-                <div class="social-links">
-                    <a href="https://github.com/byprojecthub" class="social-link" aria-label="GitHub" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/njabulo-dlamini-58b66a268/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://x.com/Colourerr" class="social-link" aria-label="Twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right: Floating visual cards -->
-        <div class="hero-visual">
-            <div class="hero-card hero-card--back">
-                <div class="hero-card__header">
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                </div>
-                <div class="hero-card__body">
-                    <div class="hero-card__row">
-                        <div class="hero-card__avatar"></div>
-                        <div class="hero-card__lines">
-                            <div class="hero-card__line hero-card__line--long"></div>
-                            <div class="hero-card__line hero-card__line--short"></div>
-                        </div>
-                    </div>
-                    <div class="hero-card__chart">
-                        <div class="hero-card__bar" style="height:40%"></div>
-                        <div class="hero-card__bar" style="height:70%"></div>
-                        <div class="hero-card__bar" style="height:55%"></div>
-                        <div class="hero-card__bar" style="height:90%"></div>
-                        <div class="hero-card__bar" style="height:65%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-card hero-card--mid">
-                <div class="hero-card__header">
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                </div>
-                <div class="hero-card__body">
-                    <div class="hero-card__badge">AI Agent</div>
-                    <div class="hero-card__title">Autonomous Workflow</div>
-                    <div class="hero-card__line hero-card__line--long"></div>
-                    <div class="hero-card__line hero-card__line--med"></div>
-                    <div class="hero-card__status">
-                        <span class="hero-card__pulse"></span>
-                        <span>Running</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-card hero-card--front">
-                <div class="hero-card__header">
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                    <div class="hero-card__dot"></div>
-                </div>
-                <div class="hero-card__body">
-                    <div class="hero-card__metric">
-                        <div class="hero-card__number">99.9%</div>
-                        <div class="hero-card__label">Uptime</div>
-                    </div>
-                    <div class="hero-card__progress">
-                        <div class="hero-card__progress-bar"></div>
-                    </div>
-                    <div class="hero-card__row" style="margin-top:16px; gap:8px;">
-                        <span class="hero-card__tag">Cloud</span>
-                        <span class="hero-card__tag">Secure</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+  </div>
+  <div class="hero-bg-text">Vueports</div>
 </section>
 
-<!-- Stats Bar -->
-<section class="stats-bar" id="stats">
-    <div class="container">
-        <div class="stats-grid stagger-children">
-            <?php foreach ($stats as $stat): ?>
-            <div class="stat-item" data-count="<?= $stat['count'] ?>" data-suffix="<?= sanitize($stat['suffix']) ?>">
-                <span class="stat-number">0<?= sanitize($stat['suffix']) ?></span>
-                <span class="stat-label"><?= sanitize($stat['label']) ?></span>
-            </div>
-            <?php endforeach; ?>
-        </div>
+<!-- Logo Bar -->
+<section class="logo-bar section-sm">
+  <div class="container">
+    <p class="logo-bar-label reveal">Trusted by forward-thinking companies</p>
+    <div class="logo-bar-grid reveal">
+      <div class="logo-bar-item">TechCorp</div>
+      <div class="logo-bar-item">DataFlow</div>
+      <div class="logo-bar-item">CloudNine</div>
+      <div class="logo-bar-item">Apex AI</div>
+      <div class="logo-bar-item">NexGen</div>
+      <div class="logo-bar-item">Streamline</div>
     </div>
+  </div>
 </section>
 
-<!-- Services Preview -->
-<section class="section" id="services">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Solutions</span>
-            <h2 class="section-title">High-Value Services That <span class="highlight gradient-text">Scale</span></h2>
-            <p class="section-desc">We don't just write code. We architect revenue-generating systems.</p>
-        </div>
-        <div class="services-grid grid grid-cols-3">
-            <?php if (!empty($services)): ?>
-                <?php foreach (array_slice($services, 0, 3) as $svc): 
-                    $features = json_decode($svc['features'] ?? '[]', true);
-                ?>
-                <div class="card card-hover animate-on-scroll">
-                    <div class="service-icon">
-                        <i class="fas <?= sanitize($svc['icon'] ?? 'fa-code') ?>"></i>
-                    </div>
-                    <h3><?= sanitize($svc['title']) ?></h3>
-                    <p><?= sanitize($svc['description']) ?></p>
-                    <?php if (!empty($features)): ?>
-                    <ul class="service-features">
-                        <?php foreach (array_slice($features, 0, 3) as $f): ?>
-                            <li><i class="fas fa-check-circle"></i><?= sanitize($f) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <?php endif; ?>
-                    <a href="service-detail.php?slug=<?= sanitize($svc['slug']) ?>" class="service-link">
-                        Learn more <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <!-- Fallback static cards if no services in DB -->
-                <div class="card card-hover animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3>Custom Software & Web</h3>
-                    <p>SaaS, APIs, legacy modernization, and cloud-native web applications.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i>Full-stack development</li>
-                        <li><i class="fas fa-check-circle"></i>API architecture</li>
-                        <li><i class="fas fa-check-circle"></i>Cloud deployment</li>
-                    </ul>
-                    <a href="services.php" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="card card-hover animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-database"></i></div>
-                    <h3>Data Engineering</h3>
-                    <p>Data lakes, ETL pipelines, BI dashboards, and predictive analytics.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i>ETL/ELT pipelines</li>
-                        <li><i class="fas fa-check-circle"></i>Data warehousing</li>
-                        <li><i class="fas fa-check-circle"></i>Power BI / Looker</li>
-                    </ul>
-                    <a href="services.php" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="card card-hover animate-on-scroll">
-                    <div class="service-icon"><i class="fas fa-robot"></i></div>
-                    <h3>AI Agent Development</h3>
-                    <p>Autonomous agents, workflow automation, and LLM integrations.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check-circle"></i>LLM integration</li>
-                        <li><i class="fas fa-check-circle"></i>RAG knowledge bases</li>
-                        <li><i class="fas fa-check-circle"></i>Autonomous agents</li>
-                    </ul>
-                    <a href="services.php" class="service-link">Learn more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            <?php endif; ?>
-        </div>
+<!-- Services Section -->
+<section class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Everything you need to<br>build and scale.</h2>
+      <p class="section-desc">From custom applications to intelligent AI agents — we handle the tech so you can focus on growth.</p>
     </div>
+
+    <div class="services-grid">
+      <!-- Custom Software -->
+      <div class="service-card accent-cyan reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <h3 class="service-title">Custom Software</h3>
+        <p class="service-desc">Tailored web and mobile applications built with modern stacks. Scalable, secure, and designed around your workflow.</p>
+        <a href="services.php#software" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Data Engineering -->
+      <div class="service-card accent-blue reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Data Engineering</h3>
+        <p class="service-desc">ETL pipelines, data warehouses, and real-time analytics. Turn raw data into actionable business intelligence.</p>
+        <a href="services.php#data" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- AI Agents -->
+      <div class="service-card accent-violet reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.387-1 1.732V7h1a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-4a7 7 0 0 1 7-7h1V5.732A2.001 2.001 0 0 1 12 2z"></path>
+            <path d="M9 21h6"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">AI Agents</h3>
+        <p class="service-desc">Intelligent automation that handles repetitive tasks, answers queries, and makes decisions — 24/7, without breaks.</p>
+        <a href="services.php#ai" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Cloud Solutions -->
+      <div class="service-card accent-pink reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Cloud Solutions</h3>
+        <p class="service-desc">AWS, Azure, and GCP architecture, migration, and DevOps. Infrastructure that scales with your ambition.</p>
+        <a href="services.php#cloud" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Consulting -->
+      <div class="service-card accent-amber reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </div>
+        <h3 class="service-title">Tech Consulting</h3>
+        <p class="service-desc">Strategic guidance on architecture, tech stack selection, and digital transformation roadmaps.</p>
+        <a href="services.php#consulting" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Support -->
+      <div class="service-card accent-emerald reveal">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">Ongoing Support</h3>
+        <p class="service-desc">Maintenance, monitoring, and continuous improvement. We stay with you long after launch day.</p>
+        <a href="services.php#support" class="service-link">
+          Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Portfolio -->
-<section class="portfolio section" id="portfolio">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">/ Portfolio</span>
-            <h2 class="section-title">Featured <span class="highlight">Work</span></h2>
+<!-- About Section -->
+<section class="section" style="background: var(--bg-surface);">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="visual-accent"></div>
+        <div class="visual-box">
+          <div class="label" style="margin-bottom: var(--space-6);">Why Vueports?</div>
+          <h3 class="heading-lg" style="margin-bottom: var(--space-4);">We build software that actually works.</h3>
+          <p class="body-base">No bloated code. No over-engineering. Just clean, scalable solutions that solve real problems and deliver measurable results.</p>
+          <div class="about-values">
+            <span class="value-tag">Performance First</span>
+            <span class="value-tag">Clean Architecture</span>
+            <span class="value-tag">Future-Proof</span>
+            <span class="value-tag">User-Centric</span>
+            <span class="value-tag">Transparent</span>
+          </div>
         </div>
-        <div class="portfolio-grid">
-            <?php if (!empty($portfolio_items)): ?>
-                <?php foreach (array_slice($portfolio_items, 0, 3) as $index => $item): ?>
-                <div class="portfolio-card <?= $index === 0 ? 'featured' : '' ?> animate-on-scroll">
-                    <div class="portfolio-image">
-                        <?php if (!empty($item['image'])): ?>
-                            <img src="<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['title']) ?>" loading="lazy">
-                        <?php else: ?>
-                            <img src="images/1694008468595.jpeg" alt="<?= sanitize($item['title']) ?>" loading="lazy">
-                        <?php endif; ?>
-                        <div class="portfolio-overlay"> 
-                            <a href="portfolio-detail.php?slug=<?= sanitize($item['slug']) ?>" class="btn btn-primary">View Project</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <span class="portfolio-tag"><?= sanitize($item['service_type'] ?? 'Project') ?></span>
-                        <h3><?= sanitize($item['title']) ?></h3>
-                        <p><?= sanitize($item['description'] ?? '') ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <!-- Fallback static portfolio cards -->
-                <div class="portfolio-card featured animate-on-scroll">
-                    <div class="portfolio-image">
-                        <img src="/images/Finlytics.png" alt="Finlytics" loading="lazy">
-                        <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
-                    </div>
-                    <div class="portfolio-info">
-                        <span class="portfolio-tag">SaaS</span>
-                        <span class="portfolio-tag">BI Dashboard</span>
-                        <h3>Finlytics Dashboard</h3>
-                        <p>Real-time financial analytics with multi-tenant architecture.</p>
-                        <p>Processing 11 analytical Screens.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card animate-on-scroll">
-                    <div class="portfolio-image">
-                        <img src="/images/reloventura1.png" alt="Reloventura" loading="lazy">
-                        <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
-                    </div>
-                    <div class="portfolio-info">
-                        <span class="portfolio-tag">Web App</span>
-                        <h3>Reloventura Platform</h3>
-                        <p>Booking engine with payment integration.</p>
-                    </div>
-                </div>
-          <?php endif; ?>
-        </div>
-        <div class="center-btn">
-            <a href="portfolio.php" class="btn btn-outline">View All Projects <i class="fas fa-arrow-right"></i></a>
-        </div>
+      </div>
+      <div class="reveal">
+        <span class="section-label">About Us</span>
+        <h2 class="section-title" style="margin-bottom: var(--space-6);">Technology partners,<br>not just vendors.</h2>
+        <p class="body-lg" style="margin-bottom: var(--space-6);">
+          Vueports Solutions was founded on a simple belief: technology should make business easier, not harder. We partner with companies to build software that drives growth, reduces friction, and creates competitive advantage.
+        </p>
+        <p class="body-base" style="margin-bottom: var(--space-8);">
+          Our team combines deep technical expertise with business acumen. We don't just write code — we solve problems, optimize processes, and help you make better decisions with data.
+        </p>
+        <a href="about.php" class="btn-arrow">
+          More About Us
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Pricing -->
-<section class="section" id="pricing">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Pricing</span>
-            <h2 class="section-title">Investment <span class="highlight gradient-text">Tiers</span></h2>
-            <p class="section-desc">Transparent pricing for high-impact solutions and functional frameworks.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="card card-hover animate-on-scroll">
-                <h3 style="font-size: var(--font-size-xl);">Starter</h3>
-                <div class="pricing-price">R13,000<span>/project</span></div>
-                <p class="pricing-desc">Perfect for MVPs, small web apps, and single AI agents. These solutions are integrated with quality standards.</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> 5-Page Website or Simple SaaS MVP</li>
-                    <li><i class="fas fa-check"></i> Basic Data Pipeline Setup</li>
-                    <li><i class="fas fa-check"></i> 1 Custom AI Agent / Chatbot</li>
-                    <li><i class="fas fa-check"></i> 30 Days Support</li>
-                    <li class="not-included"><i class="fas fa-times"></i> Advanced Analytics</li>
-                </ul>
-                <a href="calculator.php" class="btn btn-outline" style="width: 100%;">Get Started</a>
-            </div>
-            <div class="card card-featured animate-on-scroll">
-                <h3 style="font-size: var(--font-size-xl);">Professional</h3>
-                <div class="pricing-price">R25,000<span>/project</span></div>
-                <p class="pricing-desc">Growing businesses needing robust platforms and data intelligence for quality daily functionality.</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Full-Stack Web Application</li>
-                    <li><i class="fas fa-check"></i> Data Warehouse + BI Dashboard</li>
-                    <li><i class="fas fa-check"></i> Multi-Agent AI Workflow</li>
-                    <li><i class="fas fa-check"></i> API Development & Integration</li>
-                    <li><i class="fas fa-check"></i> 90 Days Support</li>
-                </ul>
-                <a href="calculator.php" class="btn btn-primary" style="width: 100%;">Get Started</a>
-            </div>
-            <div class="card card-hover animate-on-scroll">
-                <h3 style="font-size: var(--font-size-xl);">Enterprise</h3>
-                <div class="pricing-price">Custom<span>/retainer</span></div>
-                <p class="pricing-desc">Large-scale systems, enterprise data platforms, and autonomous operations. This is fully efficient solution that elevates company functions.</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Unlimited Scope & Custom Architecture</li>
-                    <li><i class="fas fa-check"></i> Real-time Data Engineering</li>
-                    <li><i class="fas fa-check"></i> Autonomous AI Agent Ecosystems</li>
-                    <li><i class="fas fa-check"></i> Dedicated DevOps & Support</li>
-                    <li><i class="fas fa-check"></i> Monthly Retainer Available</li>
-                </ul>
-                <a href="contact.php?plan=enterprise" class="btn btn-outline" style="width: 100%;">Contact Us</a>
-            </div>
-        </div>
+<!-- Stats Section -->
+<section class="section-sm">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div class="stat-item">
+        <div class="stat-value">150<span class="accent">+</span></div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">98<span class="accent">%</span></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">12<span class="accent">+</span></div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">24<span class="accent">/7</span></div>
+        <div class="stat-label">Support Available</div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- Feature Cards Section (Coolors-style) -->
+<section class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">Our Approach</span>
+      <h2 class="section-title">How we turn ideas<br>into reality.</h2>
+    </div>
+
+    <div class="grid-3" style="gap: var(--space-6);">
+      <div class="feature-card accent-cyan reveal">
+        <h3 class="card-title" style="color: var(--accent-cyan);">Discover</h3>
+        <p class="card-desc">We start by understanding your business, your users, and your goals. Deep discovery leads to better solutions.</p>
+        <a href="#" class="card-cta" style="color: var(--accent-cyan);">
+          Our Process
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <div class="feature-card accent-indigo reveal">
+        <h3 class="card-title" style="color: var(--accent-indigo);">Build</h3>
+        <p class="card-desc">Agile development with weekly demos. You see progress in real-time and can pivot whenever needed.</p>
+        <a href="#" class="card-cta" style="color: var(--accent-indigo);">
+          Tech Stack
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+
+      <div class="feature-card accent-pink reveal">
+        <h3 class="card-title" style="color: var(--accent-pink);">Launch</h3>
+        <p class="card-desc">Smooth deployment with monitoring, documentation, and training. We don't disappear after go-live.</p>
+        <a href="#" class="card-cta" style="color: var(--accent-pink);">
+          Case Studies
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Testimonials -->
-<section class="testimonials section" id="testimonials">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Testimonials</span>
-            <h2 class="section-title">Client <span class="highlight gradient-text">Results</span></h2>
-        </div>
-        <div class="testimonials-slider">
-            <div class="testimonials-track" id="testimonialsTrack">
-                <?php if (!empty($portfolio_items)): ?>
-                    <?php foreach ($portfolio_items as $t): 
-                        if (empty($t['testimonial'])) continue;
-                    ?>
-                    <div class="testimonial-card">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"<?= sanitize($t['testimonial']) ?>"</p>
-                        <div class="testimonial-author">
-                            <?php if (!empty($t['image'])): ?>
-                            <img src="<?= sanitize($t['image']) ?>" alt="<?= sanitize($t['client_name'] ?? 'Client') ?>" class="testimonial-avatar" loading="lazy">
-                            <?php else: ?>
-                            <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">
-                                <?= strtoupper(substr($t['client_name'] ?? 'C', 0, 1)) ?>
-                            </div>
-                            <?php endif; ?>
-                            <div>
-                                <div class="testimonial-name"><?= sanitize($t['client_name'] ?? 'Client') ?></div>
-                                <div class="testimonial-role"><?= sanitize($t['title'] ?? '') ?></div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <!-- Fallback testimonials -->
-                    <div class="testimonial-card">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"Vueports Solutions did an amazing work with our web-app, everything he did to optimize our software help us to reduce our loading speed by 56%"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">U</div>
-                            <div>
-                                <div class="testimonial-name">USANDA DUKADA</div>
-                                <div class="testimonial-role">IoT Manager at JPP Municipality</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"We've never had come this far without Vueports Solutions's great attention to detail and care for the final product"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">T</div>
-                            <div>
-                                <div class="testimonial-name">TEBOGO MADILENG</div>
-                                <div class="testimonial-role">CEO at AlphDotX</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"I think Vueports Solutions was essential to our product because he truly cared to deliver world-class work results"</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">I</div>
-                            <div>
-                                <div class="testimonial-name">ITUMELENG NKABINDE</div>
-                                <div class="testimonial-role">Head Designer at I.N Designs</div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <div class="slider-controls">
-                <button class="slider-btn" id="prevBtn" aria-label="Previous testimonial"><i class="fas fa-chevron-left"></i></button>
-                <div class="slider-dots" id="sliderDots"></div>
-                <button class="slider-btn" id="nextBtn" aria-label="Next testimonial"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
+<section class="section" style="background: var(--bg-surface);">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">Loved by teams<br>everywhere.</h2>
     </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <p class="testimonial-quote">"Vueports transformed our legacy system into a modern platform in just 8 weeks. The team's technical depth and communication were exceptional."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SK</div>
+          <div>
+            <div class="testimonial-name">Sarah Kimani</div>
+            <div class="testimonial-role">CTO, FinFlow Africa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <p class="testimonial-quote">"Their AI agent reduced our customer support workload by 60%. It's like having a full-time employee that never sleeps."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JM</div>
+          <div>
+            <div class="testimonial-name">James Mwangi</div>
+            <div class="testimonial-role">Founder, ShopLocal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <p class="testimonial-quote">"The data pipeline they built handles millions of records daily without breaking a sweat. Best investment we've made."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">AN</div>
+          <div>
+            <div class="testimonial-name">Amina Njoroge</div>
+            <div class="testimonial-role">Data Director, AgriTech</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="faq-section" id="faq">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">FAQ</span>
-            <h2 class="section-title">Frequently Asked <span class="highlight gradient-text">Questions</span></h2>
-            <p class="section-desc">Everything you need to know about working with us.</p>
+<!-- CTA Section -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-section-inner reveal">
+      <div class="cta-section-bg-text">Build.</div>
+      <div class="cta-section-content">
+        <h2 class="cta-section-title">Ready to build<br>something great?</h2>
+        <p class="cta-section-desc">Book a free consultation and let's discuss how we can help your business grow with technology.</p>
+        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+          <a href="consultation.php" class="btn btn-primary btn-lg">
+            Book a Call
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="calculator.php" class="btn btn-secondary btn-lg">Price Calculator</a>
         </div>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What is your typical project timeline?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Most projects range from 4-16 weeks depending on complexity. MVPs typically take 4-8 weeks, while enterprise solutions may require 12-16 weeks. We provide detailed timelines during our scoping session.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Do you offer ongoing support after launch?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes! We offer maintenance retainers and support packages. Starter projects include 30 days of support, Professional includes 90 days, and Enterprise clients get dedicated DevOps support with monthly retainers available.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What technologies do you specialize in?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>We specialize in modern full-stack development (React, Vue, Node.js, Python), cloud infrastructure (AWS, Azure, GCP), data engineering (Spark, Kafka, Snowflake), and AI/ML (OpenAI, Claude, LangChain, custom model training).</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How do you handle project pricing?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>We offer transparent fixed-price projects based on detailed scoping. For ongoing work, we have monthly retainer options. All pricing is in ZAR and we accept payments via PayFast, EFT, or bank transfer.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can you work with our existing team?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Absolutely. We regularly collaborate with in-house teams, acting as an extension of your engineering department. We use agile methodologies and integrate with your existing workflows, tools, and communication channels.</p>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-    <div class="container">
-        <h2 class="cta-title">Ready to build your next revenue engine?</h2>
-        <p class="cta-desc">Let's architect your custom software, data platform, or AI agent ecosystem.</p>
-        <a href="calculator.php" class="btn btn-primary btn-lg">Start a Project <i class="fas fa-arrow-right"></i></a>
+<!-- Large CTA Cards (Coolors-style) -->
+<section class="section-sm">
+  <div class="container">
+    <div class="grid-3" style="gap: var(--space-6);">
+      <a href="consultation.php" class="cta-card-large reveal">
+        <h3 class="cta-title">Book a Call</h3>
+      </a>
+      <a href="calculator.php" class="cta-card-large reveal">
+        <h3 class="cta-title">Get a Quote</h3>
+      </a>
+      <a href="contact.php" class="cta-card-large reveal">
+        <h3 class="cta-title">Send a Message</h3>
+      </a>
     </div>
+  </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
