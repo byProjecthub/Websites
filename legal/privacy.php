@@ -10,7 +10,7 @@ $companyName = getSetting('site_name', 'Vueports Solutions');
 $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 ?>
 
-<section class="services-hero" style="padding-top:140px;" aria-labelledby="privacy-title">
+<section class="services-hero legal-hero" aria-labelledby="privacy-title">
     <div class="container">
         <span class="section-tag">/ Legal</span>
         <h1 id="privacy-title">Privacy <span class="highlight">Policy</span></h1>
@@ -19,7 +19,7 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 </section>
 
 <section class="section" aria-labelledby="privacy-content">
-    <div class="container" style="max-width: 800px;">
+    <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">At <?= sanitize($companyName) ?>, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services, in compliance with the Protection of Personal Information Act (POPIA) of South Africa.</p>
 
@@ -107,19 +107,17 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 
             <h2>11. Contact Us</h2>
             <p>If you have questions about this Privacy Policy or wish to exercise your rights, please contact us:</p>
-            <div class="contact-box card" style="margin-top: 24px;">
+            <div class="card legal-contact-box">
                 <p><strong><?= sanitize($companyName) ?></strong></p>
                 <p>Email: <a href="mailto:<?= sanitize($contactEmail) ?>"><?= sanitize($contactEmail) ?></a></p>
                 <p>Phone: <a href="tel:+27688261507">+27 (68) 826-1507</a></p>
                 <p>Address: Johannesburg, South Africa</p>
             </div>
 
-            <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-color);">
-                <p style="font-size: 0.875rem; color: var(--text-muted);">
-                    <strong>Information Officer:</strong> Njabulo Hlongwane<br>
-                    <strong>Registration:</strong> Registered with the South African Information Regulator under POPIA<br>
-                    <strong>Reference:</strong> DPR-<?= date('Y') ?>-VUEPORTS
-                </p>
+            <div class="legal-meta">
+                <p><strong>Information Officer:</strong> Njabulo Hlongwane<br>
+                <strong>Registration:</strong> Registered with the South African Information Regulator under POPIA<br>
+                <strong>Reference:</strong> DPR-<?= date('Y') ?>-VUEPORTS</p>
             </div>
         </div>
     </div>
