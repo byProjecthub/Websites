@@ -25,7 +25,7 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     
-    <link rel="icon" type="image/png" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/images/apple-touch-icon-black.png">
     
     <!-- CRITICAL MOBILE NAV FIXES -->
     <style>
