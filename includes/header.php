@@ -27,16 +27,16 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     
     <link rel="icon" type="image/png" href="/images/apple-touch-icon-black.png">
     
-    <!-- CRITICAL MOBILE NAV FIXES -->
+    <!-- MOBILE NAV FIXES -->
     <style>
-        /* Overlay */
+        /* Overlay — MUST be above navbar */
         .nav-overlay {
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            z-index: 998;
+            z-index: 2000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -46,30 +46,34 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
             visibility: visible;
         }
 
-        /* Mobile menu base */
+        /* Mobile menu — MUST be above overlay AND navbar */
         @media (max-width: 1023px) {
             .nav-menu {
                 position: fixed;
                 top: 0;
-                right: -100%;
-                width: 80%;
+                right: -110%;
+                width: 85%;
                 max-width: 360px;
                 height: 100vh;
                 height: 100dvh;
                 background: var(--bg-card, #ffffff);
                 flex-direction: column;
-                padding: 80px 24px 24px;
+                padding: 100px 28px 32px;
                 transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+                box-shadow: -10px 0 40px rgba(0,0,0,0.2);
                 gap: 0;
                 overflow-y: auto;
-                z-index: 999;
+                z-index: 2001; /* ABOVE overlay and navbar */
             }
             [data-theme="dark"] .nav-menu {
                 background: var(--bg-primary, #0f172a);
             }
             .nav-menu.active {
                 right: 0;
+            }
+
+            .nav-menu > li {
+                width: 100%;
             }
 
             .nav-link {
@@ -82,20 +86,17 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
                 justify-content: space-between;
             }
             .nav-link::after {
-                display: none;
+                display: none !important;
             }
 
-            /* Dropdown on mobile */
+            /* Dropdown */
             .dropdown {
                 width: 100%;
-            }
-            .dropdown-toggle {
-                width: 100%;
-                justify-content: space-between;
             }
             .dropdown-toggle i {
                 transition: transform 0.3s ease;
                 font-size: 0.875rem;
+                margin-left: auto;
             }
             .dropdown.active .dropdown-toggle i {
                 transform: rotate(180deg);
@@ -109,22 +110,23 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
                 box-shadow: none;
                 border: none;
                 background: var(--bg-secondary, #f1f5f9);
-                margin: 0 0 8px;
+                margin: 0 0 12px;
                 padding: 8px 0;
                 border-radius: 12px;
                 display: none;
                 min-width: 100%;
                 overflow: hidden;
+                animation: none;
             }
             [data-theme="dark"] .dropdown-menu {
                 background: var(--bg-secondary, #1e293b);
             }
             .dropdown.active .dropdown-menu {
                 display: block;
-                animation: dropdownSlide 0.25s ease;
+                animation: dropdownSlide 0.2s ease;
             }
             @keyframes dropdownSlide {
-                from { opacity: 0; transform: translateY(-8px); }
+                from { opacity: 0; transform: translateY(-6px); }
                 to { opacity: 1; transform: translateY(0); }
             }
 
@@ -132,23 +134,17 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
                 padding: 12px 20px;
                 border-bottom: 1px solid var(--border-color-light, rgba(0,0,0,0.05));
                 font-size: 1rem;
+                display: block;
             }
             .dropdown-menu a:last-child {
                 border-bottom: none;
             }
 
-            .nav-actions {
-                margin-top: 16px;
-                padding-top: 16px;
-                border-top: 1px solid var(--border-color, #e2e8f0);
-                width: 100%;
-                justify-content: flex-start;
-            }
-
-            /* Hamburger animation */
+            /* Hamburger — visible only on mobile */
             .hamburger {
-                display: flex;
-                z-index: 1001;
+                display: flex !important;
+                position: relative;
+                z-index: 2002; /* Above menu */
             }
             .hamburger span {
                 transition: all 0.3s ease;
@@ -163,9 +159,23 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
             .hamburger.active span:nth-child(3) {
                 transform: rotate(-45deg) translate(5px, -5px);
             }
+
+            /* Hide Hire Us button in top bar on mobile if you want cleaner look */
+            .nav-actions .btn-primary {
+                display: none;
+            }
         }
 
-        /* Prevent body scroll when menu open */
+        @media (min-width: 1024px) {
+            .hamburger {
+                display: none !important;
+            }
+            .nav-overlay {
+                display: none !important;
+            }
+        }
+
+        /* Lock body scroll */
         body.menu-open {
             overflow: hidden;
             touch-action: none;
@@ -254,18 +264,20 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     </div>
 </nav>
 
-<!-- Mobile overlay -->
 <div class="nav-overlay" id="navOverlay"></div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+(function() {
     const hamburger = document.getElementById('hamburger');
     const navMenu   = document.getElementById('navMenu');
     const overlay   = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
     const body      = document.body;
 
-    /* ---------- Toggle mobile menu ---------- */
+    function isMobile() {
+        return window.innerWidth <= 1023;
+    }
+
     function openMenu() {
         hamburger.classList.add('active');
         hamburger.setAttribute('aria-expanded', 'true');
@@ -280,48 +292,48 @@ document.addEventListener('DOMContentLoaded', function () {
         navMenu.classList.remove('active');
         overlay.classList.remove('active');
         body.classList.remove('menu-open');
-        // Close all dropdowns too
-        dropdowns.forEach(d => {
-            d.classList.remove('active');
-            const m = d.querySelector('.dropdown-menu');
-            if (m) m.style.display = '';
-        });
+        dropdowns.forEach(d => d.classList.remove('active'));
     }
 
-    function toggleMenu() {
+    hamburger.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         if (navMenu.classList.contains('active')) {
             closeMenu();
         } else {
             openMenu();
         }
-    }
-
-    hamburger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        toggleMenu();
     });
 
     overlay.addEventListener('click', closeMenu);
 
-    /* ---------- Close menu when clicking a regular link ---------- */
-    navMenu.querySelectorAll('a:not(.dropdown-toggle)').forEach(link => {
-        link.addEventListener('click', function () {
-            if (window.innerWidth <= 1023) {
+    // Close when clicking any link inside the menu (except dropdown toggle)
+    navMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            if (!isMobile()) return;
+            
+            // If this is a dropdown toggle, don't close — let dropdown handler manage it
+            if (this.classList.contains('dropdown-toggle')) return;
+            
+            // If this link is inside a dropdown menu, close the whole menu
+            if (this.closest('.dropdown-menu')) {
                 closeMenu();
+                return;
             }
+            
+            // Regular top-level link
+            closeMenu();
         });
     });
 
-    /* ---------- Mobile dropdown toggles ---------- */
-    dropdowns.forEach(dropdown => {
+    // Dropdown toggles
+    dropdowns.forEach(function(dropdown) {
         const toggle = dropdown.querySelector('.dropdown-toggle');
-        const menu   = dropdown.querySelector('.dropdown-menu');
-        if (!toggle || !menu) return;
+        if (!toggle) return;
 
-        toggle.addEventListener('click', function (e) {
-            // Desktop: let CSS hover handle it, but prevent jump
-            if (window.innerWidth > 1023) {
-                e.preventDefault();
+        toggle.addEventListener('click', function(e) {
+            if (!isMobile()) {
+                e.preventDefault(); // prevent # jump on desktop too
                 return;
             }
 
@@ -330,49 +342,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const isOpen = dropdown.classList.contains('active');
 
-            // Close ALL other dropdowns first (accordion)
-            dropdowns.forEach(d => {
+            // Close siblings
+            dropdowns.forEach(function(d) {
                 if (d !== dropdown) d.classList.remove('active');
             });
 
-            // Toggle this one
             dropdown.classList.toggle('active', !isOpen);
         });
     });
 
-    /* ---------- Click outside dropdown to close it ---------- */
-    document.addEventListener('click', function (e) {
-        if (window.innerWidth > 1023) return;
-        const clickedDropdown = e.target.closest('.dropdown');
-        if (!clickedDropdown) {
+    // Click outside any dropdown to close just the dropdown (keep menu open)
+    document.addEventListener('click', function(e) {
+        if (!isMobile()) return;
+        if (!e.target.closest('.dropdown')) {
             dropdowns.forEach(d => d.classList.remove('active'));
         }
     });
 
-    /* ---------- Escape key closes everything ---------- */
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            closeMenu();
-        }
+    // Escape closes everything
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeMenu();
     });
 
-    /* ---------- Reset on resize to desktop ---------- */
+    // Reset on resize to desktop
     let resizeTimer;
-    window.addEventListener('resize', function () {
+    window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-            if (window.innerWidth > 1023) {
-                closeMenu();
-            }
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 1023) closeMenu();
         }, 150);
     });
 
-    /* ---------- Navbar scroll shadow ---------- */
+    // Navbar scroll effect
     const navbar = document.getElementById('navbar');
     if (navbar) {
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }
-});
+})();
 </script>
