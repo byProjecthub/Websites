@@ -516,12 +516,7 @@ mark {
     }
 
     /* Testimonial */
-    .project-testimonial {
-        padding: 24px;
-    }
-    .testimonial-text {
-        font-size: 1rem;
-    }
+    
 
     /* Sidebar cards */
     .sidebar-card {
@@ -561,18 +556,7 @@ mark {
     }
 }
 
-/* ========================================
-   Very Small (max-width: 360px)
-   ======================================== */
-@media (max-width: 360px) {
-    .project-testimonial {
-        padding: 20px;
-    }
-    .testimonial-author {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
+
 /* Code blocks */
 pre {
   background: var(--bg-secondary);
@@ -1215,7 +1199,10 @@ slot {
     color: var(--text-muted);
 }
 
-/* Testimonials Slider */
+/* ========================================
+   Testimonials Slider — Clean & Working
+   ======================================== */
+
 .testimonials-slider {
     position: relative;
     overflow: hidden;
@@ -1224,31 +1211,37 @@ slot {
 .testimonials-track {
     display: flex;
     gap: 24px;
-    transition: transform var(--transition-slow);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .testimonial-card {
-    min-width: calc(33.333% - 16px);
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 40px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
-    padding: 40px;
     position: relative;
-    flex-shrink: 0;
 }
 
-@media (max-width: 1024px) {
+/* Tablet: 2 cards visible */
+@media (min-width: 768px) {
     .testimonial-card {
-        min-width: calc(50% - 12px);
+        flex: 0 0 calc(50% - 12px);
+        max-width: calc(50% - 12px);
     }
 }
 
-@media (max-width: 640px) {
+/* Desktop: 3 cards visible */
+@media (min-width: 1024px) {
     .testimonial-card {
-        min-width: 100%;
+        flex: 0 0 calc(33.333% - 16px);
+        max-width: calc(33.333% - 16px);
     }
 }
 
+/* Card content */
 .quote-icon {
     font-size: 2rem;
     color: var(--color-accent);
@@ -1292,19 +1285,19 @@ slot {
     color: var(--text-secondary);
 }
 
-/* Slider Controls */
+/* Controls */
 .slider-controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-6);
-    margin-top: var(--space-10);
+    gap: 16px;
+    margin-top: 32px;
 }
 
 .slider-btn {
     width: 48px;
     height: 48px;
-    border-radius: var(--border-radius-full);
+    border-radius: 50%;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -1312,41 +1305,43 @@ slot {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .slider-btn:hover {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-white);
+    color: #fff;
 }
 
 .slider-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
 .slider-dots {
     display: flex;
-    gap: var(--space-2);
+    gap: 8px;
+    align-items: center;
 }
 
 .slider-dot {
     width: 10px;
     height: 10px;
-    border-radius: var(--border-radius-full);
-    background: var(--border-color-strong);
+    border-radius: 50%;
+    background: var(--border-color);
     border: none;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all 0.3s ease;
+    padding: 0;
 }
 
 .slider-dot.active {
     background: var(--color-accent);
-    width: 32px;
+    width: 28px;
     border-radius: 5px;
 }
-
 /* Back to Top Button */
 #backToTop {
     position: fixed;
