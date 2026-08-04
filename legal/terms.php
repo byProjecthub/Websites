@@ -9,7 +9,7 @@ $companyName = getSetting('site_name', 'Vueports Solutions');
 $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 ?>
 
-<section class="services-hero" style="padding-top:140px;" aria-labelledby="terms-title">
+<section class="services-hero legal-hero" aria-labelledby="terms-title">
     <div class="container">
         <span class="section-tag">/ Legal</span>
         <h1 id="terms-title">Terms of <span class="highlight">Service</span></h1>
@@ -17,7 +17,7 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 </section>
 
 <section class="section" aria-labelledby="terms-content">
-    <div class="container" style="max-width: 800px;">
+    <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">Please read these Terms of Service carefully before using the <?= sanitize($companyName) ?> website or engaging our services. By accessing or using our services, you agree to be bound by these terms.</p>
 
@@ -109,17 +109,15 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
             </ul>
 
             <h2>11. Contact Information</h2>
-            <div class="contact-box card" style="margin-top: 24px;">
+            <div class="card legal-contact-box">
                 <p><strong><?= sanitize($companyName) ?></strong></p>
                 <p>Email: <a href="mailto:<?= sanitize($contactEmail) ?>"><?= sanitize($contactEmail) ?></a></p>
                 <p>Phone: <a href="tel:+27688261507">+27 (68) 826-1507</a></p>
                 <p>Address: Johannesburg, South Africa</p>
             </div>
 
-            <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-color);">
-                <p style="font-size: 0.875rem; color: var(--text-muted);">
-                    By using our website or services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
-                </p>
+            <div class="legal-meta">
+                <p>By using our website or services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
             </div>
         </div>
     </div>
