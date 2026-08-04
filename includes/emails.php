@@ -31,37 +31,23 @@ require_once __DIR__ . '/functions.php';
  * Send email immediately via Resend API (bypasses Railway SMTP block)
  */
 
-  function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
+ /**
+ * Send email immediately via Resend API (bypasses Railway SMTP block)
+ */
+function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
+    // Railway: use getenv() — $_ENV is often empty in PHP-FPM/built-in server
     $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
+    $apiKey = trim($apiKey);
+    
+    error_log("sendEmailNow: START | To: $toEmail | Subject: $subject | Key present: " . (empty($apiKey) ? 'NO' : 'YES'));
     
     if (!empty($apiKey)) {
-        return sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
+        $result = sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
+        error_log("sendEmailNow: Resend result = " . ($result ? 'SUCCESS' : 'FAILED'));
+        return $result;
     }
-   
+    
     error_log("sendEmailNow: No RESEND_API_KEY found. Tried getenv() and _ENV.");
-    
-    // Local dev fallback only
-    if (function_exists('getMailer')) {
-        try {
-            $mailer = getMailer();
-            if ($mailer) {
-                $mailer->clearAddresses();
-                $mailer->addAddress(filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL), sanitize($toName));
-                $mailer->Subject = sanitize($subject);
-                $mailer->isHTML(true);
-                $mailer->Body = $htmlBody;
-                $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
-                $mailer->send();
-                $mailer->addCustomHeader('List-Unsubscribe', '<mailto:njabulod.hlongwane@gmail.com?subject=unsubscribe>');
-                $mailer->XMailer = 'Vueports Solutions Mailer';
-                error_log("sendEmailNow: PHPMailer sent to $toEmail");
-                return true;
-            }
-        } catch (\Exception $e) {
-            error_log('PHPMailer fallback failed: ' . $e->getMessage());
-        }
-    }
-    
     return false;
 }
 
@@ -70,28 +56,33 @@ require_once __DIR__ . '/functions.php';
  */
 function sendViaResend(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
     $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
-    $fromEmail = getenv('SMTP_FROM') ?: ($_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'onboarding@resend.dev'));
+    $fromEmail = getenv('SMTP_FROM') ?: ($_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'noreply@vueports.reloventura.site'));
     $fromName = getenv('SMTP_FROM_NAME') ?: ($_ENV['SMTP_FROM_NAME'] ?? getSetting('smtp_from_name', 'Vueports Solutions'));
+    $replyTo = getenv('SMTP_REPLY_TO') ?: ($_ENV['SMTP_REPLY_TO'] ?? $fromEmail);
     
     $from = $fromName ? "$fromName <$fromEmail>" : $fromEmail;
     $to = filter_var(trim($toEmail), FILTER_SANITIZE_EMAIL);
     
-    error_log("sendViaResend: From=$from | To=$to | Subject=$subject");
+    if (empty($to)) {
+        error_log("sendViaResend: Invalid recipient email");
+        return false;
+    }
     
-   $payload = [
-    'from' => $from,
-    'to' => [$to],
-    'subject' => $subject,
-    'html' => $htmlBody,
-    'text' => $textBody ?? strip_tags($htmlBody),
-    'reply_to' => [
-        'email' => 'njabulod.hlongwane@gmail.com',
-        'name' => 'Vueports Solutions'
-    ],
-    'headers' => [
-        'List-Unsubscribe' => '<mailto:njabulod.hlongwane@gmail.com?subject=unsubscribe>'
-    ]
-];
+    $payload = [
+        'from' => $from,
+        'to' => [$to],
+        'subject' => $subject,
+        'html' => $htmlBody,
+        'text' => $textBody ?? strip_tags($htmlBody),
+        'reply_to' => [
+            'email' => $replyTo,
+            'name' => $fromName
+        ],
+        'headers' => [
+            'List-Unsubscribe' => '<mailto:' . $replyTo . '?subject=unsubscribe>',
+            'X-Mailer' => 'Vueports Solutions Mailer'
+        ]
+    ];
     
     $ch = curl_init('https://api.resend.com/emails');
     curl_setopt($ch, CURLOPT_POST, true);
@@ -115,7 +106,7 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
         return false;
     }
     
-    error_log("sendViaResend: HTTP $httpCode | Response: $response");
+    error_log("sendViaResend: HTTP $httpCode | To: $to");
     
     if ($httpCode >= 200 && $httpCode < 300) {
         $decoded = json_decode($response, true);
@@ -124,6 +115,7 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
         return true;
     }
     
+    error_log("sendViaResend: API error HTTP $httpCode | Response: $response");
     return false;
 }
 /**
