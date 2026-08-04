@@ -15,6 +15,19 @@ require_once 'includes/header.php';
         <span class="section-tag">/ About Us</span>
         <h1>Engineering Revenue, Not Just <span class="highlight">Code</span></h1>
     </div>
+
+    <div class="container">
+                   
+            <!-- Main Content -->
+            <div>
+                <!-- Featured Image -->
+                <div style="border-radius:16px; overflow:hidden; margin-bottom:32px; background:var(--bg-secondary);">
+                    <img src="<?= sanitize($project['image'] ?? 'assets/images/placeholder.svg') ?>" 
+                         alt="<?= sanitize($project['title'] ?? 'Project') ?>" 
+                         style="width:100%; height:auto; display:block;"
+                         onerror="this.src='/images/vueports.png'">
+                </div>
+            </div>  
 </section>
 
 <section class="section">
