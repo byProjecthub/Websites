@@ -50,7 +50,7 @@ if (empty($project)) {
             'live_url' => '#',
             'github_url' => '#',
             'results' => ['56% faster load times', '99.9% uptime', '50+ daily transactions'],
-            'testimonial' => 'Njabulo did an amazing work with our web-app, everything he did to optimize our software help us to reduce our loading speed by 56%',
+            'testimonial' => 'Vueports Solutions did an amazing work with our web-app, everything he did to optimize our software help us to reduce our loading speed by 56%',
             'year' => '2023',
         ],
         'reloventura-platform' => [
@@ -66,7 +66,7 @@ if (empty($project)) {
             'live_url' => '#',
             'github_url' => '#',
             'results' => ['3x booking conversion', 'R50K processed', 'Zero downtime deployment'],
-            'testimonial' => 'We\'ve never had come this far without Njabulo\'s great attention to detail and care for the final product',
+            'testimonial' => 'We\'ve never had come this far without Vueports Solutions\'s great attention to detail and care for the final product',
             'year' => '2022',
         ],
         'website-tech' => [
