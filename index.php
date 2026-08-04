@@ -376,7 +376,7 @@ $stats = [
                     <!-- Fallback testimonials -->
                     <div class="testimonial-card">
                         <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"Njabulo did an amazing work with our web-app, everything he did to optimize our software help us to reduce our loading speed by 56%"</p>
+                        <p class="testimonial-text">"Vueports Solutions did an amazing work with our web-app, everything he did to optimize our software help us to reduce our loading speed by 56%"</p>
                         <div class="testimonial-author">
                             <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">U</div>
                             <div>
@@ -387,7 +387,7 @@ $stats = [
                     </div>
                     <div class="testimonial-card">
                         <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"We've never had come this far without Njabulo's great attention to detail and care for the final product"</p>
+                        <p class="testimonial-text">"We've never had come this far without Vueports Solutions's great attention to detail and care for the final product"</p>
                         <div class="testimonial-author">
                             <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">T</div>
                             <div>
@@ -398,7 +398,7 @@ $stats = [
                     </div>
                     <div class="testimonial-card">
                         <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                        <p class="testimonial-text">"I think Njabulo was essential to our product because he truly cared to deliver world-class work results"</p>
+                        <p class="testimonial-text">"I think Vueports Solutions was essential to our product because he truly cared to deliver world-class work results"</p>
                         <div class="testimonial-author">
                             <div class="testimonial-avatar" style="background: var(--bg-active); display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-weight: 700; font-size: 1.5rem;">I</div>
                             <div>
