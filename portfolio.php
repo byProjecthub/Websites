@@ -20,24 +20,18 @@ if (empty($projects)) {
         [
             'slug' => 'finlytics-dashboard',
             'title' => 'Finlytics Dashboard',
-            'description' => 'Real-time financial analytics with multi-tenant architecture.',
+            'description' => 'Real-time financial analytics with multi-tenant architecture.','description' => 'Processing 11 analytical screens.',
             'service_type' => 'SaaS',
-            'image' => 'assets/images/placeholder.svg',
+            'image' => '/images/Finlytics.png',
         ],
         [
             'slug' => 'reloventura-platform',
             'title' => 'Reloventura Platform',
             'description' => 'Booking engine with payment integration.',
-            'service_type' => 'Web App',
-            'image' => 'assets/images/placeholder.svg',
+            'service_type' => 'Web App','service_type' => 'BI Dashboard',
+            'image' => '/images/reloventura1.png',
         ],
-        [
-            'slug' => 'enterprise-etl-pipeline',
-            'title' => 'Enterprise ETL Pipeline',
-            'description' => 'Processing 2M+ records daily in the cloud.',
-            'service_type' => 'Data Engineering',
-            'image' => 'assets/images/placeholder.svg',
-        ],
+       
     ];
 }
 ?>
