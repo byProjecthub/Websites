@@ -1,5 +1,6 @@
 <?php
 $pageTitle = 'Home';
+$basePath = './';
 include 'includes/header.php';
 ?>
 
@@ -20,14 +21,14 @@ include 'includes/header.php';
         We build custom software, data pipelines, and AI agents that help your business move faster, think smarter, and scale effortlessly.
       </p>
       <div class="hero-actions animate-fade-in-up delay-300">
-        <a href="consultation.php" class="btn btn-primary btn-lg">
+        <a href="pages/consultation.php" class="btn btn-primary btn-lg">
           Start a Project
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </a>
-        <a href="services.php" class="btn btn-secondary btn-lg">Explore Services</a>
+        <a href="pages/services.php" class="btn btn-secondary btn-lg">Explore Services</a>
       </div>
     </div>
   </div>
@@ -59,7 +60,6 @@ include 'includes/header.php';
     </div>
 
     <div class="services-grid">
-      <!-- Custom Software -->
       <div class="service-card accent-cyan reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -69,7 +69,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">Custom Software</h3>
         <p class="service-desc">Tailored web and mobile applications built with modern stacks. Scalable, secure, and designed around your workflow.</p>
-        <a href="services.php#software" class="service-link">
+        <a href="pages/services.php#software" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -78,7 +78,6 @@ include 'includes/header.php';
         </a>
       </div>
 
-      <!-- Data Engineering -->
       <div class="service-card accent-blue reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -89,7 +88,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">Data Engineering</h3>
         <p class="service-desc">ETL pipelines, data warehouses, and real-time analytics. Turn raw data into actionable business intelligence.</p>
-        <a href="services.php#data" class="service-link">
+        <a href="pages/services.php#data" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -98,7 +97,6 @@ include 'includes/header.php';
         </a>
       </div>
 
-      <!-- AI Agents -->
       <div class="service-card accent-violet reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -108,7 +106,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">AI Agents</h3>
         <p class="service-desc">Intelligent automation that handles repetitive tasks, answers queries, and makes decisions — 24/7, without breaks.</p>
-        <a href="services.php#ai" class="service-link">
+        <a href="pages/services.php#ai" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -117,7 +115,6 @@ include 'includes/header.php';
         </a>
       </div>
 
-      <!-- Cloud Solutions -->
       <div class="service-card accent-pink reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -126,7 +123,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">Cloud Solutions</h3>
         <p class="service-desc">AWS, Azure, and GCP architecture, migration, and DevOps. Infrastructure that scales with your ambition.</p>
-        <a href="services.php#cloud" class="service-link">
+        <a href="pages/services.php#cloud" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -135,7 +132,6 @@ include 'includes/header.php';
         </a>
       </div>
 
-      <!-- Consulting -->
       <div class="service-card accent-amber reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -146,7 +142,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">Tech Consulting</h3>
         <p class="service-desc">Strategic guidance on architecture, tech stack selection, and digital transformation roadmaps.</p>
-        <a href="services.php#consulting" class="service-link">
+        <a href="pages/services.php#consulting" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -155,7 +151,6 @@ include 'includes/header.php';
         </a>
       </div>
 
-      <!-- Support -->
       <div class="service-card accent-emerald reveal">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -164,7 +159,7 @@ include 'includes/header.php';
         </div>
         <h3 class="service-title">Ongoing Support</h3>
         <p class="service-desc">Maintenance, monitoring, and continuous improvement. We stay with you long after launch day.</p>
-        <a href="services.php#support" class="service-link">
+        <a href="pages/services.php#support" class="service-link">
           Learn More
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -204,7 +199,7 @@ include 'includes/header.php';
         <p class="body-base" style="margin-bottom: var(--space-8);">
           Our team combines deep technical expertise with business acumen. We don't just write code — we solve problems, optimize processes, and help you make better decisions with data.
         </p>
-        <a href="about.php" class="btn-arrow">
+        <a href="pages/about.php" class="btn-arrow">
           More About Us
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -240,7 +235,7 @@ include 'includes/header.php';
   </div>
 </section>
 
-<!-- Feature Cards Section (Coolors-style) -->
+<!-- Feature Cards Section -->
 <section class="section">
   <div class="container">
     <div class="section-header center reveal">
@@ -342,31 +337,31 @@ include 'includes/header.php';
         <h2 class="cta-section-title">Ready to build<br>something great?</h2>
         <p class="cta-section-desc">Book a free consultation and let's discuss how we can help your business grow with technology.</p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="consultation.php" class="btn btn-primary btn-lg">
+          <a href="pages/consultation.php" class="btn btn-primary btn-lg">
             Book a Call
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </a>
-          <a href="calculator.php" class="btn btn-secondary btn-lg">Price Calculator</a>
+          <a href="pages/calculator.php" class="btn btn-secondary btn-lg">Price Calculator</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Large CTA Cards (Coolors-style) -->
+<!-- Large CTA Cards -->
 <section class="section-sm">
   <div class="container">
     <div class="grid-3" style="gap: var(--space-6);">
-      <a href="consultation.php" class="cta-card-large reveal">
+      <a href="pages/consultation.php" class="cta-card-large reveal">
         <h3 class="cta-title">Book a Call</h3>
       </a>
-      <a href="calculator.php" class="cta-card-large reveal">
+      <a href="pages/calculator.php" class="cta-card-large reveal">
         <h3 class="cta-title">Get a Quote</h3>
       </a>
-      <a href="contact.php" class="cta-card-large reveal">
+      <a href="pages/contact.php" class="cta-card-large reveal">
         <h3 class="cta-title">Send a Message</h3>
       </a>
     </div>
