@@ -30,19 +30,14 @@ require_once __DIR__ . '/functions.php';
 /**
  * Send email immediately via Resend API (bypasses Railway SMTP block)
  */
-function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
-    // Railway: use getenv() — $_ENV is often empty in PHP-FPM/built-in server
+
+  function sendEmailNow(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
     $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
-    $apiKey = trim($apiKey);
-    
-    error_log("sendEmailNow: START | To: $toEmail | Key present: " . (empty($apiKey) ? 'NO' : 'YES (' . substr($apiKey, 0, 6) . '...)'));
     
     if (!empty($apiKey)) {
-        $result = sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
-        error_log("sendEmailNow: Resend result = " . ($result ? 'SUCCESS' : 'FAILED'));
-        return $result;
+        return sendViaResend($toEmail, $toName, $subject, $htmlBody, $textBody);
     }
-    
+   
     error_log("sendEmailNow: No RESEND_API_KEY found. Tried getenv() and _ENV.");
     
     // Local dev fallback only
