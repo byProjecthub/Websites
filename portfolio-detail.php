@@ -6,8 +6,6 @@ require_once 'includes/functions.php';
 // Get and clean the slug
 $rawSlug = $_GET['slug'] ?? '';
 $slug = trim($rawSlug);
-
-// Replace spaces with hyphens for lookup (so "website Tech" becomes "website-tech")
 $slugLookup = str_replace(' ', '-', strtolower($slug));
 
 if (empty($slug)) {
@@ -21,41 +19,33 @@ if (function_exists('getPortfolioItemBySlug')) {
     $project = getPortfolioItemBySlug($slugLookup);
 }
 
-// Try original slug if hyphen version didn't work
 if (empty($project) && $slug !== $slugLookup) {
-    if (function_exists('getPortfolioItemBySlug')) {
-        $project = getPortfolioItemBySlug($slug);
-    }
+    $project = getPortfolioItemBySlug($slug);
 }
 
-// Fallback if DB function missing or no result
-if (empty($project)) {
-    if (function_exists('getPortfolioItems')) {
-        $all = getPortfolioItems(100, 'active');
-        foreach ($all as $p) {
-            $pSlug = $p['slug'] ?? '';
-            if ($pSlug === $slugLookup || $pSlug === $slug) {
-                $project = $p;
-                break;
-            }
+if (empty($project) && function_exists('getPortfolioItems')) {
+    $all = getPortfolioItems(100, 'active');
+    foreach ($all as $p) {
+        $pSlug = $p['slug'] ?? '';
+        if ($pSlug === $slugLookup || $pSlug === $slug) {
+            $project = $p;
+            break;
         }
     }
 }
 
-// Hardcoded fallback for known slugs (with both hyphen and space variants)
+// Hardcoded fallback
 if (empty($project)) {
     $fallbacks = [
         'finlytics-dashboard' => [
             'slug' => 'finlytics-dashboard',
             'title' => 'Finlytics Dashboard',
             'description' => 'Real-time financial analytics with multi-tenant architecture. Processing 11 Analytical Screens.',
-             'description' => '',
             'long_description' => 'Finlytics is a comprehensive financial analytics dashboard built for enterprise clients. It features real-time data processing, multi-tenant architecture, role-based access control, and interactive Power BI-style visualizations. The platform processes over 500K transactions daily with sub-second query response times.',
-            'service_type' => 'SaaS',
             'service_type' => 'BI Dashboard',
             'client_name' => 'Finlytics Corp',
             'image' => '/images/Finlytics.png',
-            'gallery' => ['/images/Finlytics2.png', 'images/Finlytics1.png'],
+            'gallery' => ['/images/Finlytics2.png', '/images/Finlytics1.png'],
             'tech_stack' => ['React', 'Node.js', 'PostgreSQL', 'Redis', 'AWS', 'Docker'],
             'live_url' => '#',
             'github_url' => '#',
@@ -79,7 +69,6 @@ if (empty($project)) {
             'testimonial' => 'We\'ve never had come this far without Njabulo\'s great attention to detail and care for the final product',
             'year' => '2022',
         ],
-       // Add space-variant fallbacks too
         'website-tech' => [
             'slug' => 'website-tech',
             'title' => 'Website Tech Project',
@@ -100,20 +89,20 @@ if (empty($project)) {
     $project = $fallbacks[$slugLookup] ?? $fallbacks[$slug] ?? null;
 }
 
-// If still nothing, show a 404-style page instead of redirecting
+// 404 page
 if (empty($project)) {
     $pageTitle = 'Project Not Found';
     $pageDescription = 'The requested project could not be found.';
     require_once 'includes/header.php';
     ?>
-    <section class="services-hero" style="padding-top:140px;">
+    <section class="services-hero project-not-found">
         <div class="container">
             <span class="section-tag">/ Error</span>
             <h1>Project Not <span class="highlight">Found</span></h1>
-            <p style="color:var(--text-secondary); font-size:1.125rem; margin-top:12px;">
+            <p class="project-not-found__text">
                 The project "<?= sanitize($slug) ?>" doesn't exist or has been removed.
             </p>
-            <div style="margin-top:32px;">
+            <div class="project-not-found__actions">
                 <a href="portfolio.php" class="btn btn-primary">
                     <i class="fas fa-arrow-left"></i> Back to Portfolio
                 </a>
@@ -125,7 +114,7 @@ if (empty($project)) {
     exit;
 }
 
-// Success — project found
+// Success
 $pageTitle = sanitize($project['title'] ?? 'Project');
 $pageDescription = sanitize($project['description'] ?? 'Portfolio project by Vueports Solutions.');
 
@@ -161,49 +150,44 @@ if (is_string($gallery)) {
 ?>
 
 <!-- Project Hero -->
-<section class="services-hero" style="padding-top:140px;">
+<section class="services-hero project-hero">
     <div class="container">
         <span class="section-tag">/ Portfolio</span>
         <h1><?= sanitize($project['title'] ?? 'Project') ?></h1>
-        <p style="color:var(--text-secondary); font-size:1.125rem; margin-top:12px;">
+        <p class="project-hero__desc">
             <?= sanitize($project['description'] ?? '') ?>
         </p>
     </div>
 </section>
 
 <!-- Project Detail -->
-<section class="section">
+<section class="section project-detail">
     <div class="container">
-        <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:48px; align-items:start;">
+        <div class="project-layout">
             
             <!-- Main Content -->
-            <div>
+            <div class="project-main">
                 <!-- Featured Image -->
-                <div style="border-radius:16px; overflow:hidden; margin-bottom:32px; background:var(--bg-secondary);">
+                <div class="project-image">
                     <img src="<?= sanitize($project['image'] ?? 'assets/images/placeholder.svg') ?>" 
-                         alt="<?= sanitize($project['title'] ?? 'Project') ?>" 
-                         style="width:100%; height:auto; display:block;"
+                         alt="<?= sanitize($project['title'] ?? 'Project') ?>"
                          onerror="this.src='assets/images/placeholder.svg'">
                 </div>
 
                 <!-- Description -->
-                <div style="margin-bottom:32px;">
-                    <h2 style="margin-bottom:16px;">About the Project</h2>
-                    <p style="color:var(--text-secondary); line-height:1.7; font-size:1.0625rem;">
-                        <?= sanitize($project['long_description'] ?? $project['description'] ?? 'No description available.') ?>
-                    </p>
+                <div class="project-about">
+                    <h2>About the Project</h2>
+                    <p><?= sanitize($project['long_description'] ?? $project['description'] ?? 'No description available.') ?></p>
                 </div>
 
                 <!-- Results -->
                 <?php if (!empty($results)): ?>
-                <div style="margin-bottom:32px;">
-                    <h3 style="margin-bottom:16px;">Key Results</h3>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:16px;">
+                <div class="project-results">
+                    <h3>Key Results</h3>
+                    <div class="results-grid">
                         <?php foreach ($results as $result): ?>
-                        <div class="card" style="text-align:center; padding:24px;">
-                            <div style="font-size:1.125rem; font-weight:700; color:var(--color-accent);">
-                                <?= sanitize($result) ?>
-                            </div>
+                        <div class="card result-card">
+                            <div class="result-text"><?= sanitize($result) ?></div>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -212,13 +196,12 @@ if (is_string($gallery)) {
 
                 <!-- Gallery -->
                 <?php if (!empty($gallery)): ?>
-                <div style="margin-bottom:32px;">
-                    <h3 style="margin-bottom:16px;">Project Gallery</h3>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px;">
+                <div class="project-gallery">
+                    <h3>Project Gallery</h3>
+                    <div class="gallery-grid">
                         <?php foreach ($gallery as $img): ?>
-                        <div style="border-radius:12px; overflow:hidden; background:var(--bg-secondary);">
+                        <div class="gallery-item">
                             <img src="<?= sanitize($img) ?>" alt="Project screenshot" 
-                                 style="width:100%; height:160px; object-fit:cover; display:block;" 
                                  onerror="this.src='assets/images/placeholder.svg'">
                         </div>
                         <?php endforeach; ?>
@@ -228,21 +211,17 @@ if (is_string($gallery)) {
 
                 <!-- Testimonial -->
                 <?php if (!empty($project['testimonial'])): ?>
-                <div class="card" style="background:var(--bg-secondary); border-left:4px solid var(--color-accent); padding:32px;">
-                    <div style="font-size:1.5rem; color:var(--color-accent); margin-bottom:12px;">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
-                    <p style="font-size:1.125rem; color:var(--text-primary); line-height:1.7; margin-bottom:16px; font-style:italic;">
-                        "<?= sanitize($project['testimonial']) ?>"
-                    </p>
+                <div class="card project-testimonial">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"<?= sanitize($project['testimonial']) ?>"</p>
                     <?php if (!empty($project['client_name'])): ?>
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:40px; height:40px; border-radius:50%; background:var(--bg-active); display:flex; align-items:center; justify-content:center; color:var(--color-accent); font-weight:700;">
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
                             <?= strtoupper(substr($project['client_name'], 0, 1)) ?>
                         </div>
-                        <div>
-                            <div style="font-weight:600;"><?= sanitize($project['client_name']) ?></div>
-                            <div style="font-size:0.875rem; color:var(--text-muted);"><?= sanitize($project['service_type'] ?? 'Client') ?></div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name"><?= sanitize($project['client_name']) ?></div>
+                            <div class="testimonial-role"><?= sanitize($project['service_type'] ?? 'Client') ?></div>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -251,28 +230,28 @@ if (is_string($gallery)) {
             </div>
 
             <!-- Sidebar -->
-            <div style="display:flex; flex-direction:column; gap:20px;">
+            <div class="project-sidebar">
                 
                 <!-- Project Meta -->
-                <div class="card">
-                    <h3 style="margin-bottom:16px; font-size:1rem;">Project Details</h3>
-                    <div style="display:flex; flex-direction:column; gap:12px;">
+                <div class="card sidebar-card">
+                    <h3>Project Details</h3>
+                    <div class="meta-list">
                         <?php if (!empty($project['service_type'])): ?>
-                        <div style="display:flex; justify-content:space-between;">
-                            <span style="color:var(--text-muted);">Category</span>
-                            <span style="font-weight:500;"><?= sanitize($project['service_type']) ?></span>
+                        <div class="meta-item">
+                            <span class="meta-label">Category</span>
+                            <span class="meta-value"><?= sanitize($project['service_type']) ?></span>
                         </div>
                         <?php endif; ?>
                         <?php if (!empty($project['client_name'])): ?>
-                        <div style="display:flex; justify-content:space-between;">
-                            <span style="color:var(--text-muted);">Client</span>
-                            <span style="font-weight:500;"><?= sanitize($project['client_name']) ?></span>
+                        <div class="meta-item">
+                            <span class="meta-label">Client</span>
+                            <span class="meta-value"><?= sanitize($project['client_name']) ?></span>
                         </div>
                         <?php endif; ?>
                         <?php if (!empty($project['year'])): ?>
-                        <div style="display:flex; justify-content:space-between;">
-                            <span style="color:var(--text-muted);">Year</span>
-                            <span style="font-weight:500;"><?= sanitize((string)$project['year']) ?></span>
+                        <div class="meta-item">
+                            <span class="meta-label">Year</span>
+                            <span class="meta-value"><?= sanitize((string)$project['year']) ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -280,9 +259,9 @@ if (is_string($gallery)) {
 
                 <!-- Tech Stack -->
                 <?php if (!empty($techStack)): ?>
-                <div class="card">
-                    <h3 style="margin-bottom:16px; font-size:1rem;">Tech Stack</h3>
-                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <div class="card sidebar-card">
+                    <h3>Tech Stack</h3>
+                    <div class="tech-tags">
                         <?php foreach ($techStack as $tech): ?>
                         <span class="skill-tag"><?= sanitize($tech) ?></span>
                         <?php endforeach; ?>
@@ -291,28 +270,28 @@ if (is_string($gallery)) {
                 <?php endif; ?>
 
                 <!-- Actions -->
-                <div class="card" style="display:flex; flex-direction:column; gap:12px;">
+                <div class="card sidebar-card sidebar-actions">
                     <?php if (!empty($project['live_url']) && $project['live_url'] !== '#'): ?>
-                    <a href="<?= sanitize($project['live_url']) ?>" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%; text-align:center;">
+                    <a href="<?= sanitize($project['live_url']) ?>" target="_blank" rel="noopener" class="btn btn-primary">
                         <i class="fas fa-external-link-alt"></i> View Live
                     </a>
                     <?php endif; ?>
                     <?php if (!empty($project['github_url']) && $project['github_url'] !== '#'): ?>
-                    <a href="<?= sanitize($project['github_url']) ?>" target="_blank" rel="noopener" class="btn btn-outline" style="width:100%; text-align:center;">
+                    <a href="<?= sanitize($project['github_url']) ?>" target="_blank" rel="noopener" class="btn btn-outline">
                         <i class="fab fa-github"></i> View Source
                     </a>
                     <?php endif; ?>
-                    <a href="consultation.php?project=<?= sanitize($project['slug'] ?? '') ?>" class="btn btn-outline" style="width:100%; text-align:center;">
+                    <a href="consultation.php?project=<?= sanitize($project['slug'] ?? '') ?>" class="btn btn-outline">
                         <i class="fas fa-envelope"></i> Start Similar Project
                     </a>
                 </div>
 
                 <!-- Navigation -->
-                <div style="display:flex; gap:12px;">
-                    <a href="portfolio.php" class="btn btn-outline" style="flex:1; text-align:center;">
+                <div class="sidebar-nav">
+                    <a href="portfolio.php" class="btn btn-outline">
                         <i class="fas fa-arrow-left"></i> All Projects
                     </a>
-                    <a href="booking.php" class="btn btn-primary" style="flex:1; text-align:center;">
+                    <a href="booking.php" class="btn btn-primary">
                         Hire Us <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -324,13 +303,13 @@ if (is_string($gallery)) {
 
 <!-- Related Projects -->
 <?php if (!empty($related)): ?>
-<section class="section" style="background:var(--bg-secondary);">
+<section class="section related-projects">
     <div class="container">
         <div class="section-header">
             <span class="section-tag">/ More Work</span>
             <h2 class="section-title">Related <span class="highlight">Projects</span></h2>
         </div>
-        <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="portfolio-grid related-grid">
             <?php foreach ($related as $r): ?>
             <div class="portfolio-card animate-on-scroll">
                 <div class="portfolio-image">
