@@ -2428,3 +2428,276 @@ button:focus-visible {
         padding: 0 20px 16px;
     }
 }
+/* ========================================
+   Hero — Two-Column Layout with Visual
+   ======================================== */
+
+.hero-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Keep existing hero-content styles, just ensure it doesn't overflow */
+.hero-content {
+    max-width: 640px;
+}
+
+/* ========================================
+   Floating Visual Cards
+   ======================================== */
+
+.hero-visual {
+    position: relative;
+    height: 480px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.hero-card {
+    position: absolute;
+    width: 280px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px var(--shadow-lg);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+}
+
+.hero-card__header {
+    display: flex;
+    gap: 6px;
+    padding: 16px 16px 0;
+}
+
+.hero-card__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.4;
+}
+
+.hero-card__body {
+    padding: 20px;
+}
+
+.hero-card__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hero-card__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary-400));
+    flex-shrink: 0;
+}
+
+.hero-card__lines {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.hero-card__line {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+}
+
+.hero-card__line--long { width: 100%; }
+.hero-card__line--med  { width: 70%; }
+.hero-card__line--short{ width: 50%; }
+
+.hero-card__chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 80px;
+    margin-top: 20px;
+    gap: 8px;
+}
+
+.hero-card__bar {
+    flex: 1;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--color-accent), var(--color-primary-400));
+    opacity: 0.8;
+}
+
+.hero-card__badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.hero-card__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.hero-card__status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.hero-card__pulse {
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero-card__metric {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.hero-card__number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary-400));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-card__label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.hero-card__progress {
+    height: 8px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.hero-card__progress-bar {
+    width: 85%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary-400));
+    border-radius: 4px;
+}
+
+.hero-card__tag {
+    padding: 4px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Card positions — layered floating effect */
+.hero-card--back {
+    top: 0;
+    right: 40px;
+    transform: rotate(-8deg) translateZ(-50px);
+    opacity: 0.7;
+    z-index: 1;
+}
+
+.hero-card--mid {
+    top: 80px;
+    right: 0;
+    transform: rotate(4deg) translateZ(0);
+    z-index: 2;
+}
+
+.hero-card--front {
+    top: 180px;
+    right: 60px;
+    transform: rotate(-2deg) translateZ(50px);
+    z-index: 3;
+    box-shadow: 0 35px 60px -15px var(--shadow-lg);
+}
+
+/* Hover lift */
+.hero-card:hover {
+    transform: rotate(0deg) translateY(-8px) scale(1.02);
+    z-index: 10;
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+
+@media (max-width: 1023px) {
+    .hero-wrapper {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        order: 1;
+    }
+
+    .hero-visual {
+        order: 2;
+        height: 380px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .hero-card {
+        width: 240px;
+    }
+
+    .hero-card--back {
+        top: 10px;
+        right: 60px;
+        transform: rotate(-6deg);
+    }
+
+    .hero-card--mid {
+        top: 70px;
+        right: 10px;
+        transform: rotate(3deg);
+    }
+
+    .hero-card--front {
+        top: 150px;
+        right: 50px;
+        transform: rotate(-2deg);
+    }
+}
+
+@media (max-width: 639px) {
+    .hero-visual {
+        display: none; /* Hide on very small screens — text is priority */
+    }
+
+    .hero-wrapper {
+        gap: 0;
+    }
+}
