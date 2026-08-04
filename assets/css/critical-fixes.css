@@ -1,0 +1,493 @@
+/* ========================================
+   CRITICAL FIXES — Apply after style.css
+   ======================================== */
+
+/* ─── FORCE DARK MODE AS DEFAULT ─── */
+:root {
+  --bg-body: #0a0a0a !important;
+  --bg-primary: #0a0a0a !important;
+  --bg-secondary: #141414 !important;
+  --bg-card: #141414 !important;
+  --bg-hover: #1a1a1a !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #a3a3a3 !important;
+  --text-muted: #737373 !important;
+  --border-color: #262626 !important;
+  --border-color-light: #1a1a1a !important;
+  --border-color-strong: #404040 !important;
+}
+
+/* ─── BODY OVERRIDE ─── */
+body {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+}
+
+/* ─── NAVBAR FIXES ─── */
+.navbar {
+  background: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid #262626 !important;
+  padding: 16px 0 !important;
+}
+
+.nav-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+.nav-menu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 32px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-link {
+  color: #a3a3a3 !important;
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  padding: 8px 0 !important;
+  position: relative !important;
+  white-space: nowrap !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffffff !important;
+}
+
+.logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.logo img {
+  height: 40px !important;
+  width: auto !important;
+}
+
+.nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+/* ─── ABOUT PAGE FIXES ─── */
+.about-hero {
+  padding-top: 120px !important;
+  padding-bottom: 80px !important;
+  background: #0a0a0a !important;
+}
+
+.about-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 64px !important;
+  align-items: start !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+.about-hero-image {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  margin-bottom: 32px !important;
+  background: #141414 !important;
+  border: 1px solid #262626 !important;
+}
+
+.about-hero-image img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+.about-lead {
+  font-size: 1.125rem !important;
+  line-height: 1.7 !important;
+  color: #a3a3a3 !important;
+  margin-bottom: 24px !important;
+}
+
+.about-text {
+  color: #a3a3a3 !important;
+  line-height: 1.7 !important;
+  margin-bottom: 24px !important;
+}
+
+/* Why choose us list */
+.about-why h3 {
+  margin-bottom: 16px !important;
+  font-size: 1.125rem !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.about-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.about-list li {
+  display: flex !important;
+  gap: 12px !important;
+  color: #a3a3a3 !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
+}
+
+.about-list li i {
+  color: #6366f1 !important;
+  margin-top: 3px !important;
+  flex-shrink: 0 !important;
+}
+
+/* ─── RIGHT SIDE CARDS (Mission/Vision/Values) ─── */
+.about-cards {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+
+.about-card {
+  background: #141414 !important;
+  border: 1px solid #262626 !important;
+  border-left: 3px solid #6366f1 !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+}
+
+.about-card--vision {
+  border-left-color: #818cf8 !important;
+}
+
+.about-card h3 {
+  margin-bottom: 8px !important;
+  color: #6366f1 !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.about-card--vision h3 {
+  color: #818cf8 !important;
+}
+
+.about-card p {
+  color: #a3a3a3 !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+/* ─── VALUES TAGS FIX ─── */
+.about-values {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+
+.about-values .skill-tag,
+.about-values span,
+.about-values a {
+  display: inline-flex !important;
+  padding: 6px 14px !important;
+  background: #1a1a1a !important;
+  border: 1px solid #262626 !important;
+  border-radius: 9999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: #a3a3a3 !important;
+  text-decoration: none !important;
+}
+
+/* ─── TECH STACK FIX ─── */
+.skills-showcase {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+.skill-category {
+  background: #141414 !important;
+  border: 1px solid #262626 !important;
+  border-radius: 16px !important;
+  padding: 32px !important;
+}
+
+.skill-category h3 {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 20px !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.skill-category h3 i {
+  color: #6366f1 !important;
+}
+
+.skill-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.skill-tag {
+  display: inline-flex !important;
+  padding: 6px 14px !important;
+  background: #1a1a1a !important;
+  border: 1px solid #262626 !important;
+  border-radius: 9999px !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  color: #a3a3a3 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.skill-tag:hover {
+  background: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+/* ─── SECTION HEADERS ─── */
+.section-header {
+  text-align: center !important;
+  margin-bottom: 64px !important;
+  max-width: 640px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0 24px !important;
+}
+
+.section-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-family: 'Fira Code', monospace !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: #6366f1 !important;
+  margin-bottom: 16px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+}
+
+.section-title {
+  font-size: clamp(1.875rem, 4vw, 3rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 16px !important;
+  color: #ffffff !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ─── FAQ SECTION FIX ─── */
+.faq-section {
+  padding: 80px 0 !important;
+  background: #0a0a0a !important;
+}
+
+.faq-grid {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
+.faq-item {
+  background: #141414 !important;
+  border: 1px solid #262626 !important;
+  border-radius: 10px !important;
+  margin-bottom: 12px !important;
+  overflow: hidden !important;
+}
+
+.faq-question {
+  padding: 20px 24px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  color: #ffffff !important;
+  background: none !important;
+  border: none !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.faq-question i {
+  color: #737373 !important;
+  font-size: 0.875rem !important;
+  transition: transform 0.25s ease !important;
+}
+
+.faq-item.active .faq-question i {
+  transform: rotate(180deg) !important;
+  color: #6366f1 !important;
+}
+
+.faq-answer {
+  padding: 0 24px !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+}
+
+.faq-item.active .faq-answer {
+  padding: 0 24px 20px !important;
+  max-height: 300px !important;
+}
+
+.faq-answer p {
+  color: #a3a3a3 !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.7 !important;
+  margin: 0 !important;
+}
+
+/* ─── FOOTER FIX ─── */
+.footer {
+  padding: 80px 0 0 !important;
+  background: #0a0a0a !important;
+  border-top: 1px solid #262626 !important;
+}
+
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
+  gap: 40px !important;
+  max-width: 1200px !important;
+  margin: 0 auto 64px !important;
+  padding: 0 24px !important;
+}
+
+.footer-brand p {
+  color: #a3a3a3 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.7 !important;
+  max-width: 320px !important;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 20px !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+.footer-links a {
+  color: #a3a3a3 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+
+.footer-links a:hover {
+  color: #6366f1 !important;
+}
+
+.footer-contact p {
+  color: #a3a3a3 !important;
+  font-size: 0.875rem !important;
+}
+
+.footer-contact i {
+  color: #6366f1 !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid #262626 !important;
+  padding: 24px 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+.footer-bottom p,
+.footer-legal a {
+  font-size: 0.75rem !important;
+  color: #737373 !important;
+}
+
+/* ─── RESPONSIVE FIXES ─── */
+@media (max-width: 1023px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .about-cards {
+    order: -1 !important;
+  }
+  .skills-showcase {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .footer-brand {
+    grid-column: span 2 !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .skills-showcase {
+    grid-template-columns: 1fr !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+  .footer-brand {
+    grid-column: span 1 !important;
+  }
+  .footer-brand p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .footer-social {
+    justify-content: center !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  .nav-menu {
+    gap: 0 !important;
+  }
+}
