@@ -1909,4 +1909,184 @@ button:focus-visible {
 
 .skip-link:focus {
     top: 0;
+}/* ========================================
+   About Page — Mobile Responsive Fixes
+   ======================================== */
+
+/* Hero image wrapper */
+.about-hero {
+    padding-top: 140px;
+}
+.about-hero-image {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    background: var(--bg-secondary);
+}
+.about-hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Two-column grid */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+/* Typography */
+.about-lead {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+.about-text {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+/* Why choose us list */
+.about-why h3 {
+    margin-bottom: 16px;
+    font-size: 1.125rem;
+}
+.about-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.about-list li {
+    display: flex;
+    gap: 12px;
+    color: var(--text-secondary);
+}
+.about-list li i {
+    color: var(--color-accent);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+/* Right-side cards */
+.about-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.about-card {
+    border-left: 4px solid var(--color-accent);
+}
+.about-card--vision {
+    border-left-color: var(--color-primary-400);
+}
+.about-card h3 {
+    margin-bottom: 8px;
+    color: var(--color-accent);
+}
+.about-card--vision h3 {
+    color: var(--color-primary-400);
+}
+.about-card p {
+    color: var(--text-secondary);
+}
+.about-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Tech stack spacing */
+.about-skills {
+    gap: 24px;
+}
+
+/* ========================================
+   Mobile Breakpoint (max-width: 1023px)
+   ======================================== */
+@media (max-width: 1023px) {
+    .about-hero {
+        padding-top: 100px;
+        text-align: center;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-cards {
+        order: -1; /* Move cards above text on mobile */
+    }
+
+    .about-list li {
+        text-align: left;
+    }
+}
+
+/* ========================================
+   Small Mobile (max-width: 639px)
+   ======================================== */
+@media (max-width: 639px) {
+    .about-hero {
+        padding-top: 80px;
+    }
+
+    .about-hero-image {
+        margin-bottom: 24px;
+        border-radius: 12px;
+    }
+
+    .about-grid {
+        gap: 32px;
+    }
+
+    .about-lead {
+        font-size: 1.05rem;
+    }
+
+    .about-card {
+        padding: 20px;
+    }
+
+    .about-card h3 {
+        font-size: 1rem;
+    }
+
+    /* Tech stack cards */
+    .about-skills {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-category {
+        padding: 24px;
+    }
+
+    .skill-category h3 {
+        font-size: 1rem;
+    }
+
+    .skill-tag {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+
+    /* FAQ tighter padding */
+    .about-faq .faq-question {
+        padding: 16px 20px;
+        font-size: 0.9375rem;
+    }
+
+    .about-faq .faq-answer {
+        padding: 0 20px;
+    }
+
+    .about-faq .faq-item.active .faq-answer {
+        padding: 0 20px 16px;
+    }
 }
