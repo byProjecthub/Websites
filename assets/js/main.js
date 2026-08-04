@@ -157,176 +157,151 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ========================================
        Testimonial Slider — COMPLETE REWRITE
        ======================================== */
+   document.addEventListener('DOMContentLoaded', function () {
     const track = document.getElementById('testimonialsTrack');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsContainer = document.getElementById('sliderDots');
-    
-    if (track && prevBtn && nextBtn) {
-        const cards = Array.from(track.querySelectorAll('.testimonial-card'));
-        let currentIndex = 0;
-        let autoplayInterval;
-        const total = cards.length;
 
-        if (total === 0) {
-            // Hide controls if no testimonials
-            if (prevBtn) prevBtn.style.display = 'none';
-            if (nextBtn) nextBtn.style.display = 'none';
-            if (dotsContainer) dotsContainer.style.display = 'none';
-            return;
-        }
+    if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
 
-        // FIXED: Calculate visible cards based on viewport
-        const getVisibleCards = () => {
-            if (window.innerWidth >= 1024) return 3;
-            if (window.innerWidth >= 640) return 2;
-            return 1;
-        };
+    const cards = Array.from(track.children);
+    let currentIndex = 0;
+    let autoplayInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-        // Create dots
-        const maxIndex = Math.max(0, total - getVisibleCards());
+    // Determine visible cards based on viewport
+    function getVisibleCount() {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 768) return 2;
+        return 1;
+    }
+
+    // Total "pages" of slides
+    function getMaxIndex() {
+        const visible = getVisibleCount();
+        return Math.max(0, cards.length - visible);
+    }
+
+    // Create dots
+    function createDots() {
+        dotsContainer.innerHTML = '';
+        const maxIndex = getMaxIndex();
         for (let i = 0; i <= maxIndex; i++) {
             const dot = document.createElement('button');
             dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
-            dot.addEventListener('click', () => {
-                goTo(i);
-                resetAutoplay();
-            });
-            dotsContainer?.appendChild(dot);
+            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
         }
+    }
 
-        const getCardWidth = () => {
-            const card = cards[0];
-            if (!card) return 0;
-            const gap = 24; // FIXED: Use CSS gap value instead of margin
-            return card.offsetWidth + gap;
-        };
+    // Update slider position
+    function updateSlider() {
+        const visible = getVisibleCount();
+        const gap = 24;
+        const cardWidth = cards[0]?.offsetWidth || 0;
+        const offset = currentIndex * (cardWidth + gap);
+        track.style.transform = `translateX(-${offset}px)`;
 
-        const updateSlider = () => {
-            const cardWidth = getCardWidth();
-            const visible = getVisibleCards();
-            const maxIdx = Math.max(0, total - visible);
-            
-            // FIXED: Clamp currentIndex
-            currentIndex = Math.min(currentIndex, maxIdx);
-            
-            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            // Update dots
-            dotsContainer?.querySelectorAll('.slider-dot').forEach((d, i) => {
-                d.classList.toggle('active', i === currentIndex);
-                d.setAttribute('aria-current', i === currentIndex ? 'true' : 'false');
-            });
-            
-            // FIXED: Update button states with disabled attribute
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= maxIdx;
-            prevBtn.style.opacity = currentIndex === 0 ? '0.4' : '1';
-            nextBtn.style.opacity = currentIndex >= maxIdx ? '0.4' : '1';
-        };
-
-        const goTo = (index) => {
-            const visible = getVisibleCards();
-            const maxIdx = Math.max(0, total - visible);
-            currentIndex = Math.max(0, Math.min(index, maxIdx));
-            updateSlider();
-        };
-
-        const next = () => {
-            const visible = getVisibleCards();
-            const maxIdx = Math.max(0, total - visible);
-            if (currentIndex >= maxIdx) {
-                goTo(0); // FIXED: Loop back to start
-            } else {
-                goTo(currentIndex + 1);
-            }
-        };
-
-        const prev = () => {
-            if (currentIndex <= 0) {
-                const visible = getVisibleCards();
-                const maxIdx = Math.max(0, total - visible);
-                goTo(maxIdx); // FIXED: Loop to end
-            } else {
-                goTo(currentIndex - 1);
-            }
-        };
-
-        const startAutoplay = () => {
-            autoplayInterval = setInterval(next, 5000); // FIXED: 5s instead of 6s
-        };
-
-        const resetAutoplay = () => {
-            clearInterval(autoplayInterval);
-            startAutoplay();
-        };
-
-        prevBtn.addEventListener('click', () => { prev(); resetAutoplay(); });
-        nextBtn.addEventListener('click', () => { next(); resetAutoplay(); });
-        
-        // Keyboard navigation
-        track?.parentElement?.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') { prev(); resetAutoplay(); }
-            if (e.key === 'ArrowRight') { next(); resetAutoplay(); }
+        // Update dots
+        const dots = dotsContainer.querySelectorAll('.slider-dot');
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
         });
 
-        // Touch/swipe support — FIXED: Better touch handling
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let isDragging = false;
-        
-        track?.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            isDragging = true;
-        }, { passive: true });
-        
-        track?.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            touchEndX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        track?.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                diff > 0 ? next() : prev();
-                resetAutoplay();
-            }
-        }, { passive: true });
+        // Update buttons
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= getMaxIndex();
+    }
 
-        // Pause on hover
-        const sliderContainer = track?.parentElement;
-        sliderContainer?.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-        sliderContainer?.addEventListener('mouseleave', startAutoplay);
-
-        // FIXED: Handle resize
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                // Recreate dots for new visible count
-                if (dotsContainer) dotsContainer.innerHTML = '';
-                const newMax = Math.max(0, total - getVisibleCards());
-                for (let i = 0; i <= newMax; i++) {
-                    const dot = document.createElement('button');
-                    dot.className = 'slider-dot' + (i === currentIndex ? ' active' : '');
-                    dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
-                    dot.addEventListener('click', () => {
-                        goTo(i);
-                        resetAutoplay();
-                    });
-                    dotsContainer?.appendChild(dot);
-                }
-                updateSlider();
-            }, 250);
-        });
-
+    function goToSlide(index) {
+        currentIndex = Math.max(0, Math.min(index, getMaxIndex()));
         updateSlider();
+        resetAutoplay();
+    }
+
+    function nextSlide() {
+        const max = getMaxIndex();
+        if (currentIndex < max) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // loop back
+        }
+        updateSlider();
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = getMaxIndex(); // loop to end
+        }
+        updateSlider();
+    }
+
+    // Autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 5000);
+    }
+
+    function resetAutoplay() {
+        clearInterval(autoplayInterval);
         startAutoplay();
     }
+
+    // Event listeners
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetAutoplay();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetAutoplay();
+    });
+
+    // Touch/swipe support
+    track.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+            resetAutoplay();
+        }
+    }
+
+    // Pause autoplay on hover
+    track.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+    track.addEventListener('mouseleave', startAutoplay);
+
+    // Recalculate on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            currentIndex = Math.min(currentIndex, getMaxIndex());
+            createDots();
+            updateSlider();
+        }, 250);
+    });
+
+    // Init
+    createDots();
+    updateSlider();
+    startAutoplay();
+});
 
     /* ========================================
        Typewriter Effect — FIXED
