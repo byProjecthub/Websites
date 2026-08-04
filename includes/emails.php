@@ -54,6 +54,9 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
 /**
  * Resend API v1 — POST /emails
  */
+/**
+ * Resend API v1 — POST /emails
+ */
 function sendViaResend(string $toEmail, string $toName, string $subject, string $htmlBody, ?string $textBody = null): bool {
     $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
     $fromEmail = getenv('SMTP_FROM') ?: ($_ENV['SMTP_FROM'] ?? getSetting('smtp_from', 'noreply@vueports.reloventura.site'));
@@ -68,20 +71,14 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
         return false;
     }
     
+    // Resend expects reply_to as a STRING, not an object
     $payload = [
         'from' => $from,
         'to' => [$to],
         'subject' => $subject,
         'html' => $htmlBody,
         'text' => $textBody ?? strip_tags($htmlBody),
-        'reply_to' => [
-            'email' => $replyTo,
-            'name' => $fromName
-        ],
-        'headers' => [
-            'List-Unsubscribe' => '<mailto:' . $replyTo . '?subject=unsubscribe>',
-            'X-Mailer' => 'Vueports Solutions Mailer'
-        ]
+        'reply_to' => $replyTo,  // ← must be a string email address
     ];
     
     $ch = curl_init('https://api.resend.com/emails');
