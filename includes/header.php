@@ -127,9 +127,6 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
         </ul>
 
         <div class="nav-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <i class="fas fa-moon"></i>
-            </button>
             <a href="contact.php" class="btn btn-primary btn-sm">Hire Us</a>
             <button class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span><span></span><span></span>
