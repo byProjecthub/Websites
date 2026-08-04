@@ -78,13 +78,20 @@ function sendViaResend(string $toEmail, string $toName, string $subject, string 
     
     error_log("sendViaResend: From=$from | To=$to | Subject=$subject");
     
-    $payload = [
-        'from' => $from,
-        'to' => [$to],
-        'subject' => $subject,
-        'html' => $htmlBody,
-        'text' => $textBody ?? strip_tags($htmlBody),
-    ];
+   $payload = [
+    'from' => $from,
+    'to' => [$to],
+    'subject' => $subject,
+    'html' => $htmlBody,
+    'text' => $textBody ?? strip_tags($htmlBody),
+    'reply_to' => [
+        'email' => 'njabulod.hlongwane@gmail.com',
+        'name' => 'Vueports Solutions'
+    ],
+    'headers' => [
+        'List-Unsubscribe' => '<mailto:njabulod.hlongwane@gmail.com?subject=unsubscribe>'
+    ]
+];
     
     $ch = curl_init('https://api.resend.com/emails');
     curl_setopt($ch, CURLOPT_POST, true);
