@@ -25,14 +25,17 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     
-<link rel="icon" type="image/png" href="/images/apple-touch-icon.png">
-    <!-- CRITICAL: Ensure mobile dropdown works even if responsive.css is missing -->
+    <link rel="icon" type="image/png" href="/images/apple-touch-icon.png">
+    
+    <!-- CRITICAL MOBILE NAV FIXES -->
     <style>
+        /* Overlay */
         .nav-overlay {
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 998;
             opacity: 0;
             visibility: hidden;
@@ -42,13 +45,130 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
             opacity: 1;
             visibility: visible;
         }
+
+        /* Mobile menu base */
         @media (max-width: 1023px) {
-            .dropdown-menu {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 360px;
+                height: 100vh;
+                height: 100dvh;
+                background: var(--bg-card, #ffffff);
+                flex-direction: column;
+                padding: 80px 24px 24px;
+                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+                gap: 0;
+                overflow-y: auto;
+                z-index: 999;
+            }
+            [data-theme="dark"] .nav-menu {
+                background: var(--bg-primary, #0f172a);
+            }
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-link {
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border-color, #e2e8f0);
+                width: 100%;
+                font-size: 1.125rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .nav-link::after {
                 display: none;
             }
-            .dropdown.active .dropdown-menu {
-                display: block !important;
+
+            /* Dropdown on mobile */
+            .dropdown {
+                width: 100%;
             }
+            .dropdown-toggle {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .dropdown-toggle i {
+                transition: transform 0.3s ease;
+                font-size: 0.875rem;
+            }
+            .dropdown.active .dropdown-toggle i {
+                transform: rotate(180deg);
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                background: var(--bg-secondary, #f1f5f9);
+                margin: 0 0 8px;
+                padding: 8px 0;
+                border-radius: 12px;
+                display: none;
+                min-width: 100%;
+                overflow: hidden;
+            }
+            [data-theme="dark"] .dropdown-menu {
+                background: var(--bg-secondary, #1e293b);
+            }
+            .dropdown.active .dropdown-menu {
+                display: block;
+                animation: dropdownSlide 0.25s ease;
+            }
+            @keyframes dropdownSlide {
+                from { opacity: 0; transform: translateY(-8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .dropdown-menu a {
+                padding: 12px 20px;
+                border-bottom: 1px solid var(--border-color-light, rgba(0,0,0,0.05));
+                font-size: 1rem;
+            }
+            .dropdown-menu a:last-child {
+                border-bottom: none;
+            }
+
+            .nav-actions {
+                margin-top: 16px;
+                padding-top: 16px;
+                border-top: 1px solid var(--border-color, #e2e8f0);
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            /* Hamburger animation */
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+            .hamburger span {
+                transition: all 0.3s ease;
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
+        /* Prevent body scroll when menu open */
+        body.menu-open {
+            overflow: hidden;
+            touch-action: none;
         }
     </style>
     
@@ -127,7 +247,7 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
 
         <div class="nav-actions">
             <a href="contact.php" class="btn btn-primary btn-sm">Hire Us</a>
-            <button class="hamburger" id="hamburger" aria-label="Menu">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>
@@ -143,25 +263,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const navMenu   = document.getElementById('navMenu');
     const overlay   = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
-    const navLinks  = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a, .dropdown-menu a');
+    const body      = document.body;
 
     /* ---------- Toggle mobile menu ---------- */
-    function toggleMenu(forceClose) {
-        if (forceClose === true) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            dropdowns.forEach(d => {
-                d.classList.remove('active');
-                const m = d.querySelector('.dropdown-menu');
-                if (m) m.style.display = '';
-            });
-            document.body.style.overflow = '';
+    function openMenu() {
+        hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        navMenu.classList.add('active');
+        overlay.classList.add('active');
+        body.classList.add('menu-open');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        body.classList.remove('menu-open');
+        // Close all dropdowns too
+        dropdowns.forEach(d => {
+            d.classList.remove('active');
+            const m = d.querySelector('.dropdown-menu');
+            if (m) m.style.display = '';
+        });
+    }
+
+    function toggleMenu() {
+        if (navMenu.classList.contains('active')) {
+            closeMenu();
         } else {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            openMenu();
         }
     }
 
@@ -170,88 +301,71 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleMenu();
     });
 
-    overlay.addEventListener('click', function () {
-        toggleMenu(true);
-    });
+    overlay.addEventListener('click', closeMenu);
 
     /* ---------- Close menu when clicking a regular link ---------- */
-    navLinks.forEach(link => {
+    navMenu.querySelectorAll('a:not(.dropdown-toggle)').forEach(link => {
         link.addEventListener('click', function () {
-            if (navMenu.classList.contains('active')) {
-                toggleMenu(true);
+            if (window.innerWidth <= 1023) {
+                closeMenu();
             }
         });
     });
 
-    /* ---------- Mobile dropdown toggles (THE FIX) ---------- */
+    /* ---------- Mobile dropdown toggles ---------- */
     dropdowns.forEach(dropdown => {
         const toggle = dropdown.querySelector('.dropdown-toggle');
         const menu   = dropdown.querySelector('.dropdown-menu');
         if (!toggle || !menu) return;
 
         toggle.addEventListener('click', function (e) {
-            // Only intercept on mobile/tablet
-            if (window.innerWidth > 1023) return;
+            // Desktop: let CSS hover handle it, but prevent jump
+            if (window.innerWidth > 1023) {
+                e.preventDefault();
+                return;
+            }
 
             e.preventDefault();
             e.stopPropagation();
 
-            // Close other dropdowns (accordion style)
+            const isOpen = dropdown.classList.contains('active');
+
+            // Close ALL other dropdowns first (accordion)
             dropdowns.forEach(d => {
-                if (d !== dropdown) {
-                    d.classList.remove('active');
-                    const m = d.querySelector('.dropdown-menu');
-                    if (m) m.style.display = 'none';
-                }
+                if (d !== dropdown) d.classList.remove('active');
             });
 
-            // Toggle this dropdown
-            const isOpen = dropdown.classList.contains('active');
-            if (isOpen) {
-                dropdown.classList.remove('active');
-                menu.style.display = 'none';
-            } else {
-                dropdown.classList.add('active');
-                menu.style.display = 'block';
-            }
+            // Toggle this one
+            dropdown.classList.toggle('active', !isOpen);
         });
+    });
+
+    /* ---------- Click outside dropdown to close it ---------- */
+    document.addEventListener('click', function (e) {
+        if (window.innerWidth > 1023) return;
+        const clickedDropdown = e.target.closest('.dropdown');
+        if (!clickedDropdown) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+
+    /* ---------- Escape key closes everything ---------- */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeMenu();
+        }
     });
 
     /* ---------- Reset on resize to desktop ---------- */
+    let resizeTimer;
     window.addEventListener('resize', function () {
-        if (window.innerWidth > 1023) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            dropdowns.forEach(d => {
-                d.classList.remove('active');
-                const m = d.querySelector('.dropdown-menu');
-                if (m) m.style.display = '';
-            });
-            document.body.style.overflow = '';
-        }
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            if (window.innerWidth > 1023) {
+                closeMenu();
+            }
+        }, 150);
     });
-
-    /* ---------- Theme toggle ---------- */
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', function () {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            const icon = this.querySelector('i');
-            if (icon) icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        });
-
-        const saved = localStorage.getItem('theme');
-        if (saved) {
-            document.documentElement.setAttribute('data-theme', saved);
-            const icon = themeToggle.querySelector('i');
-            if (icon) icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-    }
 
     /* ---------- Navbar scroll shadow ---------- */
     const navbar = document.getElementById('navbar');
