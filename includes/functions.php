@@ -1277,3 +1277,158 @@ function hashPassword(string $password): string {
 function passwordNeedsRehash(string $hash): bool {
     return password_needs_rehash($hash, PASSWORD_BCRYPT, ['cost' => 12]);
 }
+
+/* ========================================
+   SMS Integration
+   ======================================== */
+
+/**
+ * Send SMS via Twilio
+ */
+function sendSMSTwilio(string $toPhone, string $message): bool {
+    $sid = getenv('TWILIO_SID') ?: ($_ENV['TWILIO_SID'] ?? '');
+    $token = getenv('TWILIO_TOKEN') ?: ($_ENV['TWILIO_TOKEN'] ?? '');
+    $from = getenv('TWILIO_FROM') ?: ($_ENV['TWILIO_FROM'] ?? '');
+    
+    if (empty($sid) || empty($token) || empty($from)) {
+        error_log('sendSMSTwilio: Missing credentials');
+        return false;
+    }
+    
+    // Format SA number if needed
+    $to = formatSANumber($toPhone);
+    
+    $url = "https://api.twilio.com/2010-04-01/Accounts/$sid/Messages.json";
+    
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'To' => $to,
+        'From' => $from,
+        'Body' => $message
+    ]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERPWD, "$sid:$token");
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    if ($curlError) {
+        error_log("Twilio SMS cURL error: $curlError");
+        return false;
+    }
+    
+    if ($httpCode >= 200 && $httpCode < 300) {
+        error_log("Twilio SMS sent to $to");
+        return true;
+    }
+    
+    error_log("Twilio SMS failed: HTTP $httpCode | $response");
+    return false;
+}
+
+/**
+ * Send SMS via Africa's Talking
+ */
+function sendSMSAfrica(string $toPhone, string $message): bool {
+    $username = getenv('AT_USERNAME') ?: ($_ENV['AT_USERNAME'] ?? '');
+    $apiKey = getenv('AT_API_KEY') ?: ($_ENV['AT_API_KEY'] ?? '');
+    $sender = getenv('AT_SENDER_ID') ?: ($_ENV['AT_SENDER_ID'] ?? '');
+    
+    if (empty($username) || empty($apiKey)) {
+        error_log('sendSMSAfrica: Missing credentials');
+        return false;
+    }
+    
+    $to = formatSANumber($toPhone);
+    
+    $url = 'https://api.africastalking.com/version1/messaging';
+    
+    $postData = [
+        'username' => $username,
+        'to' => $to,
+        'message' => $message,
+    ];
+    
+    if (!empty($sender)) {
+        $postData['from'] = $sender;
+    }
+    
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'apiKey: ' . $apiKey,
+        'Content-Type: application/x-www-form-urlencoded',
+        'Accept: application/json'
+    ]);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    
+    if ($curlError) {
+        error_log("Africa's Talking SMS cURL error: $curlError");
+        return false;
+    }
+    
+    $decoded = json_decode($response, true);
+    if (isset($decoded['SMSMessageData']['Recipients'][0]['status']) && 
+        $decoded['SMSMessageData']['Recipients'][0]['status'] === 'Success') {
+        error_log("Africa's Talking SMS sent to $to");
+        return true;
+    }
+    
+    error_log("Africa's Talking SMS failed: HTTP $httpCode | $response");
+    return false;
+}
+
+/**
+ * Unified SMS sender — auto-detects provider
+ */
+function sendSMS(string $toPhone, string $message): bool {
+    // Try Twilio first if configured
+    if (getenv('TWILIO_SID') || ($_ENV['TWILIO_SID'] ?? false)) {
+        return sendSMSTwilio($toPhone, $message);
+    }
+    
+    // Fallback to Africa's Talking
+    if (getenv('AT_USERNAME') || ($_ENV['AT_USERNAME'] ?? false)) {
+        return sendSMSAfrica($toPhone, $message);
+    }
+    
+    error_log('sendSMS: No SMS provider configured');
+    return false;
+}
+
+/**
+ * Format South African phone numbers
+ * +27 68 826 1507 → +27688261507
+ * 068 826 1507 → +27688261507
+ */
+function formatSANumber(string $phone): string {
+    $clean = preg_replace('/[^0-9]/', '', $phone);
+    
+    // If starts with 0, replace with +27
+    if (str_starts_with($clean, '0')) {
+        return '+27' . substr($clean, 1);
+    }
+    
+    // If no country code, assume SA
+    if (!str_starts_with($clean, '27') && !str_starts_with($clean, '+')) {
+        return '+27' . $clean;
+    }
+    
+    // If starts with 27 but no +
+    if (str_starts_with($clean, '27')) {
+        return '+' . $clean;
+    }
+    
+    return $clean;
+}
