@@ -191,18 +191,20 @@ $stats = [
                 <!-- Fallback static portfolio cards -->
                 <div class="portfolio-card featured animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="assets/images/placeholder.svg" alt="Finlytics" loading="lazy">
+                        <img src="/images/Finlytics.png" alt="Finlytics" loading="lazy">
                         <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
                     </div>
                     <div class="portfolio-info">
                         <span class="portfolio-tag">SaaS</span>
+                        <span class="portfolio-tag">BI Dashboard</span>
                         <h3>Finlytics Dashboard</h3>
                         <p>Real-time financial analytics with multi-tenant architecture.</p>
+                        <p>Processing 11 analytical Screens.</p>
                     </div>
                 </div>
                 <div class="portfolio-card animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="assets/images/placeholder.svg" alt="Reloventura" loading="lazy">
+                        <img src="/images/reloventura.png" alt="Reloventura" loading="lazy">
                         <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
                     </div>
                     <div class="portfolio-info">
@@ -215,11 +217,6 @@ $stats = [
                     <div class="portfolio-image">
                         <img src="assets/images/placeholder.svg" alt="Data Pipeline" loading="lazy">
                         <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
-                    </div>
-                    <div class="portfolio-info">
-                        <span class="portfolio-tag">Data Engineering</span>
-                        <h3>Enterprise ETL Pipeline</h3>
-                        <p>Processing 2M+ records daily in the cloud.</p>
                     </div>
                 </div>
             <?php endif; ?>
