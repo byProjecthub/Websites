@@ -302,7 +302,7 @@ if (is_string($gallery)) {
                         <i class="fab fa-github"></i> View Source
                     </a>
                     <?php endif; ?>
-                    <a href="contact.php?project=<?= sanitize($project['slug'] ?? '') ?>" class="btn btn-outline" style="width:100%; text-align:center;">
+                    <a href="consultation.php?project=<?= sanitize($project['slug'] ?? '') ?>" class="btn btn-outline" style="width:100%; text-align:center;">
                         <i class="fas fa-envelope"></i> Start Similar Project
                     </a>
                 </div>
@@ -312,7 +312,7 @@ if (is_string($gallery)) {
                     <a href="portfolio.php" class="btn btn-outline" style="flex:1; text-align:center;">
                         <i class="fas fa-arrow-left"></i> All Projects
                     </a>
-                    <a href="contact.php" class="btn btn-primary" style="flex:1; text-align:center;">
+                    <a href="booking.php" class="btn btn-primary" style="flex:1; text-align:center;">
                         Hire Us <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
