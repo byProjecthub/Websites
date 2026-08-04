@@ -48,7 +48,9 @@ $stats = [
         <div class="hero-orb hero-orb-1"></div>
         <div class="hero-orb hero-orb-2"></div>
     </div>
-    <div class="container">
+    <div class="container hero-wrapper">
+        
+        <!-- Left: Existing content -->
         <div class="hero-content">
             <h1 class="hero-title">
                 Vueports Solutions is your best <span class="highlight gradient-text">IT Solutions Production Partner</span> — 
@@ -70,8 +72,74 @@ $stats = [
                 </div>
             </div>
         </div>
+
+        <!-- Right: Floating visual cards -->
+        <div class="hero-visual">
+            <div class="hero-card hero-card--back">
+                <div class="hero-card__header">
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                </div>
+                <div class="hero-card__body">
+                    <div class="hero-card__row">
+                        <div class="hero-card__avatar"></div>
+                        <div class="hero-card__lines">
+                            <div class="hero-card__line hero-card__line--long"></div>
+                            <div class="hero-card__line hero-card__line--short"></div>
+                        </div>
+                    </div>
+                    <div class="hero-card__chart">
+                        <div class="hero-card__bar" style="height:40%"></div>
+                        <div class="hero-card__bar" style="height:70%"></div>
+                        <div class="hero-card__bar" style="height:55%"></div>
+                        <div class="hero-card__bar" style="height:90%"></div>
+                        <div class="hero-card__bar" style="height:65%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card hero-card--mid">
+                <div class="hero-card__header">
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                </div>
+                <div class="hero-card__body">
+                    <div class="hero-card__badge">AI Agent</div>
+                    <div class="hero-card__title">Autonomous Workflow</div>
+                    <div class="hero-card__line hero-card__line--long"></div>
+                    <div class="hero-card__line hero-card__line--med"></div>
+                    <div class="hero-card__status">
+                        <span class="hero-card__pulse"></span>
+                        <span>Running</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card hero-card--front">
+                <div class="hero-card__header">
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                    <div class="hero-card__dot"></div>
+                </div>
+                <div class="hero-card__body">
+                    <div class="hero-card__metric">
+                        <div class="hero-card__number">99.9%</div>
+                        <div class="hero-card__label">Uptime</div>
+                    </div>
+                    <div class="hero-card__progress">
+                        <div class="hero-card__progress-bar"></div>
+                    </div>
+                    <div class="hero-card__row" style="margin-top:16px; gap:8px;">
+                        <span class="hero-card__tag">Cloud</span>
+                        <span class="hero-card__tag">Secure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    
 </section>
 
 <!-- Stats Bar -->
