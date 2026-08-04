@@ -29,158 +29,149 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     
     <!-- MOBILE NAV FIXES -->
     <style>
-        /* Overlay — MUST be above navbar */
-        .nav-overlay {
+    /* Overlay — solid dark, NO blur to prevent menu blur */
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Mobile menu — solid opaque background, forced crisp rendering */
+    @media (max-width: 1023px) {
+        .nav-menu {
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            top: 0;
+            right: -110%;
+            width: 85%;
+            max-width: 360px;
+            height: 100vh;
+            height: 100dvh;
+            background: #ffffff;
+            flex-direction: column;
+            padding: 100px 28px 32px;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.25);
+            gap: 0;
+            overflow-y: auto;
+            z-index: 2001;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
         }
-        .nav-overlay.active {
+        [data-theme="dark"] .nav-menu {
+            background: #0f172a;
+        }
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu > li {
+            width: 100%;
+        }
+
+        .nav-link {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
+            width: 100%;
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-link::after {
+            display: none !important;
+        }
+
+        .dropdown {
+            width: 100%;
+        }
+        .dropdown-toggle i {
+            transition: transform 0.3s ease;
+            font-size: 0.875rem;
+            margin-left: auto;
+        }
+        .dropdown.active .dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: static;
             opacity: 1;
             visibility: visible;
-        }
-
-        /* Mobile menu — MUST be above overlay AND navbar */
-        @media (max-width: 1023px) {
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -110%;
-                width: 85%;
-                max-width: 360px;
-                height: 100vh;
-                height: 100dvh;
-                background: var(--bg-card, #ffffff);
-                flex-direction: column;
-                padding: 100px 28px 32px;
-                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -10px 0 40px rgba(0,0,0,0.2);
-                gap: 0;
-                overflow-y: auto;
-                z-index: 2001; /* ABOVE overlay and navbar */
-            }
-            [data-theme="dark"] .nav-menu {
-                background: var(--bg-primary, #0f172a);
-            }
-            .nav-menu.active {
-                right: 0;
-            }
-
-            .nav-menu > li {
-                width: 100%;
-            }
-
-            .nav-link {
-                padding: 16px 0;
-                border-bottom: 1px solid var(--border-color, #e2e8f0);
-                width: 100%;
-                font-size: 1.125rem;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .nav-link::after {
-                display: none !important;
-            }
-
-            /* Dropdown */
-            .dropdown {
-                width: 100%;
-            }
-            .dropdown-toggle i {
-                transition: transform 0.3s ease;
-                font-size: 0.875rem;
-                margin-left: auto;
-            }
-            .dropdown.active .dropdown-toggle i {
-                transform: rotate(180deg);
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                border: none;
-                background: var(--bg-secondary, #f1f5f9);
-                margin: 0 0 12px;
-                padding: 8px 0;
-                border-radius: 12px;
-                display: none;
-                min-width: 100%;
-                overflow: hidden;
-                animation: none;
-            }
-            [data-theme="dark"] .dropdown-menu {
-                background: var(--bg-secondary, #1e293b);
-            }
-            .dropdown.active .dropdown-menu {
-                display: block;
-                animation: dropdownSlide 0.2s ease;
-            }
-            @keyframes dropdownSlide {
-                from { opacity: 0; transform: translateY(-6px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            .dropdown-menu a {
-                padding: 12px 20px;
-                border-bottom: 1px solid var(--border-color-light, rgba(0,0,0,0.05));
-                font-size: 1rem;
-                display: block;
-            }
-            .dropdown-menu a:last-child {
-                border-bottom: none;
-            }
-
-            /* Hamburger — visible only on mobile */
-            .hamburger {
-                display: flex !important;
-                position: relative;
-                z-index: 2002; /* Above menu */
-            }
-            .hamburger span {
-                transition: all 0.3s ease;
-            }
-            .hamburger.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-                transform: scaleX(0);
-            }
-            .hamburger.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(5px, -5px);
-            }
-
-            /* Hide Hire Us button in top bar on mobile if you want cleaner look */
-            .nav-actions .btn-primary {
-                display: none;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .hamburger {
-                display: none !important;
-            }
-            .nav-overlay {
-                display: none !important;
-            }
-        }
-
-        /* Lock body scroll */
-        body.menu-open {
+            transform: none;
+            box-shadow: none;
+            border: none;
+            background: #f1f5f9;
+            margin: 0 0 12px;
+            padding: 8px 0;
+            border-radius: 12px;
+            display: none;
+            min-width: 100%;
             overflow: hidden;
-            touch-action: none;
         }
-    </style>
+        [data-theme="dark"] .dropdown-menu {
+            background: #1e293b;
+        }
+        .dropdown.active .dropdown-menu {
+            display: block;
+            animation: dropdownSlide 0.2s ease;
+        }
+        @keyframes dropdownSlide {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 1rem;
+            display: block;
+        }
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .hamburger {
+            display: flex !important;
+            position: relative;
+            z-index: 2002;
+        }
+        .hamburger span {
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .nav-actions .btn-primary {
+            display: none;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .hamburger { display: none !important; }
+        .nav-overlay { display: none !important; }
+    }
+
+    body.menu-open {
+        overflow: hidden;
+        touch-action: none;
+    }
+</style>
     
     <script>
     window.addEventListener('load', function(){
