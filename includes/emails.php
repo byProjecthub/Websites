@@ -279,11 +279,12 @@ function sendSingleQueuedEmail(int $emailId): bool {
 
 function buildEmailTemplate(string $content, string $title = ''): string {
     $appName = getSetting('app_name', 'Vueports Solutions');
-    $appUrl = getSetting('app_url', 'https://vueports.reloventura.site');
+    $appUrl = getSetting('app_url', 'https://vueports.reloventura.site'); // ← updated
     $year = date('Y');
-    $contactEmail = getSetting('contact_email', 'colourerrclrr@gmail.com');
+    $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     $contactPhone = getSetting('contact_phone', '+27 (68) 826-1507');
     
+
     return '<!DOCTYPE html>
 <html lang="en">
 <head>
