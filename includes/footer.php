@@ -1,5 +1,6 @@
 <?php
 // Vueports Solutions — Footer Template
+if (!isset($basePath)) { $basePath = './'; }
 ?>
 
 <!-- Footer -->
@@ -27,11 +28,11 @@
       <div class="footer-column">
         <h4>Services</h4>
         <ul>
-          <li><a href="services.php">Custom Software</a></li>
-          <li><a href="services.php">Data Engineering</a></li>
-          <li><a href="services.php">AI Agents</a></li>
-          <li><a href="services.php">Cloud Solutions</a></li>
-          <li><a href="services.php">Consulting</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/services.php">Custom Software</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/services.php">Data Engineering</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/services.php">AI Agents</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/services.php">Cloud Solutions</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/services.php">Consulting</a></li>
         </ul>
       </div>
 
@@ -39,9 +40,9 @@
       <div class="footer-column">
         <h4>Company</h4>
         <ul>
-          <li><a href="about.php">About Us</a></li>
-          <li><a href="pricing.php">Pricing</a></li>
-          <li><a href="contact.php">Contact</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/about.php">About Us</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/pricing.php">Pricing</a></li>
+          <li><a href="<?php echo $basePath; ?>pages/contact.php">Contact</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">Blog</a></li>
         </ul>

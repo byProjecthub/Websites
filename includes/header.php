@@ -1,6 +1,7 @@
 <?php
 // Vueports Solutions — Header Template
-// Coolors-inspired + Monochrome Noir
+// Include config.php BEFORE this file to set BASE_PATH
+if (!isset($basePath)) { $basePath = './'; }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,27 +10,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo isset($pageTitle) ? $pageTitle . ' | ' : ''; ?>Vueports Solutions</title>
   <meta name="description" content="Vueports Solutions — Custom Software, Data Engineering & AI Agents">
-  <link rel="stylesheet" href="assets/css/variables.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="<?php echo $basePath; ?>assets/css/variables.css">
+  <link rel="stylesheet" href="<?php echo $basePath; ?>assets/css/style.css">
 </head>
 <body>
 
 <!-- Navigation -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="index.php" class="navbar-logo">Vueports<span>.</span></a>
+    <a href="<?php echo $basePath; ?>index.php" class="navbar-logo">Vueports<span>.</span></a>
 
     <div class="navbar-links">
-      <a href="index.php">Home</a>
-      <a href="about.php">About</a>
-      <a href="services.php">Services</a>
-      <a href="pricing.php">Pricing</a>
-      <a href="contact.php">Contact</a>
+      <a href="<?php echo $basePath; ?>index.php">Home</a>
+      <a href="<?php echo $basePath; ?>pages/about.php">About</a>
+      <a href="<?php echo $basePath; ?>pages/services.php">Services</a>
+      <a href="<?php echo $basePath; ?>pages/pricing.php">Pricing</a>
+      <a href="<?php echo $basePath; ?>pages/contact.php">Contact</a>
     </div>
 
     <div class="navbar-actions">
-      <a href="login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>
-      <a href="consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
+      <a href="<?php echo $basePath; ?>pages/login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>
+      <a href="<?php echo $basePath; ?>pages/consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
       <button class="navbar-toggle" onclick="toggleMobileNav()" aria-label="Menu">
         <span></span>
         <span></span>
@@ -47,10 +48,10 @@
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
   </button>
-  <a href="index.php" onclick="toggleMobileNav()">Home</a>
-  <a href="about.php" onclick="toggleMobileNav()">About</a>
-  <a href="services.php" onclick="toggleMobileNav()">Services</a>
-  <a href="pricing.php" onclick="toggleMobileNav()">Pricing</a>
-  <a href="contact.php" onclick="toggleMobileNav()">Contact</a>
-  <a href="login.php" onclick="toggleMobileNav()">Sign In</a>
+  <a href="<?php echo $basePath; ?>index.php" onclick="toggleMobileNav()">Home</a>
+  <a href="<?php echo $basePath; ?>pages/about.php" onclick="toggleMobileNav()">About</a>
+  <a href="<?php echo $basePath; ?>pages/services.php" onclick="toggleMobileNav()">Services</a>
+  <a href="<?php echo $basePath; ?>pages/pricing.php" onclick="toggleMobileNav()">Pricing</a>
+  <a href="<?php echo $basePath; ?>pages/contact.php" onclick="toggleMobileNav()">Contact</a>
+  <a href="<?php echo $basePath; ?>pages/login.php" onclick="toggleMobileNav()">Sign In</a>
 </div>
