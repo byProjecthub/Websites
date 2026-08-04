@@ -34,8 +34,7 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
     // Railway: use getenv() — $_ENV is often empty in PHP-FPM/built-in server
     $apiKey = getenv('RESEND_API_KEY') ?: ($_ENV['RESEND_API_KEY'] ?? '');
     $apiKey = trim($apiKey);
-    $mailer->addCustomHeader('List-Unsubscribe', '<mailto:njabulod.hlongwane@gmail.com?subject=unsubscribe>');
-    $mailer->XMailer = 'Vueports Solutions Mailer';
+    
     error_log("sendEmailNow: START | To: $toEmail | Key present: " . (empty($apiKey) ? 'NO' : 'YES (' . substr($apiKey, 0, 6) . '...)'));
     
     if (!empty($apiKey)) {
@@ -58,6 +57,8 @@ function sendEmailNow(string $toEmail, string $toName, string $subject, string $
                 $mailer->Body = $htmlBody;
                 $mailer->AltBody = $textBody ?? strip_tags($htmlBody);
                 $mailer->send();
+                $mailer->addCustomHeader('List-Unsubscribe', '<mailto:njabulod.hlongwane@gmail.com?subject=unsubscribe>');
+                $mailer->XMailer = 'Vueports Solutions Mailer';
                 error_log("sendEmailNow: PHPMailer sent to $toEmail");
                 return true;
             }
