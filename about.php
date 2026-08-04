@@ -10,70 +10,65 @@ $pageDescription = 'About Vueports Solutions - Engineering Revenue, Not Just Cod
 require_once 'includes/header.php';
 ?>
 
-<section class="services-hero" style="padding-top:140px;">
+<section class="services-hero about-hero">
     <div class="container">
         <span class="section-tag">/ About Us</span>
         <h1>Engineering Revenue, Not Just <span class="highlight">Code</span></h1>
     </div>
 
     <div class="container">
-                   
-            <!-- Main Content -->
-            <div>
-                <!-- Featured Image -->
-                <div style="border-radius:16px; overflow:hidden; margin-bottom:32px; background:var(--bg-secondary);">
-                    <img src="<?= sanitize($project['image'] ?? 'assets/images/placeholder.svg') ?>" 
-                         alt="<?= sanitize($project['title'] ?? 'Project') ?>" 
-                         style="width:100%; height:auto; display:block;"
-                         onerror="this.src='/images/vueports.png'">
-                </div>
-            </div>  
+        <div class="about-hero-image">
+            <img src="<?= sanitize($project['image'] ?? 'assets/images/placeholder.svg') ?>" 
+                 alt="<?= sanitize($project['title'] ?? 'Project') ?>"
+                 onerror="this.src='/images/vueports.png'">
+        </div>
+    </div>
 </section>
 
-<section class="section">
+<section class="section about-intro">
     <div class="container">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;">
-            <div>
-                <p style="font-size:1.25rem; line-height:1.7; color:var(--text-secondary); margin-bottom:24px;">
+        <div class="about-grid">
+            <div class="about-content">
+                <p class="about-lead">
                     Vueports Solutions is a specialized technology partner focused on three high-margin disciplines high quality architecture for large scales and robust projects: <strong>Custom Software Development</strong>, <strong>Data Engineering & Analytics</strong>, and <strong>AI Agent Development</strong>.
                 </p>
-                <p style="color:var(--text-secondary); line-height:1.7; margin-bottom:24px;">
+                <p class="about-text">
                     Since 2020, we have delivered secure, scalable systems for municipalities, startups, and design agencies across South Africa. Our approach combines clean architecture, modern cloud infrastructure, and business-first thinking.
                 </p>
-                <div style="margin-top:32px;">
-                    <h3 style="margin-bottom:16px; font-size:1.125rem;">Why Clients Choose Us</h3>
-                    <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
-                        <li style="display:flex; gap:12px; color:var(--text-secondary);">
-                            <i class="fas fa-check-circle" style="color:var(--color-accent); margin-top:3px;"></i>
+                <div class="about-why">
+                    <h3>Why Clients Choose Us</h3>
+                    <ul class="about-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
                             <span><strong>Outcome-Based Delivery:</strong> We scope to business KPIs, not just technical specs.</span>
                         </li>
-                        <li style="display:flex; gap:12px; color:var(--text-secondary);">
-                            <i class="fas fa-check-circle" style="color:var(--color-accent); margin-top:3px;"></i>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
                             <span><strong>Full-Stack Depth:</strong> From React frontends to Python data pipelines to LLM orchestration.</span>
                         </li>
-                        <li style="display:flex; gap:12px; color:var(--text-secondary);">
-                            <i class="fas fa-check-circle" style="color:var(--color-accent); margin-top:3px;"></i>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
                             <span><strong>Security First:</strong> Secure-by-design architecture with compliance awareness.</span>
                         </li>
-                        <li style="display:flex; gap:12px; color:var(--text-secondary);">
-                            <i class="fas fa-check-circle" style="color:var(--color-accent); margin-top:3px;"></i>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
                             <span><strong>Post-Launch Partnership:</strong> Managed services, monitoring, and continuous optimization.</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div style="display:flex; flex-direction:column; gap:20px;">
-                <div class="card" style="border-left:4px solid var(--color-accent);">
-                    <h3 style="margin-bottom:8px; color:var(--color-accent);">Mission</h3>
-                    <p style="color:var(--text-secondary);">To transform businesses into data-driven, AI-augmented organizations through world-class software engineering.</p>
+            <div class="about-cards">
+                <div class="card about-card about-card--mission">
+                    <h3>Mission</h3>
+                    <p>To transform businesses into data-driven, AI-augmented organizations through world-class software engineering.</p>
                 </div>
-                <div class="card" style="border-left:4px solid var(--color-primary-400);">
-                    <h3 style="margin-bottom:8px; color:var(--color-primary-400);">Vision</h3>
-                    <p style="color:var(--text-secondary);">Become the most trusted technology production partner for mid-market companies in South Africa and beyond.</p>
+                <div class="card about-card about-card--vision">
+                    <h3>Vision</h3>
+                    <p>Become the most trusted technology production partner for mid-market companies in South Africa and beyond.</p>
                 </div>
-                <div class="card">
-                    <h3 style="margin-bottom:8px;">Values</h3>
-                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;">
+                <div class="card about-card">
+                    <h3>Values</h3>
+                    <div class="about-values">
                         <span class="skill-tag">Integrity</span>
                         <span class="skill-tag">Excellence</span>
                         <span class="skill-tag">Innovation</span>
@@ -85,13 +80,13 @@ require_once 'includes/header.php';
     </div>
 </section>
 
-<section class="section" style="background:var(--bg-secondary);">
+<section class="section about-tech" style="background:var(--bg-secondary);">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header center">
             <span class="section-tag">/ Tech Stack</span>
             <h2 class="section-title">Technologies We <span class="highlight">Master</span></h2>
         </div>
-        <div class="skills-showcase">
+        <div class="skills-showcase about-skills">
             <div class="skill-category card-hover">
                 <h3><i class="fas fa-code"></i> Software & Web</h3>
                 <div class="skill-tags">
@@ -132,8 +127,7 @@ require_once 'includes/header.php';
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="faq-section">
+<section class="faq-section about-faq">
     <div class="container">
         <div class="section-header center">
             <span class="section-tag">/ FAQ</span>
