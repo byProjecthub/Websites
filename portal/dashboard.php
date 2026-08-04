@@ -7,8 +7,8 @@ $pageTitle = 'Dashboard';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Vueports Portal</title>
-  <link rel="stylesheet" href="../assets/css/variables.css">
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/variables.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
 
@@ -41,7 +41,7 @@ $pageTitle = 'Dashboard';
     </nav>
 
     <div style="margin-top: auto; padding-top: var(--space-6); border-top: 1px solid var(--border-subtle);">
-      <a href="../index.php" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); transition: all var(--transition-fast);">
+      <a href="../../index.php" style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); transition: all var(--transition-fast);">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         Sign Out
       </a>
