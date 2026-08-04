@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Sign In';
 ?>
 <!DOCTYPE html>

@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Book a Meeting';
 include '../includes/header.php';
 ?>

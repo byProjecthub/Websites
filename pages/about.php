@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'About';
 include 'includes/header.php';
 ?>

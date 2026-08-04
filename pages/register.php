@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Create Account';
 ?>
 <!DOCTYPE html>

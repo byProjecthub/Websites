@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Contact';
 include '../includes/header.php';
 ?>
@@ -54,7 +55,7 @@ include '../includes/header.php';
         <div style="margin-top: var(--space-12); padding: var(--space-8); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);">
           <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4);">Prefer to book directly?</h3>
           <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-6);">Schedule a free 30-minute consultation at a time that works for you.</p>
-          <a href="../booking.php" class="btn btn-primary">
+          <a href="./booking.php" class="btn btn-primary">
             Book a Meeting
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>

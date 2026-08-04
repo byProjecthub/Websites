@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Services';
 include '../includes/header.php';
 ?>
@@ -27,7 +28,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> API Development</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> System Integration</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
 
       <div class="service-card accent-blue reveal" id="data">
@@ -40,7 +41,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Real-time Analytics</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> BI Dashboards</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
 
       <div class="service-card accent-violet reveal" id="ai">
@@ -53,7 +54,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Predictive Analytics</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Workflow Automation</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
 
       <div class="service-card accent-pink reveal" id="cloud">
@@ -66,7 +67,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Kubernetes</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Monitoring & Alerts</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
 
       <div class="service-card accent-amber reveal" id="consulting">
@@ -79,7 +80,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Digital Strategy</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Security Audits</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
 
       <div class="service-card accent-emerald reveal" id="support">
@@ -92,7 +93,7 @@ include '../includes/header.php';
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Performance Tuning</li>
           <li style="font-size: var(--text-sm); color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-2);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Feature Development</li>
         </ul>
-        <a href="../consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        <a href="./consultation.php" class="service-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
       </div>
     </div>
   </div>

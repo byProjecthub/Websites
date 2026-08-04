@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Pricing';
 include '../includes/header.php';
 ?>
@@ -29,7 +30,7 @@ include '../includes/header.php';
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> 30 days support</div>
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Source code included</div>
         </div>
-        <a href="../consultation.php" class="btn btn-secondary" style="width: 100%;">Get Started</a>
+        <a href="./consultation.php" class="btn btn-secondary" style="width: 100%;">Get Started</a>
       </div>
 
       <div class="pricing-card featured reveal">
@@ -45,7 +46,7 @@ include '../includes/header.php';
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Database design</div>
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Admin dashboard</div>
         </div>
-        <a href="../consultation.php" class="btn btn-primary" style="width: 100%;">Get Started</a>
+        <a href="./consultation.php" class="btn btn-primary" style="width: 100%;">Get Started</a>
       </div>
 
       <div class="pricing-card reveal">
@@ -61,13 +62,13 @@ include '../includes/header.php';
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Data engineering</div>
           <div class="pricing-feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> White-label options</div>
         </div>
-        <a href="../consultation.php" class="btn btn-secondary" style="width: 100%;">Contact Sales</a>
+        <a href="./consultation.php" class="btn btn-secondary" style="width: 100%;">Contact Sales</a>
       </div>
     </div>
 
     <div class="text-center" style="margin-top: var(--space-12);">
       <p style="font-size: var(--text-base); color: var(--text-secondary); margin-bottom: var(--space-4);">Not sure which plan is right for you?</p>
-      <a href="../calculator.php" class="btn btn-accent btn-lg">
+      <a href="./calculator.php" class="btn btn-accent btn-lg">
         Try Price Calculator
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>

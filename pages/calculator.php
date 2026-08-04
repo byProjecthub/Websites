@@ -1,4 +1,5 @@
 <?php
+$basePath = '../';
 $pageTitle = 'Price Calculator';
 include '../includes/header.php';
 ?>
@@ -143,11 +144,11 @@ include '../includes/header.php';
       </div>
 
       <div style="display: flex; gap: var(--space-4); margin-top: var(--space-8); flex-wrap: wrap;">
-        <a href="../consultation.php" class="btn btn-primary btn-lg" style="flex: 1; min-width: 200px;">
+        <a href="./consultation.php" class="btn btn-primary btn-lg" style="flex: 1; min-width: 200px;">
           Book a Free Call
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
-        <a href="../contact.php" class="btn btn-secondary btn-lg" style="flex: 1; min-width: 200px;">Send Inquiry</a>
+        <a href="./contact.php" class="btn btn-secondary btn-lg" style="flex: 1; min-width: 200px;">Send Inquiry</a>
       </div>
 
       <p style="font-size: var(--text-xs); color: var(--text-muted); text-align: center; margin-top: var(--space-6);">This is a ballpark estimate. Final pricing depends on detailed requirements. Book a call for an accurate quote.</p>
