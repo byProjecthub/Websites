@@ -9,7 +9,7 @@ $companyName = getSetting('site_name', 'Vueports Solutions');
 $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 ?>
 
-<section class="services-hero" style="padding-top:140px;" aria-labelledby="cookies-title">
+<section class="services-hero legal-hero" aria-labelledby="cookies-title">
     <div class="container">
         <span class="section-tag">/ Legal</span>
         <h1 id="cookies-title">Cookie <span class="highlight">Policy</span></h1>
@@ -17,7 +17,7 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 </section>
 
 <section class="section" aria-labelledby="cookies-content">
-    <div class="container" style="max-width: 800px;">
+    <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">This Cookie Policy explains how <?= sanitize($companyName) ?> uses cookies and similar technologies when you visit our website.</p>
 
@@ -33,83 +33,91 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
             
             <h3>2.1 Essential Cookies</h3>
             <p>These cookies are necessary for the website to function properly. They cannot be disabled.</p>
-            <table class="data-table" style="margin: 16px 0;">
-                <thead>
-                    <tr>
-                        <th>Cookie Name</th>
-                        <th>Purpose</th>
-                        <th>Duration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>session_id</td>
-                        <td>Maintains your session state</td>
-                        <td>Session</td>
-                    </tr>
-                    <tr>
-                        <td>csrf_token</td>
-                        <td>Security token for form submissions</td>
-                        <td>Session</td>
-                    </tr>
-                    <tr>
-                        <td>vueports_theme</td>
-                        <td>Stores your theme preference (light/dark)</td>
-                        <td>1 year</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="legal-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cookie Name</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>session_id</td>
+                            <td>Maintains your session state</td>
+                            <td>Session</td>
+                        </tr>
+                        <tr>
+                            <td>csrf_token</td>
+                            <td>Security token for form submissions</td>
+                            <td>Session</td>
+                        </tr>
+                        <tr>
+                            <td>vueports_theme</td>
+                            <td>Stores your theme preference (light/dark)</td>
+                            <td>1 year</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h3>2.2 Analytics Cookies</h3>
             <p>These cookies help us understand how visitors interact with our website. All data is anonymized.</p>
-            <table class="data-table" style="margin: 16px 0;">
-                <thead>
-                    <tr>
-                        <th>Cookie Name</th>
-                        <th>Purpose</th>
-                        <th>Duration</th>
-                    </tr>                <tbody>
-                    <tr>
-                        <td>_ga</td>
-                        <td>Google Analytics - distinguishes users</td>
-                        <td>13 months</td>
-                    </tr>
-                    <tr>
-                        <td>_gid</td>
-                        <td>Google Analytics - distinguishes sessions</td>
-                        <td>24 hours</td>
-                    </tr>
-                    <tr>
-                        <td>vueports_visit</td>
-                        <td>Internal analytics - page view tracking (anonymized)</td>
-                        <td>30 days</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="legal-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cookie Name</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>_ga</td>
+                            <td>Google Analytics — distinguishes users</td>
+                            <td>13 months</td>
+                        </tr>
+                        <tr>
+                            <td>_gid</td>
+                            <td>Google Analytics — distinguishes sessions</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>vueports_visit</td>
+                            <td>Internal analytics — page view tracking (anonymized)</td>
+                            <td>30 days</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h3>2.3 Functional Cookies</h3>
             <p>These cookies enable enhanced functionality and personalization.</p>
-            <table class="data-table" style="margin: 16px 0;">
-                <thead>
-                    <tr>
-                        <th>Cookie Name</th>
-                        <th>Purpose</th>
-                        <th>Duration</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>vueports_consent</td>
-                        <td>Stores your cookie consent preferences</td>
-                        <td>1 year</td>
-                    </tr>
-                    <tr>
-                        <td>vueports_return</td>
-                        <td>Remembers if you are a returning visitor</td>
-                        <td>1 year</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="legal-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cookie Name</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>vueports_consent</td>
+                            <td>Stores your cookie consent preferences</td>
+                            <td>1 year</td>
+                        </tr>
+                        <tr>
+                            <td>vueports_return</td>
+                            <td>Remembers if you are a returning visitor</td>
+                            <td>1 year</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <h2>3. Third-Party Cookies</h2>
             <p>We may allow third-party service providers to place cookies on your device for the following purposes:</p>
@@ -141,18 +149,16 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
 
             <h2>7. Contact Us</h2>
             <p>If you have questions about our use of cookies or this policy, please contact us:</p>
-            <div class="contact-box card" style="margin-top: 24px;">
+            <div class="card legal-contact-box">
                 <p><strong><?= sanitize($companyName) ?></strong></p>
                 <p>Email: <a href="mailto:<?= sanitize($contactEmail) ?>"><?= sanitize($contactEmail) ?></a></p>
                 <p>Phone: <a href="tel:+27688261507">+27 (68) 826-1507</a></p>
                 <p>Address: Johannesburg, South Africa</p>
             </div>
 
-            <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-color);">
-                <p style="font-size: 0.875rem; color: var(--text-muted);">
-                    <strong>Effective Date:</strong> <?= date('Y') ?>-01-01<br>
-                    <strong>Last Updated:</strong> <?= date('Y-m-d') ?>
-                </p>
+            <div class="legal-meta">
+                <p><strong>Effective Date:</strong> <?= date('Y') ?>-01-01<br>
+                <strong>Last Updated:</strong> <?= date('Y-m-d') ?></p>
             </div>
         </div>
     </div>
