@@ -481,7 +481,7 @@ $stats = [
     <div class="container">
         <h2 class="cta-title">Ready to build your next revenue engine?</h2>
         <p class="cta-desc">Let's architect your custom software, data platform, or AI agent ecosystem.</p>
-        <a href="contact.php" class="btn btn-primary btn-lg">Start a Project <i class="fas fa-arrow-right"></i></a>
+        <a href="calculator.php" class="btn btn-primary btn-lg">Start a Project <i class="fas fa-arrow-right"></i></a>
     </div>
 </section>
 
