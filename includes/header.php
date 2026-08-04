@@ -25,153 +25,31 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <!-- Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     
-    <link rel="icon" type="image/png" href="/images/apple-touch-icon-black.png">
-    
-    <!-- MOBILE NAV FIXES -->
+    <!-- CRITICAL: Ensure mobile dropdown works even if responsive.css is missing -->
     <style>
-    /* Overlay — solid dark, NO blur to prevent menu blur */
-    .nav-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.6);
-        z-index: 2000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .nav-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    /* Mobile menu — solid opaque background, forced crisp rendering */
-    @media (max-width: 1023px) {
-        .nav-menu {
+        .nav-overlay {
             position: fixed;
-            top: 0;
-            right: -110%;
-            width: 85%;
-            max-width: 360px;
-            height: 100vh;
-            height: 100dvh;
-            background: #ffffff;
-            flex-direction: column;
-            padding: 100px 28px 32px;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -10px 0 40px rgba(0,0,0,0.25);
-            gap: 0;
-            overflow-y: auto;
-            z-index: 2001;
-            -webkit-backdrop-filter: none;
-            backdrop-filter: none;
-        }
-        [data-theme="dark"] .nav-menu {
-            background: #0f172a;
-        }
-        .nav-menu.active {
-            right: 0;
-        }
-
-        .nav-menu > li {
-            width: 100%;
-        }
-
-        .nav-link {
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border-color, #e2e8f0);
-            width: 100%;
-            font-size: 1.125rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .nav-link::after {
-            display: none !important;
-        }
-
-        .dropdown {
-            width: 100%;
-        }
-        .dropdown-toggle i {
-            transition: transform 0.3s ease;
-            font-size: 0.875rem;
-            margin-left: auto;
-        }
-        .dropdown.active .dropdown-toggle i {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: static;
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-            box-shadow: none;
-            border: none;
-            background: #f1f5f9;
-            margin: 0 0 12px;
-            padding: 8px 0;
-            border-radius: 12px;
-            display: none;
-            min-width: 100%;
-            overflow: hidden;
-        }
-        [data-theme="dark"] .dropdown-menu {
-            background: #1e293b;
-        }
-        .dropdown.active .dropdown-menu {
-            display: block;
-            animation: dropdownSlide 0.2s ease;
-        }
-        @keyframes dropdownSlide {
-            from { opacity: 0; transform: translateY(-6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dropdown-menu a {
-            padding: 12px 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            font-size: 1rem;
-            display: block;
-        }
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .hamburger {
-            display: flex !important;
-            position: relative;
-            z-index: 2002;
-        }
-        .hamburger span {
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
         }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
+        @media (max-width: 1023px) {
+            .dropdown-menu {
+                display: none;
+            }
+            .dropdown.active .dropdown-menu {
+                display: block !important;
+            }
         }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        .nav-actions .btn-primary {
-            display: none;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .hamburger { display: none !important; }
-        .nav-overlay { display: none !important; }
-    }
-
-    body.menu-open {
-        overflow: hidden;
-        touch-action: none;
-    }
-</style>
+    </style>
     
     <script>
     window.addEventListener('load', function(){
@@ -247,129 +125,142 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
         </ul>
 
         <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
             <a href="contact.php" class="btn btn-primary btn-sm">Hire Us</a>
-            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </div>
 </nav>
 
+<!-- Mobile overlay -->
 <div class="nav-overlay" id="navOverlay"></div>
 
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function () {
     const hamburger = document.getElementById('hamburger');
     const navMenu   = document.getElementById('navMenu');
     const overlay   = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
-    const body      = document.body;
+    const navLinks  = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a, .dropdown-menu a');
 
-    function isMobile() {
-        return window.innerWidth <= 1023;
-    }
-
-    function openMenu() {
-        hamburger.classList.add('active');
-        hamburger.setAttribute('aria-expanded', 'true');
-        navMenu.classList.add('active');
-        overlay.classList.add('active');
-        body.classList.add('menu-open');
-    }
-
-    function closeMenu() {
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-        navMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        body.classList.remove('menu-open');
-        dropdowns.forEach(d => d.classList.remove('active'));
+    /* ---------- Toggle mobile menu ---------- */
+    function toggleMenu(forceClose) {
+        if (forceClose === true) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            dropdowns.forEach(d => {
+                d.classList.remove('active');
+                const m = d.querySelector('.dropdown-menu');
+                if (m) m.style.display = '';
+            });
+            document.body.style.overflow = '';
+        } else {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        }
     }
 
     hamburger.addEventListener('click', function (e) {
-        e.preventDefault();
         e.stopPropagation();
-        if (navMenu.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
+        toggleMenu();
     });
 
-    overlay.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', function () {
+        toggleMenu(true);
+    });
 
-    // Close when clicking any link inside the menu (except dropdown toggle)
-    navMenu.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            if (!isMobile()) return;
-            
-            // If this is a dropdown toggle, don't close — let dropdown handler manage it
-            if (this.classList.contains('dropdown-toggle')) return;
-            
-            // If this link is inside a dropdown menu, close the whole menu
-            if (this.closest('.dropdown-menu')) {
-                closeMenu();
-                return;
+    /* ---------- Close menu when clicking a regular link ---------- */
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            if (navMenu.classList.contains('active')) {
+                toggleMenu(true);
             }
-            
-            // Regular top-level link
-            closeMenu();
         });
     });
 
-    // Dropdown toggles
-    dropdowns.forEach(function(dropdown) {
+    /* ---------- Mobile dropdown toggles (THE FIX) ---------- */
+    dropdowns.forEach(dropdown => {
         const toggle = dropdown.querySelector('.dropdown-toggle');
-        if (!toggle) return;
+        const menu   = dropdown.querySelector('.dropdown-menu');
+        if (!toggle || !menu) return;
 
-        toggle.addEventListener('click', function(e) {
-            if (!isMobile()) {
-                e.preventDefault(); // prevent # jump on desktop too
-                return;
-            }
+        toggle.addEventListener('click', function (e) {
+            // Only intercept on mobile/tablet
+            if (window.innerWidth > 1023) return;
 
             e.preventDefault();
             e.stopPropagation();
 
-            const isOpen = dropdown.classList.contains('active');
-
-            // Close siblings
-            dropdowns.forEach(function(d) {
-                if (d !== dropdown) d.classList.remove('active');
+            // Close other dropdowns (accordion style)
+            dropdowns.forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('active');
+                    const m = d.querySelector('.dropdown-menu');
+                    if (m) m.style.display = 'none';
+                }
             });
 
-            dropdown.classList.toggle('active', !isOpen);
+            // Toggle this dropdown
+            const isOpen = dropdown.classList.contains('active');
+            if (isOpen) {
+                dropdown.classList.remove('active');
+                menu.style.display = 'none';
+            } else {
+                dropdown.classList.add('active');
+                menu.style.display = 'block';
+            }
         });
     });
 
-    // Click outside any dropdown to close just the dropdown (keep menu open)
-    document.addEventListener('click', function(e) {
-        if (!isMobile()) return;
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(d => d.classList.remove('active'));
+    /* ---------- Reset on resize to desktop ---------- */
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 1023) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            dropdowns.forEach(d => {
+                d.classList.remove('active');
+                const m = d.querySelector('.dropdown-menu');
+                if (m) m.style.display = '';
+            });
+            document.body.style.overflow = '';
         }
     });
 
-    // Escape closes everything
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeMenu();
-    });
+    /* ---------- Theme toggle ---------- */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            const icon = this.querySelector('i');
+            if (icon) icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
 
-    // Reset on resize to desktop
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            if (window.innerWidth > 1023) closeMenu();
-        }, 150);
-    });
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = themeToggle.querySelector('i');
+            if (icon) icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    }
 
-    // Navbar scroll effect
+    /* ---------- Navbar scroll shadow ---------- */
     const navbar = document.getElementById('navbar');
     if (navbar) {
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
     }
-})();
+});
 </script>
