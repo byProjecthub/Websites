@@ -20,15 +20,16 @@ if (empty($projects)) {
         [
             'slug' => 'finlytics-dashboard',
             'title' => 'Finlytics Dashboard',
-            'description' => 'Real-time financial analytics with multi-tenant architecture.','description' => 'Processing 11 analytical screens.',
-            'service_type' => 'SaaS',
+            'description' => 'Real-time financial analytics with multi-tenant architecture.','description', 'Processing 11 analytical screens.',
+            'service_type' => 'SaaS', 'BI Dashboard',
+            
             'image' => '/images/Finlytics.png',
         ],
         [
             'slug' => 'reloventura-platform',
             'title' => 'Reloventura Platform',
             'description' => 'Booking engine with payment integration.',
-            'service_type' => 'Web App','service_type' => 'BI Dashboard',
+            'service_type' => 'Web App',
             'image' => '/images/reloventura1.png',
         ],
        
