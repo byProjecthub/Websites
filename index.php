@@ -204,7 +204,7 @@ $stats = [
                 </div>
                 <div class="portfolio-card animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="/images/reloventura.png" alt="Reloventura" loading="lazy">
+                        <img src="/images/reloventura1.png" alt="Reloventura" loading="lazy">
                         <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
                     </div>
                     <div class="portfolio-info">
@@ -213,13 +213,7 @@ $stats = [
                         <p>Booking engine with payment integration.</p>
                     </div>
                 </div>
-                <div class="portfolio-card animate-on-scroll">
-                    <div class="portfolio-image">
-                        <img src="assets/images/placeholder.svg" alt="Data Pipeline" loading="lazy">
-                        <div class="portfolio-overlay"><a href="portfolio.php" class="btn btn-primary">View Project</a></div>
-                    </div>
-                </div>
-            <?php endif; ?>
+          <?php endif; ?>
         </div>
         <div class="center-btn">
             <a href="portfolio.php" class="btn btn-outline">View All Projects <i class="fas fa-arrow-right"></i></a>
