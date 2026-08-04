@@ -23,7 +23,9 @@ $siteTitle = getSetting('site_title', 'Vueports Solutions');
     <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
     
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/critical-fixes.css">
     
     <!-- CRITICAL: Ensure mobile dropdown works even if responsive.css is missing -->
     <style>
