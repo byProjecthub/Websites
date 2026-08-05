@@ -1,7 +1,4 @@
-# ============================================
-# consultation.php — ROOT LEVEL (merged with functional consultation(1).php)
-# ============================================
-consultation_php = '''<?php
+<?php
 declare(strict_types=1);
 
 require_once 'config/database.php';
