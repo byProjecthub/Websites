@@ -1,7 +1,4 @@
-# ============================================
-# services.php — ROOT LEVEL
-# ============================================
-services_php = '''<?php
+<?php
 $pageTitle = 'Services';
 require_once 'includes/functions.php';
 
