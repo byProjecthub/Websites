@@ -3,22 +3,22 @@ declare(strict_types=1);
 $pageTitle = 'Privacy Policy';
 $pageDescription = 'Vueports Solutions Privacy Policy - POPIA compliant data protection practices.';
 
-require_once __DIR__ . '/../includes/header.php';
+require_once 'includes/header.php';
 
-$lastUpdated = getSetting('privacy_last_updated', '2024-01-01');
-$companyName = getSetting('site_name', 'Vueports Solutions');
-$contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
+$lastUpdated = function_exists('getSetting') ? getSetting('privacy_last_updated', '2024-01-01') : '2024-01-01';
+$companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports Solutions') : 'Vueports Solutions';
+$contactEmail = function_exists('getSetting') ? getSetting('contact_email', 'njabulod.hlongwane@gmail.com') : 'njabulod.hlongwane@gmail.com';
 ?>
 
-<section class="services-hero legal-hero" aria-labelledby="privacy-title">
+<section class="page-header">
     <div class="container">
         <span class="section-tag">/ Legal</span>
-        <h1 id="privacy-title">Privacy <span class="highlight">Policy</span></h1>
-        <p class="section-desc">Last updated: <?= sanitize($lastUpdated) ?></p>
+        <h1 class="page-header-title">Privacy <span class="highlight">Policy</span></h1>
+        <p class="page-header-desc">Last updated: <?= sanitize($lastUpdated) ?></p>
     </div>
 </section>
 
-<section class="section" aria-labelledby="privacy-content">
+<section class="section section-alt">
     <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">At <?= sanitize($companyName) ?>, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services, in compliance with the Protection of Personal Information Act (POPIA) of South Africa.</p>
@@ -123,4 +123,4 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     </div>
 </section>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once 'includes/footer.php'; ?>
