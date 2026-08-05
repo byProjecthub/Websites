@@ -56,8 +56,8 @@
     <div class="footer-bottom">
       <p>&copy; <?php echo date('Y'); ?> Vueports Solutions. All rights reserved.</p>
       <div class="footer-bottom-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+        <a href="/legal/privacy.php">Privacy Policy</a>
+        <a href="/legal/terms.php">Terms of Service</a>
       </div>
     </div>
   </div>
