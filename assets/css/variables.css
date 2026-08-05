@@ -1,100 +1,67 @@
-/* ========================================
+
+
+# ============================================
+# 1. variables.css — Light theme as default
+# ============================================
+variables_css = '''/* ========================================
    Vueports Solutions — Design Tokens
-   Monochrome Noir + Indigo Accent
+   Coolors-inspired + Clean White Light Theme
    ======================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  /* ─── Monochrome Noir Core ─── */
-  --noir-1000: #000000;
-  --noir-950:  #0a0a0a;
-  --noir-900:  #141414;
-  --noir-800:  #1a1a1a;
-  --noir-700:  #262626;
-  --noir-600:  #404040;
-  --noir-500:  #525252;
-  --noir-400:  #737373;
-  --noir-300:  #a3a3a3;
-  --noir-200:  #d4d4d4;
-  --noir-100:  #f5f5f5;
-  --noir-50:   #fafafa;
-  --noir-0:    #ffffff;
+  /* ─── Core Light ─── */
+  --bg-body: #ffffff;
+  --bg-surface: #f5f5f5;
+  --bg-surface-elevated: #fafafa;
+  --bg-surface-hover: #f0f0f0;
+  --border-subtle: #e5e5e5;
+  --border-hover: #d4d4d4;
 
-  /* ─── Accent (Indigo-Violet) ─── */
-  --accent-50:  #eef2ff;
-  --accent-100: #e0e7ff;
-  --accent-200: #c7d2fe;
-  --accent-300: #a5b4fc;
-  --accent-400: #818cf8;
-  --accent-500: #6366f1;
-  --accent-600: #4f46e5;
-  --accent-700: #4338ca;
-  --accent-800: #3730a3;
-  --accent-900: #312e81;
+  /* ─── Typography ─── */
+  --text-primary: #0a0a0a;
+  --text-secondary: #525252;
+  --text-muted: #a3a3a3;
+  --text-inverse: #ffffff;
 
-  /* ─── Semantic Mapping — Dark Default (Monochrome Noir) ─── */
-  --color-accent:        var(--accent-500);
-  --color-accent-light:  var(--accent-400);
-  --color-accent-dark:   var(--accent-600);
+  /* ─── Coolors-inspired Accent Palette ─── */
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-indigo: #6366f1;
+  --accent-violet: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
 
-  --color-success:       #22c55e;
-  --color-success-light: rgba(34, 197, 94, 0.12);
-  --color-warning:       #f59e0b;
-  --color-warning-light: rgba(245, 158, 11, 0.12);
-  --color-danger:        #ef4444;
-  --color-danger-light:  rgba(239, 68, 68, 0.12);
-  --color-info:          var(--accent-400);
-  --color-info-light:    rgba(129, 140, 248, 0.12);
+  /* Accent backgrounds (subtle, for light cards) */
+  --accent-cyan-bg: rgba(6, 182, 212, 0.08);
+  --accent-blue-bg: rgba(59, 130, 246, 0.08);
+  --accent-indigo-bg: rgba(99, 102, 241, 0.08);
+  --accent-violet-bg: rgba(139, 92, 246, 0.08);
+  --accent-pink-bg: rgba(236, 72, 153, 0.08);
+  --accent-rose-bg: rgba(244, 63, 94, 0.08);
 
-  /* Backgrounds */
-  --bg-body:      var(--noir-950);
-  --bg-primary:   var(--noir-950);
-  --bg-secondary: var(--noir-900);
-  --bg-card:      var(--noir-900);
-  --bg-hover:     var(--noir-800);
-  --bg-active:    rgba(99, 102, 241, 0.10);
-  --bg-overlay:   rgba(10, 10, 10, 0.85);
+  /* ─── Typography Scale ─── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
 
-  /* Text */
-  --text-primary:   var(--noir-0);
-  --text-secondary: var(--noir-300);
-  --text-muted:     var(--noir-400);
-  --text-inverse:   var(--noir-1000);
-  --text-link:      var(--color-accent);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
 
-  /* Borders — thin, editorial */
-  --border-color:       var(--noir-700);
-  --border-color-light: var(--noir-800);
-  --border-color-strong:var(--noir-600);
-  --border-radius-sm:   6px;
-  --border-radius-md:   10px;
-  --border-radius-lg:   16px;
-  --border-radius-xl:   24px;
-  --border-radius-full: 9999px;
-
-  /* Shadows — extremely subtle, used rarely */
-  --shadow-sm:  0 1px 2px 0 rgba(0, 0, 0, 0.40);
-  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.50), 0 2px 4px -1px rgba(0, 0, 0, 0.30);
-  --shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.50), 0 4px 6px -2px rgba(0, 0, 0, 0.30);
-  --shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.60), 0 10px 10px -5px rgba(0, 0, 0, 0.40);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.18);
-  --shadow-glow-strong: 0 0 40px rgba(99, 102, 241, 0.28);
-
-  /* Typography — Inter / Geist feel */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  --font-size-xs:  0.75rem;
-  --font-size-sm:  0.875rem;
-  --font-size-base:1rem;
-  --font-size-lg:  1.125rem;
-  --font-size-xl:  1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  --font-size-5xl: 3rem;
-  --font-size-6xl: 3.75rem;
-  --font-size-7xl: 4.5rem;
-
-  /* Spacing — generous editorial whitespace */
+  /* ─── Spacing ─── */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -102,79 +69,70 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --space-10:2.5rem;
-  --space-12:3rem;
-  --space-16:4rem;
-  --space-20:5rem;
-  --space-24:6rem;
-  --space-32:8rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
 
-  /* Layout */
-  --container-max: 1200px;
-  --container-padding: var(--space-6);
-  --section-padding-y: var(--space-32);
-  --section-padding-y-sm: var(--space-20);
+  /* ─── Layout ─── */
+  --max-width: 1280px;
+  --section-py: 120px;
+  --section-py-sm: 80px;
+  --container-px: 24px;
 
-  /* Transitions */
+  /* ─── Radii ─── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+  --shadow-glow-cyan: 0 0 40px rgba(6, 182, 212, 0.12);
+  --shadow-glow-indigo: 0 0 40px rgba(99, 102, 241, 0.12);
+
+  /* ─── Transitions ─── */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Z-index */
+  /* ─── Z-index ─── */
   --z-dropdown: 100;
-  --z-sticky:   200;
-  --z-modal:    300;
-  --z-popover:  400;
-  --z-tooltip:  500;
-  --z-toast:    600;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
 }
 
-/* ─── Light Mode (Clean AlphadotX style) ─── */
-[data-theme="light"] {
-  --bg-body:      var(--noir-50);
-  --bg-primary:   var(--noir-0);
-  --bg-secondary: var(--noir-100);
-  --bg-card:      var(--noir-0);
-  --bg-hover:     var(--noir-100);
-  --bg-active:    rgba(99, 102, 241, 0.08);
-  --bg-overlay:   rgba(255, 255, 255, 0.92);
+/* ─── Dark Mode Override ─── */
+[data-theme="dark"] {
+  --bg-body: #0a0a0a;
+  --bg-surface: #141414;
+  --bg-surface-elevated: #1a1a1a;
+  --bg-surface-hover: #1f1f1f;
+  --border-subtle: #262626;
+  --border-hover: #404040;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --text-inverse: #0a0a0a;
 
-  --text-primary:   var(--noir-1000);
-  --text-secondary: var(--noir-500);
-  --text-muted:     var(--noir-400);
-  --text-inverse:   var(--noir-0);
-
-  --border-color:       var(--noir-200);
-  --border-color-light: var(--noir-100);
-  --border-color-strong:var(--noir-300);
-
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.12);
-  --shadow-glow-strong: 0 0 40px rgba(99, 102, 241, 0.20);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+  --shadow-glow-cyan: 0 0 40px rgba(6, 182, 212, 0.15);
+  --shadow-glow-indigo: 0 0 40px rgba(99, 102, 241, 0.15);
 }
+'''
 
-/* ─── Reduced Motion ─── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+with open(output_dir + "variables.css", "w") as f:
+    f.write(variables_css)
 
-/* ─── High Contrast ─── */
-@media (prefers-contrast: high) {
-  :root {
-    --border-color: var(--noir-0);
-    --shadow-sm: none;
-    --shadow-md: none;
-  }
-  [data-theme="light"] {
-    --border-color: var(--noir-1000);
-  }
-}
+print("✅ variables.css written")
