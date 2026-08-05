@@ -4,8 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($basePath)) { $basePath = './'; }
-
 // Auth state
 $isLoggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 $userName = $_SESSION['user_name'] ?? '';
@@ -30,14 +28,14 @@ function isActive($page, $current) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' | ' : ''; ?>Vueports Solutions</title>
   <meta name="description" content="<?php echo isset($pageDescription) ? htmlspecialchars($pageDescription) : 'Vueports Solutions — Custom Software, Data Engineering & AI Agents'; ?>">
- <link rel="stylesheet" href="/assets/css/variables.css?v=<?php echo time(); ?>">
-<link rel="stylesheet" href="/assets/css/style.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="assets/css/variables.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
 <!-- Flash Message -->
 <?php if ($flashMessage): ?>
-<div id="flashMessage" class="alert alert-<?php echo htmlspecialchars($flashType); ?>" style="position: fixed; top: 90px; left: 50%; transform: translateX(-50%); z-index: 500; max-width: 500px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
+<div id="flashMessage" class="alert alert-<?php echo htmlspecialchars($flashType); ?>" style="position: fixed; top: 90px; left: 50%; transform: translateX(-50%); z-index: 500; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
   <?php echo htmlspecialchars($flashMessage); ?>
 </div>
 <script>
@@ -51,29 +49,29 @@ setTimeout(() => {
 <!-- Navigation -->
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
-    <a href="<?php echo $basePath; ?>index.php" class="navbar-logo">Vueports<span>.</span></a>
+    <a href="index.php" class="navbar-logo">Vueports<span>.</span></a>
 
     <div class="navbar-links">
-      <a href="<?php echo $basePath; ?>index.php" class="<?php echo isActive('index', $currentPage); ?>">Home</a>
-      <a href="<?php echo $basePath; ?>about.php" class="<?php echo isActive('about', $currentPage); ?>">About</a>
-      <a href="<?php echo $basePath; ?>services.php" class="<?php echo isActive('services', $currentPage); ?>">Services</a>
-      <a href="<?php echo $basePath; ?>pricing.php" class="<?php echo isActive('pricing', $currentPage); ?>">Pricing</a>
-      <a href="<?php echo $basePath; ?>contact.php" class="<?php echo isActive('contact', $currentPage); ?>">Contact</a>
+      <a href="index.php" class="<?php echo isActive('index', $currentPage); ?>">Home</a>
+      <a href="about.php" class="<?php echo isActive('about', $currentPage); ?>">About</a>
+      <a href="services.php" class="<?php echo isActive('services', $currentPage); ?>">Services</a>
+      <a href="pricing.php" class="<?php echo isActive('pricing', $currentPage); ?>">Pricing</a>
+      <a href="contact.php" class="<?php echo isActive('contact', $currentPage); ?>">Contact</a>
       <?php if ($isLoggedIn): ?>
-        <a href="<?php echo $basePath; ?>portal/dashboard.php" class="<?php echo isActive('dashboard', $currentPage); ?>">Portal</a>
+        <a href="portal/dashboard.php" class="<?php echo isActive('dashboard', $currentPage); ?>">Portal</a>
       <?php endif; ?>
     </div>
 
     <div class="navbar-actions">
       <?php if ($isLoggedIn): ?>
-        <span style="font-size: var(--text-sm); color: var(--text-secondary); display: inline-flex; align-items: center; gap: var(--space-2);">
+        <span style="font-size: 0.875rem; color: #6b7280; display: inline-flex; align-items: center; gap: 0.5rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           <?php echo htmlspecialchars($userName ?: 'Account'); ?>
         </span>
-        <a href="<?php echo $basePath; ?>logout.php" class="btn btn-secondary" style="display:inline-flex;">Sign Out</a>
+        <a href="logout.php" class="btn btn-secondary" style="display:inline-flex;">Sign Out</a>
       <?php else: ?>
-        <a href="<?php echo $basePath; ?>login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>
-        <a href="<?php echo $basePath; ?>consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
+        <a href="login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>
+        <a href="consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
       <?php endif; ?>
       <button class="navbar-toggle" onclick="toggleMobileNav()" aria-label="Menu">
         <span></span>
@@ -92,15 +90,15 @@ setTimeout(() => {
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
   </button>
-  <a href="<?php echo $basePath; ?>index.php" onclick="toggleMobileNav()">Home</a>
-  <a href="<?php echo $basePath; ?>about.php" onclick="toggleMobileNav()">About</a>
-  <a href="<?php echo $basePath; ?>services.php" onclick="toggleMobileNav()">Services</a>
-  <a href="<?php echo $basePath; ?>pricing.php" onclick="toggleMobileNav()">Pricing</a>
-  <a href="<?php echo $basePath; ?>contact.php" onclick="toggleMobileNav()">Contact</a>
+  <a href="index.php" onclick="toggleMobileNav()">Home</a>
+  <a href="about.php" onclick="toggleMobileNav()">About</a>
+  <a href="services.php" onclick="toggleMobileNav()">Services</a>
+  <a href="pricing.php" onclick="toggleMobileNav()">Pricing</a>
+  <a href="contact.php" onclick="toggleMobileNav()">Contact</a>
   <?php if ($isLoggedIn): ?>
-    <a href="<?php echo $basePath; ?>portal/dashboard.php" onclick="toggleMobileNav()">Portal</a>
-    <a href="<?php echo $basePath; ?>logout.php" onclick="toggleMobileNav()">Sign Out</a>
+    <a href="portal/dashboard.php" onclick="toggleMobileNav()">Portal</a>
+    <a href="logout.php" onclick="toggleMobileNav()">Sign Out</a>
   <?php else: ?>
-    <a href="<?php echo $basePath; ?>login.php" onclick="toggleMobileNav()">Sign In</a>
+    <a href="login.php" onclick="toggleMobileNav()">Sign In</a>
   <?php endif; ?>
 </div>
