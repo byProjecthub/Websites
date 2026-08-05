@@ -1,7 +1,4 @@
-# ============================================
-# register.php — ROOT LEVEL
-# ============================================
-register_php = '''<?php
+<?php
 declare(strict_types=1);
 require_once 'includes/functions.php';
 
