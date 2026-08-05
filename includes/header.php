@@ -30,8 +30,8 @@ function isActive($page, $current) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' | ' : ''; ?>Vueports Solutions</title>
   <meta name="description" content="<?php echo isset($pageDescription) ? htmlspecialchars($pageDescription) : 'Vueports Solutions — Custom Software, Data Engineering & AI Agents'; ?>">
-  <link rel="stylesheet" href="<?php echo $basePath; ?>assets/css/variables.css">
-  <link rel="stylesheet" href="<?php echo $basePath; ?>assets/css/style.css">
+ <link rel="stylesheet" href="/assets/css/variables.css?v=<?php echo time(); ?>">
+<link rel="stylesheet" href="/assets/css/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
