@@ -1,8 +1,4 @@
-
-# ============================================
-# contact.php — ROOT LEVEL (merged with functional contact(1).php)
-# ============================================
-contact_php = '''<?php
+<?php
 declare(strict_types=1);
 
 require_once 'config/database.php';
