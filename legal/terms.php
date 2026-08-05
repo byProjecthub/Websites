@@ -3,6 +3,7 @@ declare(strict_types=1);
 $pageTitle = 'Terms of Service';
 $pageDescription = 'Vueports Solutions Terms of Service - Legal terms and conditions for using our website and services.';
 
+require_once '../includes/functions.php';
 require_once '../includes/header.php';
 
 $companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports Solutions') : 'Vueports Solutions';
