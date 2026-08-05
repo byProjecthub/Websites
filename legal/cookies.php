@@ -3,6 +3,7 @@ declare(strict_types=1);
 $pageTitle = 'Cookie Policy';
 $pageDescription = 'Vueports Solutions Cookie Policy - How we use cookies and similar technologies.';
 
+require_once '../includes/functions.php';
 require_once '../includes/header.php';
 
 $companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports Solutions') : 'Vueports Solutions';
