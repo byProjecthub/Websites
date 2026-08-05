@@ -1,7 +1,4 @@
-# ============================================
-# index.php — ROOT LEVEL, correct paths
-# ============================================
-index_php = '''<?php declare(strict_types=1);
+<?php declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 
