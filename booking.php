@@ -1,7 +1,4 @@
-# ============================================
-# booking.php — ROOT LEVEL (merged with functional booking(1).php)
-# ============================================
-booking_php = '''<?php
+<?php
 declare(strict_types=1);
 require_once 'includes/functions.php';
 require_once 'includes/emails.php';
