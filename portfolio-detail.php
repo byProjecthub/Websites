@@ -44,8 +44,8 @@ if (empty($project)) {
             'long_description' => 'Finlytics is a comprehensive financial analytics dashboard built for enterprise clients. It features real-time data processing, multi-tenant architecture, role-based access control, and interactive Power BI-style visualizations. The platform processes over 500K transactions daily with sub-second query response times.',
             'service_type' => 'BI Dashboard',
             'client_name' => 'Finlytics Corp',
-            'image' => '/images/Finlytics.png',
-            'gallery' => ['/images/Finlytics2.png', '/images/Finlytics1.png'],
+            'image' => 'assets/images/Finlytics.png',
+            'gallery' => ['assets/images/Finlytics2.png', 'assets/images/Finlytics1.png'],
             'tech_stack' => ['React', 'Node.js', 'PostgreSQL', 'Redis', 'AWS', 'Docker'],
             'live_url' => '#',
             'github_url' => '#',
@@ -60,30 +60,14 @@ if (empty($project)) {
             'long_description' => 'Reloventura is a full-featured booking and reservation platform for the travel industry. It includes an availability calendar, secure payment processing via PayFast, automated email notifications, and an admin dashboard for managing bookings, refunds, and reporting.',
             'service_type' => 'Web App',
             'client_name' => 'Reloventura Pty Ltd',
-            'image' => '/images/reloventura1.png',
-            'gallery' => ['/images/reloventura.png', '/images/reloventura2.png'],
+            'image' => 'assets/images/reloventura1.png',
+            'gallery' => ['assets/images/reloventura.png', 'assets/images/reloventura2.png'],
             'tech_stack' => ['PHP', 'MySQL', 'JavaScript', 'PayFast API', 'Tailwind CSS', 'Laravel'],
             'live_url' => '#',
             'github_url' => '#',
             'results' => ['3x booking conversion', 'R50K processed', 'Zero downtime deployment'],
             'testimonial' => 'We\'ve never had come this far without Vueports Solutions\'s great attention to detail and care for the final product',
             'year' => '2022',
-        ],
-        'website-tech' => [
-            'slug' => 'website-tech',
-            'title' => 'Website Tech Project',
-            'description' => 'Custom website development project.',
-            'long_description' => 'A custom website built with modern technologies and best practices.',
-            'service_type' => 'Web Development',
-            'client_name' => 'Website Tech Client',
-            'image' => 'assets/images/placeholder.svg',
-            'gallery' => ['assets/images/placeholder.svg'],
-            'tech_stack' => ['HTML', 'CSS', 'JavaScript', 'PHP'],
-            'live_url' => '#',
-            'github_url' => '#',
-            'results' => ['Responsive design', 'Fast loading', 'SEO optimized'],
-            'testimonial' => '',
-            'year' => '2024',
         ],
     ];
     $project = $fallbacks[$slugLookup] ?? $fallbacks[$slug] ?? null;
@@ -95,16 +79,15 @@ if (empty($project)) {
     $pageDescription = 'The requested project could not be found.';
     require_once 'includes/header.php';
     ?>
-    <section class="services-hero project-not-found">
+    <section class="page-header" style="padding-top: 200px; padding-bottom: 120px;">
         <div class="container">
             <span class="section-tag">/ Error</span>
-            <h1>Project Not <span class="highlight">Found</span></h1>
-            <p class="project-not-found__text">
-                The project "<?= sanitize($slug) ?>" doesn't exist or has been removed.
-            </p>
-            <div class="project-not-found__actions">
+            <h1 class="page-header-title">Project Not <span class="highlight">Found</span></h1>
+            <p class="page-header-desc">The project "<?= sanitize($slug) ?>" doesn't exist or has been removed.</p>
+            <div style="margin-top: var(--space-8);">
                 <a href="portfolio.php" class="btn btn-primary">
-                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+                    Back to Portfolio
                 </a>
             </div>
         </div>
@@ -136,35 +119,27 @@ if (function_exists('getRelatedProjects')) {
 
 // Ensure arrays
 $techStack = $project['tech_stack'] ?? [];
-if (is_string($techStack)) {
-    $techStack = json_decode($techStack, true) ?: [];
-}
+if (is_string($techStack)) $techStack = json_decode($techStack, true) ?: [];
 $results = $project['results'] ?? [];
-if (is_string($results)) {
-    $results = json_decode($results, true) ?: [];
-}
+if (is_string($results)) $results = json_decode($results, true) ?: [];
 $gallery = $project['gallery'] ?? [];
-if (is_string($gallery)) {
-    $gallery = json_decode($gallery, true) ?: [];
-}
+if (is_string($gallery)) $gallery = json_decode($gallery, true) ?: [];
 ?>
 
 <!-- Project Hero -->
-<section class="services-hero project-hero">
+<section class="page-header" style="padding-bottom: var(--space-12);">
     <div class="container">
         <span class="section-tag">/ Portfolio</span>
-        <h1><?= sanitize($project['title'] ?? 'Project') ?></h1>
-        <p class="project-hero__desc">
-            <?= sanitize($project['description'] ?? '') ?>
-        </p>
+        <h1 class="page-header-title"><?= sanitize($project['title'] ?? 'Project') ?></h1>
+        <p class="page-header-desc"><?= sanitize($project['description'] ?? '') ?></p>
     </div>
 </section>
 
 <!-- Project Detail -->
-<section class="section project-detail">
+<section class="section section-alt">
     <div class="container">
         <div class="project-layout">
-            
+
             <!-- Main Content -->
             <div class="project-main">
                 <!-- Featured Image -->
@@ -212,7 +187,9 @@ if (is_string($gallery)) {
                 <!-- Testimonial -->
                 <?php if (!empty($project['testimonial'])): ?>
                 <div class="card project-testimonial">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <div class="quote-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                    </div>
                     <p class="testimonial-text">"<?= sanitize($project['testimonial']) ?>"</p>
                     <?php if (!empty($project['client_name'])): ?>
                     <div class="testimonial-author">
@@ -231,7 +208,7 @@ if (is_string($gallery)) {
 
             <!-- Sidebar -->
             <div class="project-sidebar">
-                
+
                 <!-- Project Meta -->
                 <div class="card sidebar-card">
                     <h3>Project Details</h3>
@@ -273,26 +250,31 @@ if (is_string($gallery)) {
                 <div class="card sidebar-card sidebar-actions">
                     <?php if (!empty($project['live_url']) && $project['live_url'] !== '#'): ?>
                     <a href="<?= sanitize($project['live_url']) ?>" target="_blank" rel="noopener" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt"></i> View Live
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        View Live
                     </a>
                     <?php endif; ?>
                     <?php if (!empty($project['github_url']) && $project['github_url'] !== '#'): ?>
                     <a href="<?= sanitize($project['github_url']) ?>" target="_blank" rel="noopener" class="btn btn-outline">
-                        <i class="fab fa-github"></i> View Source
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        View Source
                     </a>
                     <?php endif; ?>
                     <a href="consultation.php?project=<?= sanitize($project['slug'] ?? '') ?>" class="btn btn-outline">
-                        <i class="fas fa-envelope"></i> Start Similar Project
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Start Similar Project
                     </a>
                 </div>
 
                 <!-- Navigation -->
                 <div class="sidebar-nav">
                     <a href="portfolio.php" class="btn btn-outline">
-                        <i class="fas fa-arrow-left"></i> All Projects
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+                        All Projects
                     </a>
                     <a href="booking.php" class="btn btn-primary">
-                        Hire Us <i class="fas fa-arrow-right"></i>
+                        Hire Us
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 6px;"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                     </a>
                 </div>
 
@@ -303,9 +285,9 @@ if (is_string($gallery)) {
 
 <!-- Related Projects -->
 <?php if (!empty($related)): ?>
-<section class="section related-projects">
+<section class="section">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header center">
             <span class="section-tag">/ More Work</span>
             <h2 class="section-title">Related <span class="highlight">Projects</span></h2>
         </div>
