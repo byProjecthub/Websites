@@ -3,20 +3,20 @@ declare(strict_types=1);
 $pageTitle = 'Cookie Policy';
 $pageDescription = 'Vueports Solutions Cookie Policy - How we use cookies and similar technologies.';
 
-require_once __DIR__ . '/../includes/header.php';
+require_once 'includes/header.php';
 
-$companyName = getSetting('site_name', 'Vueports Solutions');
-$contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
+$companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports Solutions') : 'Vueports Solutions';
+$contactEmail = function_exists('getSetting') ? getSetting('contact_email', 'njabulod.hlongwane@gmail.com') : 'njabulod.hlongwane@gmail.com';
 ?>
 
-<section class="services-hero legal-hero" aria-labelledby="cookies-title">
+<section class="page-header">
     <div class="container">
         <span class="section-tag">/ Legal</span>
-        <h1 id="cookies-title">Cookie <span class="highlight">Policy</span></h1>
+        <h1 class="page-header-title">Cookie <span class="highlight">Policy</span></h1>
     </div>
 </section>
 
-<section class="section" aria-labelledby="cookies-content">
+<section class="section section-alt">
     <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">This Cookie Policy explains how <?= sanitize($companyName) ?> uses cookies and similar technologies when you visit our website.</p>
@@ -30,7 +30,7 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
             </ul>
 
             <h2>2. Types of Cookies We Use</h2>
-            
+
             <h3>2.1 Essential Cookies</h3>
             <p>These cookies are necessary for the website to function properly. They cannot be disabled.</p>
             <div class="legal-table-wrapper">
@@ -164,4 +164,4 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     </div>
 </section>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once 'includes/footer.php'; ?>
