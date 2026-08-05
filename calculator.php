@@ -1,7 +1,4 @@
-# ============================================
-# calculator.php — ROOT LEVEL (merged with functional calculator(1).php)
-# ============================================
-calculator_php = '''<?php
+<?php
 declare(strict_types=1);
 require_once 'includes/functions.php';
 require_once 'includes/emails.php';
