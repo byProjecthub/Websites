@@ -3,20 +3,20 @@ declare(strict_types=1);
 $pageTitle = 'Terms of Service';
 $pageDescription = 'Vueports Solutions Terms of Service - Legal terms and conditions for using our website and services.';
 
-require_once __DIR__ . '/../includes/header.php';
+require_once '../includes/header.php';
 
-$companyName = getSetting('site_name', 'Vueports Solutions');
-$contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
+$companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports Solutions') : 'Vueports Solutions';
+$contactEmail = function_exists('getSetting') ? getSetting('contact_email', 'njabulod.hlongwane@gmail.com') : 'njabulod.hlongwane@gmail.com';
 ?>
 
-<section class="services-hero legal-hero" aria-labelledby="terms-title">
+<section class="page-header">
     <div class="container">
         <span class="section-tag">/ Legal</span>
-        <h1 id="terms-title">Terms of <span class="highlight">Service</span></h1>
+        <h1 class="page-header-title">Terms of <span class="highlight">Service</span></h1>
     </div>
 </section>
 
-<section class="section" aria-labelledby="terms-content">
+<section class="section section-alt">
     <div class="container legal-container">
         <div class="legal-content">
             <p class="lead">Please read these Terms of Service carefully before using the <?= sanitize($companyName) ?> website or engaging our services. By accessing or using our services, you agree to be bound by these terms.</p>
@@ -123,4 +123,4 @@ $contactEmail = getSetting('contact_email', 'njabulod.hlongwane@gmail.com');
     </div>
 </section>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>
