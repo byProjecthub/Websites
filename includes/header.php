@@ -70,8 +70,8 @@ setTimeout(() => {
         </span>
         <a href="logout.php" class="btn btn-secondary" style="display:inline-flex;">Sign Out</a>
       <?php else: ?>
-        <a href="login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>
-        <a href="consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
+  <!-- <a href="login.php" class="btn btn-secondary" style="display:inline-flex;">Sign In</a>-->
+     <a href="consultation.php" class="btn btn-primary" style="display:inline-flex;">Get Started</a>
       <?php endif; ?>
       <button class="navbar-toggle" onclick="toggleMobileNav()" aria-label="Menu">
         <span></span>
@@ -99,6 +99,6 @@ setTimeout(() => {
     <a href="portal/dashboard.php" onclick="toggleMobileNav()">Portal</a>
     <a href="logout.php" onclick="toggleMobileNav()">Sign Out</a>
   <?php else: ?>
-    <a href="login.php" onclick="toggleMobileNav()">Sign In</a>
+ <!--   <a href="login.php" onclick="toggleMobileNav()">Sign In</a>-->
   <?php endif; ?>
 </div>
