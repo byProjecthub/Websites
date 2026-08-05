@@ -20,36 +20,32 @@ if (empty($projects)) {
         [
             'slug' => 'finlytics-dashboard',
             'title' => 'Finlytics Dashboard',
-            'description' => 'Real-time financial analytics with multi-tenant architecture.','description', 'Processing 11 analytical screens.',
-            'service_type' => 'SaaS', 'BI Dashboard',
-            
-            'image' => '/images/Finlytics.png',
+            'description' => 'Real-time financial analytics with multi-tenant architecture. Processing 11 analytical screens.',
+            'service_type' => 'SaaS / BI Dashboard',
+            'image' => 'assets/images/Finlytics.png',
         ],
         [
             'slug' => 'reloventura-platform',
             'title' => 'Reloventura Platform',
             'description' => 'Booking engine with payment integration.',
             'service_type' => 'Web App',
-            'image' => '/images/reloventura1.png',
+            'image' => 'assets/images/reloventura1.png',
         ],
-       
     ];
 }
 ?>
 
-<section class="services-hero" style="padding-top:140px;">
+<section class="page-header">
     <div class="container">
         <span class="section-tag">/ Portfolio</span>
-        <h1>Our <span class="highlight">Work</span></h1>
-        <p style="color:var(--text-secondary); font-size:1.125rem; margin-top:12px;">
-            Projects that deliver real business results.
-        </p>
+        <h1 class="page-header-title">Our <span class="highlight">Work</span></h1>
+        <p class="page-header-desc">Projects that deliver real business results.</p>
     </div>
 </section>
 
-<section class="section">
+<section class="section section-alt">
     <div class="container">
-        <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+        <div class="portfolio-grid">
             <?php foreach ($projects as $project): ?>
             <div class="portfolio-card animate-on-scroll">
                 <div class="portfolio-image">
