@@ -1,7 +1,4 @@
-# ============================================
-# header.php — ROOT LEVEL (correct paths)
-# ============================================
-header_php = '''<?php
+<?php
 // Vueports Solutions — Header Template (Root Level)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
