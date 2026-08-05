@@ -130,9 +130,3 @@ variables_css = '''/* ========================================
   --shadow-glow-cyan: 0 0 40px rgba(6, 182, 212, 0.15);
   --shadow-glow-indigo: 0 0 40px rgba(99, 102, 241, 0.15);
 }
-'''
-
-with open(output_dir + "variables.css", "w") as f:
-    f.write(variables_css)
-
-print("✅ variables.css written")
