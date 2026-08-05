@@ -1,7 +1,4 @@
-# ============================================
-# about.php — ROOT LEVEL (merged with functional about(1).php content)
-# ============================================
-about_php = '''<?php
+<?php
 declare(strict_types=1);
 $pageTitle = 'About';
 $pageDescription = 'About Vueports Solutions — Engineering Revenue, Not Just Code.';
