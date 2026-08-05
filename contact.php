@@ -1,5 +1,10 @@
-<?php
+
+# ============================================
+# contact.php — ROOT LEVEL (merged with functional contact(1).php)
+# ============================================
+contact_php = '''<?php
 declare(strict_types=1);
+
 require_once 'config/database.php';
 require_once 'includes/functions.php';
 require_once 'includes/emails.php';
@@ -27,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Please enter a valid email address.';
         } else {
             $db = db();
-            
             if (!$db) {
                 $error = 'Database connection failed. Please try again later.';
                 error_log('CONTACT FORM ERROR: db() returned null');
@@ -55,15 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $confirmOk = sendContactConfirmation($leadData);
                     $adminOk   = sendAdminLeadNotification($leadData);
                     
-                    if (!$confirmOk) {
-                        error_log("CONTACT FORM: sendContactConfirmation failed for $email");
-                    }
-                    if (!$adminOk) {
-                        error_log("CONTACT FORM: sendAdminLeadNotification failed for $email");
-                    }
+                    if (!$confirmOk) error_log("CONTACT FORM: sendContactConfirmation failed for $email");
+                    if (!$adminOk) error_log("CONTACT FORM: sendAdminLeadNotification failed for $email");
                     
                     $success = 'Thank you! Your message has been received. We will respond within 24 hours.';
-                    
                 } catch (PDOException $e) {
                     error_log('CONTACT FORM DB ERROR: ' . $e->getMessage());
                     $error = 'Unable to save your message. Please try again later.';
@@ -80,107 +79,129 @@ $pageTitle = 'Contact';
 require_once 'includes/header.php';
 ?>
 
-<section class="services-hero" style="padding-top:140px;">
-    <div class="container">
-        <span class="section-tag">/ Contact</span>
-        <h1>Let's Build Something <span class="highlight">Profitable</span></h1>
-        <p>Tell us about your project. We reply to all inquiries within one business day.</p>
+<section class="page-header">
+  <div class="page-header-bg">Contact</div>
+  <div class="container">
+    <div class="page-header-content">
+      <span class="section-label">Contact</span>
+      <h1 class="page-header-title">Let's start<br>a conversation.</h1>
+      <p class="page-header-desc">Have a project in mind? We'd love to hear about it. Reach out and we'll get back to you within 24 hours.</p>
     </div>
+  </div>
 </section>
 
-<section style="padding:60px 0 120px;">
-    <div class="container">
-        <div class="contact-layout">
-            <div class="contact-info">
-                <div class="contact-info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <h4>Email</h4>
-                        <p><?= sanitize(getSetting('contact_email', 'njabulod.hlongwane@gmail.com')) ?></p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <h4>Phone</h4>
-                        <p><?= sanitize(getSetting('contact_phone', '+27 (68) 826-1507')) ?></p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h4>Location</h4>
-                        <p><?= sanitize(getSetting('location', 'Johannesburg, SA')) ?></p>
-                    </div>
-                </div>
-                <div class="contact-info-item">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h4>Response Time</h4>
-                        <p>Within 24 business hours</p>
-                    </div>
-                </div>
-            </div>
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="section-label">Get in Touch</span>
+        <h2 class="section-title" style="margin-bottom: var(--space-8);">We're here to help.</h2>
 
-            <div>
-                <?php if ($success): ?>
-                    <div class="alert alert-success">
-                        <i class="fas fa-check-circle"></i> <?= $success ?>
-                    </div>
-                <?php endif; ?>
-                <?php if ($error): ?>
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-circle"></i> <?= $error ?>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="contact.php" class="card card-hover">
-                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                    
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-                        <div class="form-group" style="margin-bottom:0;">
-                            <label class="form-label">Name *</label>
-                            <input type="text" name="name" required class="form-input">
-                        </div>
-                        <div class="form-group" style="margin-bottom:0;">
-                            <label class="form-label">Email *</label>
-                            <input type="email" name="email" required class="form-input">
-                        </div>
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-                        <div class="form-group" style="margin-bottom:0;">
-                            <label class="form-label">Phone</label>
-                            <input type="tel" name="phone" class="form-input">
-                        </div>
-                        <div class="form-group" style="margin-bottom:0;">
-                            <label class="form-label">Service Interest</label>
-                            <select name="service_interest" class="form-select">
-                                <option value="">General Inquiry</option>
-                                <option value="custom-software-web">Custom Software & Web</option>
-                                <option value="data-engineering-analytics">Data Engineering</option>
-                                <option value="ai-agent-development">AI Agent Development</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Subject</label>
-                        <input type="text" name="subject" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Message *</label>
-                        <textarea name="message" rows="6" required class="form-textarea" placeholder="Describe your project, goals, timeline, and budget..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
-            </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
+          <div class="contact-info-text">
+            <h4>Email</h4>
+            <p><?php echo htmlspecialchars(getSetting('contact_email', 'hello@vueports.com')); ?><br>support@vueports.com</p>
+          </div>
         </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <div class="contact-info-text">
+            <h4>Phone</h4>
+            <p><?php echo htmlspecialchars(getSetting('contact_phone', '+254 700 123 456')); ?><br>Mon–Fri, 9am–6pm EAT</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div class="contact-info-text">
+            <h4>Office</h4>
+            <p><?php echo htmlspecialchars(getSetting('location', 'Nairobi, Kenya')); ?></p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-12); padding: var(--space-8); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);">
+          <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4);">Prefer to book directly?</h3>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-6);">Schedule a free 30-minute consultation at a time that works for you.</p>
+          <a href="booking.php" class="btn btn-primary">
+            Book a Meeting
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form-card reveal">
+        <h3 style="font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-2);">Send us a message</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-8);">Fill out the form below and we'll respond within 24 hours.</p>
+
+        <?php if ($success): ?>
+          <div class="alert alert-success" style="margin-bottom: var(--space-6);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline; vertical-align:text-bottom; margin-right:var(--space-2);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <?php echo htmlspecialchars($success); ?>
+          </div>
+        <?php endif; ?>
+        <?php if ($error): ?>
+          <div class="alert alert-error" style="margin-bottom: var(--space-6);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline; vertical-align:text-bottom; margin-right:var(--space-2);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <?php echo htmlspecialchars($error); ?>
+          </div>
+        <?php endif; ?>
+
+        <form action="" method="POST">
+          <input type="hidden" name="csrf_token" value="<?php echo csrfToken(); ?>">
+
+          <div class="grid-2" style="gap: var(--space-4);">
+            <div class="form-group">
+              <label class="form-label">Name *</label>
+              <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email *</label>
+              <input type="email" name="email" class="form-input" placeholder="john@company.com" required>
+            </div>
+          </div>
+
+          <div class="grid-2" style="gap: var(--space-4);">
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" name="phone" class="form-input" placeholder="+254 700 123 456">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service Interest</label>
+              <select name="service_interest" class="form-select">
+                <option value="">General Inquiry</option>
+                <option value="custom-software-web">Custom Software & Web</option>
+                <option value="data-engineering-analytics">Data Engineering</option>
+                <option value="ai-agent-development">AI Agent Development</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" name="subject" class="form-input" placeholder="How can we help?">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message *</label>
+            <textarea name="message" class="form-textarea" placeholder="Describe your project, goals, timeline, and budget..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            Send Message
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
