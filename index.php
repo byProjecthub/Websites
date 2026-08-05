@@ -1,15 +1,13 @@
-
 # ============================================
-# index.php — Merged: design sections + functional DB logic
+# index.php — ROOT LEVEL, correct paths
 # ============================================
 index_php = '''<?php declare(strict_types=1);
 error_reporting(E_ALL);
-ini_set('display_errors', '0'); // Production safe
+ini_set('display_errors', '0');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = ltrim($uri, '/');
 
-// If requesting a specific PHP file directly, let it serve
 if ($uri && $uri !== 'index.php' && file_exists($uri . '.php')) {
     include $uri . '.php';
     exit;
@@ -62,14 +60,14 @@ $stats = [
         We build custom software, data pipelines, and AI agents that help your business move faster, think smarter, and scale effortlessly.
       </p>
       <div class="hero-actions animate-fade-in-up delay-300">
-        <a href="pages/consultation.php" class="btn btn-primary btn-lg">
+        <a href="consultation.php" class="btn btn-primary btn-lg">
           Start a Project
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </a>
-        <a href="pages/services.php" class="btn btn-secondary btn-lg">Explore Services</a>
+        <a href="services.php" class="btn btn-secondary btn-lg">Explore Services</a>
       </div>
     </div>
   </div>
@@ -127,7 +125,7 @@ $stats = [
             <?php endforeach; ?>
           </ul>
           <?php endif; ?>
-          <a href="pages/service-detail.php?slug=<?php echo urlencode($svc['slug'] ?? ''); ?>" class="service-link">
+          <a href="service-detail.php?slug=<?php echo urlencode($svc['slug'] ?? ''); ?>" class="service-link">
             Learn More
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -137,42 +135,41 @@ $stats = [
         </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <!-- Fallback static cards -->
         <div class="service-card accent-cyan reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
           <h3 class="service-title">Custom Software</h3>
           <p class="service-desc">Tailored web and mobile applications built with modern stacks. Scalable, secure, and designed around your workflow.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-blue reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
           <h3 class="service-title">Data Engineering</h3>
           <p class="service-desc">ETL pipelines, data warehouses, and real-time analytics. Turn raw data into actionable business intelligence.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-violet reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.387-1 1.732V7h1a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-4a7 7 0 0 1 7-7h1V5.732A2.001 2.001 0 0 1 12 2z"></path><path d="M9 21h6"></path></svg></div>
           <h3 class="service-title">AI Agents</h3>
           <p class="service-desc">Intelligent automation that handles repetitive tasks, answers queries, and makes decisions — 24/7, without breaks.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-pink reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg></div>
           <h3 class="service-title">Cloud Solutions</h3>
           <p class="service-desc">AWS, Azure, and GCP architecture, migration, and DevOps. Infrastructure that scales with your ambition.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-amber reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
           <h3 class="service-title">Tech Consulting</h3>
           <p class="service-desc">Strategic guidance on architecture, tech stack selection, and digital transformation roadmaps.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-emerald reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
           <h3 class="service-title">Ongoing Support</h3>
           <p class="service-desc">Maintenance, monitoring, and continuous improvement. We stay with you long after launch day.</p>
-          <a href="pages/services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
       <?php endif; ?>
     </div>
@@ -207,7 +204,7 @@ $stats = [
         <p class="body-base" style="margin-bottom: var(--space-8);">
           Our team combines deep technical expertise with business acumen. We don't just write code — we solve problems, optimize processes, and help you make better decisions with data.
         </p>
-        <a href="pages/about.php" class="btn-arrow">
+        <a href="about.php" class="btn-arrow">
           More About Us
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -245,36 +242,25 @@ $stats = [
       <div class="feature-card accent-cyan reveal">
         <h3 class="card-title" style="color: var(--accent-cyan);">Discover</h3>
         <p class="card-desc">We start by understanding your business, your users, and your goals. Deep discovery leads to better solutions.</p>
-        <a href="pages/consultation.php" class="card-cta" style="color: var(--accent-cyan);">
+        <a href="consultation.php" class="card-cta" style="color: var(--accent-cyan);">
           Our Process
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
-
       <div class="feature-card accent-indigo reveal">
         <h3 class="card-title" style="color: var(--accent-indigo);">Build</h3>
         <p class="card-desc">Agile development with weekly demos. You see progress in real-time and can pivot whenever needed.</p>
-        <a href="pages/services.php" class="card-cta" style="color: var(--accent-indigo);">
+        <a href="services.php" class="card-cta" style="color: var(--accent-indigo);">
           Tech Stack
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
-
       <div class="feature-card accent-pink reveal">
         <h3 class="card-title" style="color: var(--accent-pink);">Launch</h3>
         <p class="card-desc">Smooth deployment with monitoring, documentation, and training. We don't disappear after go-live.</p>
-        <a href="pages/portfolio.php" class="card-cta" style="color: var(--accent-pink);">
+        <a href="portfolio.php" class="card-cta" style="color: var(--accent-pink);">
           Case Studies
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
     </div>
@@ -311,7 +297,7 @@ $stats = [
         endforeach;
       endif;
       
-      if (!$hasTestimonials:
+      if (!$hasTestimonials):
       ?>
       <div class="testimonial-card reveal">
         <p class="testimonial-quote">"Vueports transformed our legacy system into a modern platform in just 8 weeks. The team's technical depth and communication were exceptional."</p>
@@ -357,14 +343,11 @@ $stats = [
         <h2 class="cta-section-title">Ready to build<br>something great?</h2>
         <p class="cta-section-desc">Book a free consultation and let's discuss how we can help your business grow with technology.</p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="pages/consultation.php" class="btn btn-primary btn-lg">
+          <a href="consultation.php" class="btn btn-primary btn-lg">
             Book a Call
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
-          <a href="pages/calculator.php" class="btn btn-secondary btn-lg">Price Calculator</a>
+          <a href="calculator.php" class="btn btn-secondary btn-lg">Price Calculator</a>
         </div>
       </div>
     </div>
@@ -375,13 +358,13 @@ $stats = [
 <section class="section-sm">
   <div class="container">
     <div class="grid-3" style="gap: var(--space-6);">
-      <a href="pages/consultation.php" class="cta-card-large reveal">
+      <a href="consultation.php" class="cta-card-large reveal">
         <h3 class="cta-title">Book a Call</h3>
       </a>
-      <a href="pages/calculator.php" class="cta-card-large reveal">
+      <a href="calculator.php" class="cta-card-large reveal">
         <h3 class="cta-title">Get a Quote</h3>
       </a>
-      <a href="pages/contact.php" class="cta-card-large reveal">
+      <a href="contact.php" class="cta-card-large reveal">
         <h3 class="cta-title">Send a Message</h3>
       </a>
     </div>
@@ -389,7 +372,6 @@ $stats = [
 </section>
 
 <script>
-// Animated stat counters
 const statItems = document.querySelectorAll('.stat-item .stat-value');
 const animateCounter = (el) => {
   const target = parseInt(el.dataset.count || '0');
@@ -416,5 +398,3 @@ statItems.forEach(el => statObserver.observe(el));
 </script>
 
 <?php include 'includes/footer.php'; ?>
-
-
