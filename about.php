@@ -1,191 +1,231 @@
-<?php
-// Uncomment the next two lines to see errors, then comment them back once fixed
-// error_reporting(E_ALL);
-// ini_set('display_errors', '1');
-
+# ============================================
+# about.php — ROOT LEVEL (merged with functional about(1).php content)
+# ============================================
+about_php = '''<?php
 declare(strict_types=1);
 $pageTitle = 'About';
-$pageDescription = 'About Vueports Solutions - Engineering Revenue, Not Just Code.';
+$pageDescription = 'About Vueports Solutions — Engineering Revenue, Not Just Code.';
 
+require_once 'includes/functions.php';
 require_once 'includes/header.php';
 ?>
 
-<section class="services-hero about-hero">
-    <div class="container">
-        <span class="section-tag">/ About Us</span>
-        <h1>Engineering Revenue, Not Just <span class="highlight">Code</span></h1>
+<!-- Page Header -->
+<section class="page-header">
+  <div class="page-header-bg">About</div>
+  <div class="container">
+    <div class="page-header-content">
+      <span class="section-label">About Us</span>
+      <h1 class="page-header-title">Technology partners<br>for modern teams.</h1>
+      <p class="page-header-desc">We combine deep technical expertise with business acumen to deliver software that drives real results.</p>
     </div>
-
-    <div class="container">
-        <div class="about-hero-image">
-            <img src="<?= sanitize($project['image'] ?? 'assets/images/placeholder.svg') ?>" 
-                 alt="<?= sanitize($project['title'] ?? 'Project') ?>"
-                 onerror="this.src='/images/vueports.png'">
-        </div>
-    </div>
+  </div>
 </section>
 
-<section class="section about-intro">
-    <div class="container">
-        <div class="about-grid">
-            <div class="about-content">
-                <p class="about-lead">
-                    Vueports Solutions is a specialized technology partner focused on three high-margin disciplines high quality architecture for large scales and robust projects: <strong>Custom Software Development</strong>, <strong>Data Engineering & Analytics</strong>, and <strong>AI Agent Development</strong>.
-                </p>
-                <p class="about-text">
-                    Since 2020, we have delivered secure, scalable systems for municipalities, startups, and design agencies across South Africa. Our approach combines clean architecture, modern cloud infrastructure, and business-first thinking.
-                </p>
-                <div class="about-why">
-                    <h3>Why Clients Choose Us</h3>
-                    <ul class="about-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span><strong>Outcome-Based Delivery:</strong> We scope to business KPIs, not just technical specs.</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span><strong>Full-Stack Depth:</strong> From React frontends to Python data pipelines to LLM orchestration.</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span><strong>Security First:</strong> Secure-by-design architecture with compliance awareness.</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span><strong>Post-Launch Partnership:</strong> Managed services, monitoring, and continuous optimization.</span>
-                        </li>
-                    </ul>
-                </div>
+<!-- Mission -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="section-label">Our Mission</span>
+        <h2 class="section-title" style="margin-bottom: var(--space-6);">Making technology work<br>for people.</h2>
+        <p class="body-lg" style="margin-bottom: var(--space-6);">
+          We believe great software is invisible — it just works. Our mission is to build systems so intuitive and reliable that you forget the technology exists and focus on what matters: your business.
+        </p>
+        <p class="body-base">
+          Founded in 2020, Vueports has grown from a two-person team to a full-service software studio serving clients across Africa, Europe, and North America. Every project we take on is an opportunity to push boundaries and deliver something exceptional.
+        </p>
+      </div>
+      <div class="about-visual reveal">
+        <div class="visual-accent" style="background: var(--accent-cyan);"></div>
+        <div class="visual-box">
+          <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+            <div style="text-align: center;">
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">5+</div>
+              <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Years Active</div>
             </div>
-            <div class="about-cards">
-                <div class="card about-card about-card--mission">
-                    <h3>Mission</h3>
-                    <p>To transform businesses into data-driven, AI-augmented organizations through world-class software engineering.</p>
-                </div>
-                <div class="card about-card about-card--vision">
-                    <h3>Vision</h3>
-                    <p>Become the most trusted technology production partner for mid-market companies in South Africa and beyond.</p>
-                </div>
-                <div class="card about-card">
-                    <h3>Values</h3>
-                    <div class="about-values">
-                        <span class="skill-tag">Integrity</span>
-                        <span class="skill-tag">Excellence</span>
-                        <span class="skill-tag">Innovation</span>
-                        <span class="skill-tag">Partnership</span>
-                    </div>
-                </div>
+            <div style="text-align: center;">
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">25+</div>
+              <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Team Members</div>
             </div>
+            <div style="text-align: center;">
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">150+</div>
+              <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Projects</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">12</div>
+              <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Countries</div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="section about-tech" style="background:var(--bg-secondary);">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">/ Tech Stack</span>
-            <h2 class="section-title">Technologies We <span class="highlight">Master</span></h2>
-        </div>
-        <div class="skills-showcase about-skills">
-            <div class="skill-category card-hover">
-                <h3><i class="fas fa-code"></i> Software & Web</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">React / Next.js</span>
-                    <span class="skill-tag">Vue.js</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">PHP / Laravel</span>
-                    <span class="skill-tag">Python / Django</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Tailwind CSS</span>
-                </div>
-            </div>
-            <div class="skill-category card-hover">
-                <h3><i class="fas fa-database"></i> Data & Cloud</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">MySQL</span>
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">Snowflake</span>
-                    <span class="skill-tag">BigQuery</span>
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Docker / K8s</span>
-                </div>
-            </div>
-            <div class="skill-category card-hover">
-                <h3><i class="fas fa-robot"></i> AI & Automation</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">OpenAI API</span>
-                    <span class="skill-tag">LangChain</span>
-                    <span class="skill-tag">Vector DBs</span>
-                    <span class="skill-tag">RAG Pipelines</span>
-                    <span class="skill-tag">Zapier / Make</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">Pandas / NumPy</span>
-                </div>
-            </div>
-        </div>
+<!-- Values -->
+<section class="section" style="background: var(--bg-surface);">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">Our Values</span>
+      <h2 class="section-title">What drives us<br>every day.</h2>
     </div>
+
+    <div class="grid-3" style="gap: var(--space-6);">
+      <div class="resource-card reveal">
+        <h3 class="resource-title">Transparency First</h3>
+        <p class="resource-desc">No hidden costs, no surprises. We communicate openly about timelines, budgets, and challenges from day one.</p>
+      </div>
+      <div class="resource-card reveal">
+        <h3 class="resource-title">Quality Obsession</h3>
+        <p class="resource-desc">We don't ship code we're not proud of. Testing, review, and refinement are baked into every sprint.</p>
+      </div>
+      <div class="resource-card reveal">
+        <h3 class="resource-title">Long-term Thinking</h3>
+        <p class="resource-desc">We build for the future. Scalable architecture, clean code, and thorough documentation are non-negotiable.</p>
+      </div>
+      <div class="resource-card reveal">
+        <h3 class="resource-title">User-Centric Design</h3>
+        <p class="resource-desc">The best software is invisible. We design experiences that feel natural and require zero training.</p>
+      </div>
+      <div class="resource-card reveal">
+        <h3 class="resource-title">Continuous Learning</h3>
+        <p class="resource-desc">Technology moves fast. We invest in R&D and training so our clients always get cutting-edge solutions.</p>
+      </div>
+      <div class="resource-card reveal">
+        <h3 class="resource-title">Partnership Mindset</h3>
+        <p class="resource-desc">We're not vendors — we're partners. Your success is our success, and we act like it.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="faq-section about-faq">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">/ FAQ</span>
-            <h2 class="section-title">Frequently Asked <span class="highlight">Questions</span></h2>
-        </div>
-
-        <div class="faq-grid">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What is your typical project timeline?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Project timelines vary based on complexity. A simple landing page typically takes 1-2 weeks, while a full web application can take 4-8 weeks. I'll provide a detailed timeline during our initial consultation.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Do you offer maintenance services?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes! I offer monthly maintenance packages that include security updates, performance monitoring, content updates, and technical support. This ensures your website stays secure and up-to-date.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What technologies do you specialize in?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>I specialize in modern web technologies including HTML5, CSS3, JavaScript (React, Vue, Node.js), PHP, Python, and various databases. I also work with CMS platforms like WordPress and Shopify.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How do you handle project pricing?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>I offer both fixed-price and hourly billing options. After understanding your requirements, I'll provide a detailed quote. Payment is typically split into milestones: 50% upfront, 50% upon completion.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can you work with existing codebases?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Absolutely! I regularly work with existing codebases, whether it's adding new features, refactoring legacy code, or modernizing older applications. I'll review your code first and provide recommendations.</p>
-                </div>
-            </div>
-        </div>
+<!-- Tech Stack -->
+<section class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">Tech Stack</span>
+      <h2 class="section-title">Technologies We<br>Master</h2>
     </div>
+    <div class="grid-3" style="gap: var(--space-6);">
+      <div class="card reveal">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4); color: var(--accent-cyan);">Software & Web</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+          <span class="value-tag">React / Next.js</span>
+          <span class="value-tag">Vue.js</span>
+          <span class="value-tag">Node.js</span>
+          <span class="value-tag">PHP / Laravel</span>
+          <span class="value-tag">Python / Django</span>
+          <span class="value-tag">TypeScript</span>
+          <span class="value-tag">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="card reveal">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4); color: var(--accent-blue);">Data & Cloud</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+          <span class="value-tag">PostgreSQL</span>
+          <span class="value-tag">MySQL</span>
+          <span class="value-tag">MongoDB</span>
+          <span class="value-tag">Snowflake</span>
+          <span class="value-tag">BigQuery</span>
+          <span class="value-tag">AWS</span>
+          <span class="value-tag">Docker / K8s</span>
+        </div>
+      </div>
+      <div class="card reveal">
+        <h3 style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4); color: var(--accent-violet);">AI & Automation</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+          <span class="value-tag">OpenAI API</span>
+          <span class="value-tag">LangChain</span>
+          <span class="value-tag">Vector DBs</span>
+          <span class="value-tag">RAG Pipelines</span>
+          <span class="value-tag">Zapier / Make</span>
+          <span class="value-tag">TensorFlow</span>
+          <span class="value-tag">Pandas / NumPy</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<?php require_once 'includes/footer.php'; ?>
+<!-- Team -->
+<section class="section" style="background: var(--bg-surface);">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">The Team</span>
+      <h2 class="section-title">Meet the people<br>behind the code.</h2>
+    </div>
+
+    <div class="grid-4" style="gap: var(--space-6);">
+      <div class="card text-center reveal">
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-indigo-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-indigo);">DK</div>
+        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">David Kimani</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-muted);">Founder & CEO</p>
+      </div>
+      <div class="card text-center reveal">
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-cyan-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-cyan);">WO</div>
+        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Wanjiku Ochieng</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-muted);">Lead Engineer</p>
+      </div>
+      <div class="card text-center reveal">
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-pink-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-pink);">AM</div>
+        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Amina Mohammed</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-muted);">Data Architect</p>
+      </div>
+      <div class="card text-center reveal">
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-emerald-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-emerald);">JK</div>
+        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">James Kariuki</h3>
+        <p style="font-size: var(--text-sm); color: var(--text-muted);">AI Specialist</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Frequently Asked<br>Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What is your typical project timeline?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p>Most projects range from 4-16 weeks depending on complexity. MVPs typically take 4-8 weeks, while enterprise solutions may require 12-16 weeks. We provide detailed timelines during our scoping session.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>Do you offer ongoing support after launch?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p>Yes! We offer maintenance retainers and support packages. Starter projects include 30 days of support, Professional includes 90 days, and Enterprise clients get dedicated DevOps support with monthly retainers available.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>What technologies do you specialize in?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p>We specialize in modern full-stack development (React, Vue, Node.js, Python), cloud infrastructure (AWS, Azure, GCP), data engineering (Spark, Kafka, Snowflake), and AI/ML (OpenAI, Claude, LangChain, custom model training).</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>How do you handle project pricing?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p>We offer transparent fixed-price projects based on detailed scoping. For ongoing work, we have monthly retainer options. All pricing is in ZAR and we accept payments via PayFast, EFT, or bank transfer.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span>Can you work with our existing team?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p>Absolutely. We regularly collaborate with in-house teams, acting as an extension of your engineering department. We use agile methodologies and integrate with your existing workflows, tools, and communication channels.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php include 'includes/footer.php'; ?>
