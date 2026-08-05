@@ -3,6 +3,7 @@ declare(strict_types=1);
 $pageTitle = 'Privacy Policy';
 $pageDescription = 'Vueports Solutions Privacy Policy - POPIA compliant data protection practices.';
 
+require_once '../includes/functions.php';
 require_once '../includes/header.php';
 
 $lastUpdated = function_exists('getSetting') ? getSetting('privacy_last_updated', '2024-01-01') : '2024-01-01';
