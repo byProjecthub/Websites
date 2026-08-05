@@ -2176,9 +2176,4 @@ table { border-collapse: collapse; width: 100%; }
   justify-content: center;
   color: var(--text-primary);
 }
-'''
 
-with open(output_dir + "style.css", "w") as f:
-    f.write(style_css)
-
-print("✅ style.css written")
