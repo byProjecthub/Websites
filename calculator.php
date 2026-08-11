@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote
         $db = db();
         if ($db) {
             $stmt = $db->prepare("INSERT INTO calculator_leads 
-                (name, email, phone, company, service_type, answers_json, estimated_min, estimated_max, created_at) 
+                (name, email, phone, company, service_type, answer_json, estimated_min, estimated_max, created_at) 
                 VALUES (?,?,?,?,?,?,?,?, NOW())");
             $stmt->execute([
                 sanitize($_POST['name'] ?? ''),
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'quote
                 sanitize($_POST['phone'] ?? ''),
                 sanitize($_POST['company'] ?? ''),
                 sanitize($_POST['service_type'] ?? ''),
-                $_POST['answers_json'] ?? '{}',
+                $_POST['answer_json'] ?? '{}',
                 (float) ($_POST['estimated_min'] ?? 0),
                 (float) ($_POST['estimated_max'] ?? 0),
             ]);
@@ -655,7 +655,7 @@ require_once 'includes/header.php';
           <input type="hidden" name="csrf_token" value="<?php echo csrfToken(); ?>">
           <input type="hidden" name="action" value="quote">
           <input type="hidden" name="service_type" id="quoteService" value="Custom Software & Web Development">
-          <input type="hidden" name="answers_json" id="quoteAnswers" value="{}">
+          <input type="hidden" name="answer_json" id="quoteAnswer" value="{}">
           <input type="hidden" name="estimated_min" id="quoteMin" value="0">
           <input type="hidden" name="estimated_max" id="quoteMax" value="0">
 
@@ -802,9 +802,9 @@ function calculateEstimate() {
     document.getElementById('quoteMin').value = Math.round(calc.min);
     document.getElementById('quoteMax').value = Math.round(calc.max);
     
-    const answers = {};
-    document.querySelectorAll(`#panel-${currentService} select`).forEach(s => answers[s.id] = s.value);
-    document.getElementById('quoteAnswers').value = JSON.stringify(answers);
+    const answer = {};
+    document.querySelectorAll(`#panel-${currentService} select`).forEach(s => answer[s.id] = s.value);
+    document.getElementById('quoteAnswer').value = JSON.stringify(answer);
     
     document.getElementById('estimateResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
