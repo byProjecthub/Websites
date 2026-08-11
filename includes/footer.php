@@ -6,7 +6,28 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="logo">Vueports<span>.</span></div>
+        <div class="logo"> <a href="index.php" class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="200" height="50">
+                        <defs>
+                            <linearGradient id="vGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="accentGradF" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#f43f5e;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Stylized V Mark — FLIPPED UPSIDE DOWN -->
+                        <g transform="rotate(180, 65, 65)">
+                            <path d="M 60 10 L 110 130 L 130 130 L 70 0 L 50 0 L 0 130 L 20 130 Z" fill="url(#vGradF)"/>
+                            <path d="M 70 35 L 95 95 L 105 95 L 75 20 Z" fill="url(#accentGradF)" opacity="0.9"/>
+                            <circle cx="115" cy="145" r="8" fill="url(#accentGradF)"/>
+                        </g>
+                        <text x="170" y="95" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="72" font-weight="800" fill="#0f172a" letter-spacing="-2">Vueports</text>
+                        <text x="172" y="130" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="500" fill="#64748b" letter-spacing="4">SOLUTIONS</text>
+                    </svg>
+                </a>Vueports<span>.</span></div>
         <p>Custom software, data engineering, and AI agents for modern teams. Built in South Africa, serving the world.</p>
         <div class="footer-social">
           <a href="https://github.com/byprojecthub" target="_blank" rel="noopener" aria-label="GitHub">
