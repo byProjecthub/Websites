@@ -109,7 +109,7 @@ require_once 'includes/header.php';
           </div>
           <div class="contact-info-text">
             <h4>Phone</h4>
-            <p><?php echo htmlspecialchars(getSetting('contact_phone', '+254 700 123 456')); ?><br>Mon–Fri, 9am–6pm EAT</p>
+            <p><?php echo htmlspecialchars(getSetting('contact_phone', '+254 700 123 456')); ?><br>Mon–Fri, 9am–6pm SAT</p>
           </div>
         </div>
 
