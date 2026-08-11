@@ -1,6 +1,6 @@
 /* ========================================
    Vueports Solutions — Design Tokens
-   Coolors-inspired + Clean White Light Theme
+   + 3 Figma Color Palettes
    ======================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -20,7 +20,7 @@
   --text-muted: #a3a3a3;
   --text-inverse: #ffffff;
 
-  /* ─── Coolors-inspired Accent Palette ─── */
+  /* ─── Original Accent Palette ─── */
   --accent-cyan: #06b6d4;
   --accent-blue: #3b82f6;
   --accent-indigo: #6366f1;
@@ -30,13 +30,40 @@
   --accent-amber: #f59e0b;
   --accent-emerald: #10b981;
 
-  /* Accent backgrounds (subtle, for light cards) */
+  /* Accent backgrounds */
   --accent-cyan-bg: rgba(6, 182, 212, 0.08);
   --accent-blue-bg: rgba(59, 130, 246, 0.08);
   --accent-indigo-bg: rgba(99, 102, 241, 0.08);
   --accent-violet-bg: rgba(139, 92, 246, 0.08);
   --accent-pink-bg: rgba(236, 72, 153, 0.08);
   --accent-rose-bg: rgba(244, 63, 94, 0.08);
+
+  /* ─── Palette 1: Blue Eclipse ─── */
+  --eclipse-1: #272757;
+  --eclipse-2: #8686AC;
+  --eclipse-3: #505081;
+  --eclipse-4: #0F0E47;
+  --eclipse-gradient: linear-gradient(135deg, #272757 0%, #505081 50%, #0F0E47 100%);
+  --eclipse-gradient-soft: linear-gradient(135deg, rgba(39,39,87,0.06) 0%, rgba(80,80,129,0.06) 100%);
+  --eclipse-glow: 0 0 40px rgba(39, 39, 87, 0.15);
+
+  /* ─── Palette 2: Stormy Morning ─── */
+  --stormy-1: #6A89A7;
+  --stormy-2: #BDDDFC;
+  --stormy-3: #88BDF2;
+  --stormy-4: #384959;
+  --stormy-gradient: linear-gradient(135deg, #384959 0%, #6A89A7 50%, #88BDF2 100%);
+  --stormy-gradient-soft: linear-gradient(135deg, rgba(106,137,167,0.08) 0%, rgba(189,221,252,0.08) 100%);
+  --stormy-glow: 0 0 40px rgba(106, 137, 167, 0.2);
+
+  /* ─── Palette 3: Cobalt Sky ─── */
+  --cobalt-1: #0047AB;
+  --cobalt-2: #000080;
+  --cobalt-3: #82C8E5;
+  --cobalt-4: #6D8196;
+  --cobalt-gradient: linear-gradient(135deg, #000080 0%, #0047AB 50%, #82C8E5 100%);
+  --cobalt-gradient-soft: linear-gradient(135deg, rgba(0,71,171,0.06) 0%, rgba(130,200,229,0.06) 100%);
+  --cobalt-glow: 0 0 40px rgba(0, 71, 171, 0.15);
 
   /* ─── Typography Scale ─── */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
