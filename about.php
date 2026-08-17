@@ -30,7 +30,7 @@ require_once 'includes/header.php';
           We believe great software is invisible — it just works. Our mission is to build systems so intuitive and reliable that you forget the technology exists and focus on what matters: your business.
         </p>
         <p class="body-base">
-          Founded in 2020, Vueports has grown from a two-person team to a full-service software studio serving clients across Africa, Europe, and North America. Every project we take on is an opportunity to push boundaries and deliver something exceptional.
+          Founded in 20260, Vueports has grown from a designing and developing for small business's to a full-service develpoment for mid business's, Our software studio serves clients across South Africa. Every project we take on is an opportunity to push boundaries and deliver something exceptional.
         </p>
       </div>
       <div class="about-visual reveal">
@@ -38,19 +38,19 @@ require_once 'includes/header.php';
         <div class="visual-box">
           <div class="stats-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-6);">
             <div style="text-align: center;">
-              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">5+</div>
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: var(--accent-blue);">4+</div>
               <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Years Active</div>
             </div>
             <div style="text-align: center;">
-              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">25+</div>
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: var(--accent-cyan);">2+</div>
               <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Team Members</div>
             </div>
             <div style="text-align: center;">
-              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">150+</div>
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: var(--accent-violet);">12+</div>
               <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Projects</div>
             </div>
             <div style="text-align: center;">
-              <div style="font-size: var(--text-4xl); font-weight: 900; color: #ffffff;">12</div>
+              <div style="font-size: var(--text-4xl); font-weight: 900; color: var(--accent-blue);">1</div>
               <div style="font-size: var(--text-sm); color: var(--text-muted); margin-top: var(--space-2);">Countries</div>
             </div>
           </div>
@@ -69,27 +69,27 @@ require_once 'includes/header.php';
     </div>
 
     <div class="grid-3" style="gap: var(--space-6);">
-      <div class="resource-card reveal">
+      <div class="resource-card reveal" style= "background: var(--accent-indigo-bg);">
         <h3 class="resource-title">Transparency First</h3>
         <p class="resource-desc">No hidden costs, no surprises. We communicate openly about timelines, budgets, and challenges from day one.</p>
       </div>
-      <div class="resource-card reveal">
+      <div class="resource-card reveal" style="background: var(--accent-cyan-bg);">
         <h3 class="resource-title">Quality Obsession</h3>
         <p class="resource-desc">We don't ship code we're not proud of. Testing, review, and refinement are baked into every sprint.</p>
       </div>
-      <div class="resource-card reveal">
+      <div class="resource-card reveal" style=" background: var(--accent-pink-bg);">
         <h3 class="resource-title">Long-term Thinking</h3>
         <p class="resource-desc">We build for the future. Scalable architecture, clean code, and thorough documentation are non-negotiable.</p>
       </div>
-      <div class="resource-card reveal">
+      <div class="resource-card reveal"  style=" background: var(--accent-pink-bg);">
         <h3 class="resource-title">User-Centric Design</h3>
         <p class="resource-desc">The best software is invisible. We design experiences that feel natural and require zero training.</p>
       </div>
-      <div class="resource-card reveal">
+      <div class="resource-card reveal" style= "background: var(--accent-indigo-bg);>
         <h3 class="resource-title">Continuous Learning</h3>
         <p class="resource-desc">Technology moves fast. We invest in R&D and training so our clients always get cutting-edge solutions.</p>
       </div>
-      <div class="resource-card reveal">
+      <div class="resource-card reveal"  style="background: var(--accent-cyan-bg);">
         <h3 class="resource-title">Partnership Mindset</h3>
         <p class="resource-desc">We're not vendors — we're partners. Your success is our success, and we act like it.</p>
       </div>
@@ -155,8 +155,8 @@ require_once 'includes/header.php';
 
     <div class="grid-4" style="gap: var(--space-6);">
       <div class="card text-center reveal">
-        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-indigo-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-indigo);">DK</div>
-        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">David Kimani</h3>
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-indigo-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-indigo);">ND</div>
+        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Njabulo Dlamini</h3>
         <p style="font-size: var(--text-sm); color: var(--text-muted);">Founder & CEO</p>
       </div>
       <div class="card text-center reveal">
