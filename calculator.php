@@ -905,6 +905,26 @@ const services = {
             ]};
         }
     },
+    mobile: {
+        name: 'Mobile Applications Development',
+        base: 20000,
+        pageRate: 1500,
+        calculate() {
+             const typeMult = parseFloat(document.getElementById('sw-type').value);
+            const pages = parseInt(document.getElementById('sw-pages').value);
+            const integrations = parseInt(document.getElementById('sw-integrations').value);
+            const design = parseInt(document.getElementById('sw-design').value);
+            const timeline = parseInt(document.getElementById('sw-timeline').value);
+            const subtotal = this.base + (pages * this.pageRate * typeMult) + integrations + design + timeline;
+            return { min: subtotal * 0.9, max: subtotal * 1.15, breakdown: [
+                `Base project: R${this.base.toLocaleString()}`,
+                `Pages/Screens (${pages} × R${this.pageRate} × ${typeMult}x): R${Math.round(pages*this.pageRate*typeMult).toLocaleString()}`,
+                `Integrations: R${integrations.toLocaleString()}`,
+                `Design: R${design.toLocaleString()}`,
+                `Timeline: R${timeline.toLocaleString()}`
+            ]};
+        }
+    },
     data: {
         name: 'Data Engineering & Analytics',
         base: 25000,
