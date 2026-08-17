@@ -660,8 +660,8 @@ require_once 'includes/header.php';
             <option value="1">Native</option>
             <option value="2" selected>Web Based</option>
             <option value="3">Hybrid</option>
-            <option value="3">Cross-Platform</option>
-            <option value="3">Progressive Wep Apps</option>
+            <option value="4">Cross-Platform</option>
+            <option value="5">Progressive Wep Apps</option>
           </select>
         </div>
 
@@ -961,7 +961,7 @@ const services = {
                 `Timeline: R${timeline.toLocaleString()}`
             ]};
         }
- },
+ }
 };
 
 let currentService = 'software';
