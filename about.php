@@ -153,7 +153,7 @@ require_once 'includes/header.php';
       <h2 class="section-title">Meet the people<br>behind the code.</h2>
     </div>
 
-    <div class="grid-4" style="gap: var(--space-6);">
+    <div class="grid-1" style="gap: var(--space-6);">
       <div class="card text-center reveal">
         <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-indigo-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-indigo);">ND</div>
         <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Njabulo Dlamini</h3>
