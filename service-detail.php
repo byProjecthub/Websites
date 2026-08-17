@@ -70,7 +70,7 @@ if ($db) {
         <?php if (!empty($related)): ?>
         <div style="margin-top: var(--space-16);">
             <h3 style="text-align: center; margin-bottom: var(--space-8); font-size: var(--text-2xl);">Explore Related Services</h3>
-            <div class="grid-3" style="max-width: 800px; margin: 0 auto;">
+            <div class="grid-2" style="max-width: 800px; margin: 0 auto;">
                 <?php foreach ($related as $r): ?>
                 <a href="service-detail.php?slug=<?= sanitize($r['slug']) ?>" class="card card-hover" style="text-decoration: none;">
                     <div style="font-size: 2rem; color: var(--accent-indigo); margin-bottom: var(--space-3);">
