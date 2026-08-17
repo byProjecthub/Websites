@@ -158,23 +158,9 @@ require_once 'includes/header.php';
         <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-indigo-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-indigo);">ND</div>
         <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Njabulo Dlamini</h3>
         <p style="font-size: var(--text-sm); color: var(--text-muted);">Founder & CEO</p>
-      </div>
-      <div class="card text-center reveal">
-        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-cyan-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-cyan);">WO</div>
-        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Wanjiku Ochieng</h3>
         <p style="font-size: var(--text-sm); color: var(--text-muted);">Lead Engineer</p>
       </div>
-      <div class="card text-center reveal">
-        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-pink-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-pink);">AM</div>
-        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">Amina Mohammed</h3>
-        <p style="font-size: var(--text-sm); color: var(--text-muted);">Data Architect</p>
       </div>
-      <div class="card text-center reveal">
-        <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background: var(--accent-emerald-bg); display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-4); font-size: var(--text-2xl); font-weight: 800; color: var(--accent-emerald);">JK</div>
-        <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-1);">James Kariuki</h3>
-        <p style="font-size: var(--text-sm); color: var(--text-muted);">AI Specialist</p>
-      </div>
-    </div>
   </div>
 </section>
 
