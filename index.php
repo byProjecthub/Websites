@@ -299,34 +299,24 @@ $stats = [
       <div class="testimonial-card reveal">
         <p class="testimonial-quote">"Vueports transformed our legacy system into a modern platform in just 8 weeks. The team's technical depth and communication were exceptional."</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar">SK</div>
+          <div class="testimonial-avatar">UD</div>
           <div>
-            <div class="testimonial-name">Sarah Kimani</div>
-            <div class="testimonial-role">CTO, FinFlow Africa</div>
+            <div class="testimonial-name">Usanda Dakuda</div>
+            <div class="testimonial-role">IT MANAGER, JPP Municipality</div>
           </div>
         </div>
       </div>
       <div class="testimonial-card reveal">
-        <p class="testimonial-quote">"Their AI agent reduced our customer support workload by 60%. It's like having a full-time employee that never sleeps."</p>
+        <p class="testimonial-quote">"Their AI chatbot reduced our customer support workload by 60%. It's like having a full-time employee that never sleeps."</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar">JM</div>
+          <div class="testimonial-avatar">TM</div>
           <div>
-            <div class="testimonial-name">James Mwangi</div>
-            <div class="testimonial-role">Founder, ShopLocal</div>
+            <div class="testimonial-name">Tebogo Madimeng</div>
+            <div class="testimonial-role">Founder, AlphaDotX</div>
           </div>
         </div>
       </div>
-      <div class="testimonial-card reveal">
-        <p class="testimonial-quote">"The data pipeline they built handles millions of records daily without breaking a sweat. Best investment we've made."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">AN</div>
-          <div>
-            <div class="testimonial-name">Amina Njoroge</div>
-            <div class="testimonial-role">Data Director, AgriTech</div>
-          </div>
-        </div>
-      </div>
-      <?php endif; ?>
+       <?php endif; ?>
     </div>
   </div>
 </section>
