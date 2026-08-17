@@ -74,7 +74,7 @@ require_once 'includes/header.php';
         <button type="button" class="btn btn-primary" id="tab-software" onclick="switchService('software')">Custom Software</button>
         <button type="button" class="btn btn-secondary" id="tab-data" onclick="switchService('data')">Data Engineering</button>
         <button type="button" class="btn btn-secondary" id="tab-ai" onclick="switchService('ai')">AI Agents</button>
-          <button type="button" class="btn btn-secondary" id="tab-mobile" onclick="switchService('ai')">Mobile Applications</button>
+          <button type="button" class="btn btn-secondary" id="tab-mobile" onclick="switchService('mobile')">Mobile Applications</button>
       </div>
 
       <!-- ========== SOFTWARE PANEL ========== -->
