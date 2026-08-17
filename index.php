@@ -147,7 +147,7 @@ $stats = [
         <div class="service-card accent-violet reveal">
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.387-1 1.732V7h1a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-4a7 7 0 0 1 7-7h1V5.732A2.001 2.001 0 0 1 12 2z"></path><path d="M9 21h6"></path></svg></div>
           <h3 class="service-title">AI Agents</h3>
-          <p class="service-desc">Intelligent automation that handles repetitive tasks, answers queries, and makes decisions — 24/7, without breaks.</p>
+          <p class="service-desc">Intelligent automation that handles repetitive tasks., answers queries, and makes decisions — 24/7, without breaks.</p>
           <a href="services.php" class="service-link">Learn More <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card accent-pink reveal">
