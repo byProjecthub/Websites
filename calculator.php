@@ -74,7 +74,7 @@ require_once 'includes/header.php';
         <button type="button" class="btn btn-primary" id="tab-software" onclick="switchService('software')">Custom Software</button>
         <button type="button" class="btn btn-secondary" id="tab-data" onclick="switchService('data')">Data Engineering</button>
         <button type="button" class="btn btn-secondary" id="tab-ai" onclick="switchService('ai')">AI Agents</button>
-          <button type="button" class="btn btn-secondary" id="tab-ai" onclick="switchService('ai')">Mobile Applications</button>
+          <button type="button" class="btn btn-secondary" id="tab-mobile" onclick="switchService('ai')">Mobile Applications</button>
       </div>
 
       <!-- ========== SOFTWARE PANEL ========== -->
@@ -621,7 +621,7 @@ require_once 'includes/header.php';
       </div>
 
          <!-- ========== MOBILE APP PANEL ========== -->
-      <div id="panel-software" class="calculator-section">
+      <div id="panel-mobile" class="calculator-section">
         <h3>Custom Mobile Application Development</h3>
 
         <div class="calculator-section">
