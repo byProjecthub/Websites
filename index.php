@@ -76,12 +76,8 @@ $stats = [
   <div class="container">
     <p class="logo-bar-label reveal">Trusted by forward-thinking companies</p>
     <div class="logo-bar-grid reveal">
-      <div class="logo-bar-item">TechCorp</div>
-      <div class="logo-bar-item">DataFlow</div>
-      <div class="logo-bar-item">CloudNine</div>
-      <div class="logo-bar-item">Apex AI</div>
-      <div class="logo-bar-item">NexGen</div>
-      <div class="logo-bar-item">Streamline</div>
+      <div class="logo-bar-item">JPP Municipality</div>
+      <div class="logo-bar-item">AlphaDotX</div>
     </div>
   </div>
 </section>
