@@ -52,14 +52,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['role'] = $row['role'] ?? 'admin';
                 $_SESSION['admin_role'] = $row['role'] ?? 'admin';
+
+
+                 $stmt = $db->prepare("UPDATE admins SET last_login_at = NOW(), last_login_ip = ? WHERE id = ?");
+                        $stmt->execute([$_SERVER['REMOTE_ADDR'] ?? null, $user['id']]);
                 
                 session_regenerate_id(true);
+
                 
                 redirect('dashboard.php');
             }
         }
     }
 }
+$pageTitle = 'Sign-In';
+require_once 'includes/header.php'>;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,33 +77,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="admin-login">
-    <div class="login-box">
-        <h2><i class="fas fa-shield-alt"></i> Admin Portal</h2>
+    <div class="auth-page">
+  <div class="auth-card reveal">
+    <div class="auth-logo">Vueports<span>.</span></div>
+    <p class="auth-subtitle">Sign in to your Admin portal</p>
         
-        <?php if ($error): ?>
-            <div class="alert alert-error" style="background:#fee2e2; color:#991b1b; padding:12px; border-radius:8px; margin-bottom:16px;">
-                <strong>Error:</strong> <?= sanitize($error) ?>
-                <?php if ($debug): ?>
-                    <br><small style="opacity:0.8;"><?= sanitize($debug) ?></small>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
-        
-        <form method="POST" autocomplete="on">
-            <div class="form-group">
-                <label for="admin-username">Username</label>
-                <input type="text" id="admin-username" name="username" autocomplete="username" required autofocus>
-            </div>
-            <div class="form-group">
-                <label for="admin-password">Password</label>
-                <input type="password" id="admin-password" name="password" autocomplete="current-password" required>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
-        </form>
+       <?php if ($success): ?>
+      <div class="alert alert-success" style="margin-bottom: var(--space-6);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline; vertical-align:text-bottom; margin-right:var(--space-2);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <?php echo htmlspecialchars($success); ?>
+      </div>
+    <?php endif; ?>
+    <?php if ($error): ?>
+      <div class="alert alert-error" style="margin-bottom: var(--space-6);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline; vertical-align:text-bottom; margin-right:var(--space-2);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
+        <form action="" method="POST" autocomplete="on">
+      <input type="hidden" name="csrf_token" value="<?php echo csrfToken(); ?>">
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-input" placeholder="you@company.com" autocomplete="username" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+        <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer;">
+          <input type="checkbox" name="remember" style="width: 16px; height: 16px;">
+          Remember me
+        </label>
+        <a href="forgot-password.php" style="font-size: var(--text-sm); color: var(--accent-indigo); font-weight: 500;">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+        Sign In
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+    </form>
+       <div class="auth-divider"><span>or</span></div>
         
         <p style="text-align:center; margin-top:16px; font-size:0.875rem;">
             <a href="../index.php">← Back to Website</a>
-        </p>
+        </p
+           <p class="auth-footer">
+      Don't have an account? <a href="register.php">Create one</a>
+    </p>  
     </div>
+
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>
