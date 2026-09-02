@@ -111,6 +111,103 @@ ul {
     width: 100%;
 }
 
+/*================================TERMS=================================*/
+
+.page-header {
+    margin-bottom: 60px;
+}
+
+.section-header.center {
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+}
+
+.page-header-title{
+   font-size: 0.775rem;
+   color: var(--accent);
+   margin-bottom: 16px;
+   font-family: var(--font-mono);
+   display: inline-block;
+}
+
+.section{
+   margin: 40px;
+   padding: 80px;
+   
+}
+
+.section-alt{
+   margin: 50px;
+   padding: 90px;
+   
+}
+
+.legal-container{
+  max-width:(--container-max);
+   margin: 0 auto;
+   padding:(--container-padding);
+   width: 100%;
+}
+
+.legal-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1; 
+}
+
+.lead{
+   font-family: var(--mono);
+   font-size: 0.475rem;
+   color: var(--#ffffff);
+
+   .legal-table-wrapper{
+      align-items: center;
+    position: relative;
+      padding: 20px;
+   }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+   .legal-contact-box{
+      background: var(--bg-card);
+border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+      
+   }
+   .legal-meta{
+      font-family: var(--font-mono);
+    font-size: 0.475rem;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+
+   
 /* ========================================
    Typography
    ======================================== */
@@ -687,7 +784,7 @@ p {
     z-index: 1;
 }
 
-/* ========================================
+/* ====================================F====
    Stats Section
    ======================================== */
 
