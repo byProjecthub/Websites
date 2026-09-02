@@ -10,7 +10,7 @@ $companyName = function_exists('getSetting') ? getSetting('site_name', 'Vueports
 $contactEmail = function_exists('getSetting') ? getSetting('contact_email', 'njabulod.hlongwane@gmail.com') : 'njabulod.hlongwane@gmail.com';
 ?>
 
-<section class="page-header">
+<section class="page-header" >
     <div class="container">
         <span class="section-tag">/ Legal</span>
         <h1 class="page-header-title">Cookie <span class="highlight">Policy</span></h1>
