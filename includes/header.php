@@ -30,6 +30,9 @@ function isActive($page, $current) {
   <meta name="description" content="<?php echo isset($pageDescription) ? htmlspecialchars($pageDescription) : 'Vueports Solutions — Custom Software, Data Engineering & AI Agents'; ?>">
   <link rel="stylesheet" href="assets/css/variables.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 </head>
 <body>
 
